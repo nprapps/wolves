@@ -4,8 +4,8 @@ $(document).ready(function() {
     var $titlecard_wrapper = $('.titlecard-wrapper');
     var $w = $(window);
     
-    var aspect_width = 6;
-    var aspect_height = 4;
+    var aspect_width = 16;
+    var aspect_height = 9;
     var window_width;
     var window_height;
     
