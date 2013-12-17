@@ -1,46 +1,54 @@
 {% extends '_base.html' %}
 
-{% block header_content %}
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>{{ COPY.content.header_title }}</h1>
-                <h2>{{ COPY.content.lorem_ipsum }}</h2>
-            </div>
-        </div>
-    </div>
-</header>
-{% endblock %}
+{% block extra_css %}
+{% endblock extra_css %}
 
+{% block extra_head_js %}
+{% endblock extra_head_js %}
 
+{% block extra_head %}
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.10/webfont.js"></script>
+<script>
+    WebFont.load({
+         custom: {
+             families: [
+                 'Gotham SSm:n4,n7'
+             ],
+             urls: [
+                 'http://s.npr.org/templates/css/fonts/GothamSSm.css'
+             ]
+         },
+         timeout: 10000
+     });
+</script>
+{% endblock extra_head %}
 {% block content %}
-<h1>{{ PROJECT_NAME }}</h1>
-<div id="story-meta">
-    <p class="byline">by <span>{{ COPY.attribution.byline }}</span></p>
-    <p class="dateblock">
-        <span class="date">{{ COPY.attribution.pubdate }}</span>
-        <span class="time"> {{ COPY.attribution.pubtime }}</span>
-    </p>
-</div>
+<div class="titlecard-wrapper">
 
-<h2>Example COPY list</h2>
-<dl>
-    {% for row in COPY.example_list %}
-    <dt>{{ row.term }}</dt><dd>{{ row.definition }}</dd>
-    {% endfor %}
-</dl>
+<div id="title-text">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<img src="img/npr-logo.png" class="npr-logo" alt="npr-logo" >
+				<h1>Title image</h1>
+				<h2>subtitle</h2>
+			</div><!-- /.col --> 
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</div><!-- /#title-text -->
+<div class="titlecard"></div>
 
-<h2>JST example</h2>
-<p id="template-example"></p>
-{% endblock %}
+	
+</div><!-- /titlecard-wrapper -->
 
+<section id="content">
+	<div class="container">
+		<div class="row">
+			<div id="main-content" class="col-md-8">
+				<h1>{{ PROJECT_NAME }}</h1>
+			</div><!--/col-->
+		</div><!--/row-->
+	</div><!--/container-->
+</section>
 
-{% block wide_content %}
-<div class="row">
-    <div class="col-md-12">
-        <h2>{{ COPY.content.footer_title }}</h2>
-        <p>{{ COPY.content.lorem_ipsum }}</p>
-    </div>
-</div>
 {% endblock %}
