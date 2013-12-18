@@ -188,7 +188,7 @@ background-color: #000;
 		position: relative;
 		width: 100%;
 		height: 100%;
-		background: url('@{img-root}/wolf-title.jpg') no-repeat center center fixed;
+		background: url('@{img-root}/wolf-title.jpg') no-repeat center center;
 		/*background: url('img/walk-title.jpg') no-repeat center center fixed; */
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
@@ -249,7 +249,7 @@ line-height: 2;
 padding: 600px 0 400px 0;
 text-transform: uppercase;
 color: #fff;
-background: url('@{img-root}/7.jpg') no-repeat center center fixed;
+background: url('@{img-root}/7.jpg') no-repeat center center;
 		/*background: url('img/walk-title.jpg') no-repeat center center fixed; */
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
@@ -285,6 +285,33 @@ background: url('@{img-root}/7.jpg') no-repeat center center fixed;
 	p {
 		color: #222;
 	}
+}
+
+.edge-to-edge {
+	position: relative;
+	overflow: hidden;
+	
+	.edge-caption {
+		position: absolute;
+		top: 0;
+		right: 10px;
+		z-index: 3;
+		font-size: 17px;
+		line-height: 1.5;
+		color: #fff;
+		width: 300px;
+		padding: 20px;
+		}
+}
+
+.toggle-captions {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	z-index: 12;
+	
+	p {color: #fff;}
+	
 }
 
 

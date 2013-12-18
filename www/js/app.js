@@ -39,7 +39,7 @@ $(document).ready(function() {
         
         // size the divs accordingly
         $titlecard.width(w + 'px').height(h + 'px');
-        $titlecard.css('margin', h_offset + 'px ' + w_offset + 'px');
+        //$titlecard.css('margin', h_offset + 'px ' + w_offset + 'px');
         $titlecard_wrapper.height(window_height + 'px');
         $container.css('marginTop', window_height + 'px');
     }
