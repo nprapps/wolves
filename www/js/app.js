@@ -9,6 +9,21 @@ $(document).ready(function() {
     var window_width;
     var window_height;
     
+    
+    //toggle captions
+    
+	$( '.toggle-captions' ).click(function() {
+		$( '.edge-caption' ).fadeToggle( 'slow', function() {
+		});
+		$('body').toggleClass('focused');
+		if ($(this).find('p').text() == 'Show Captions')
+		$(this).find('p').text('Hide Captions')
+		else
+		$(this).find('p').text('Show Captions');
+	});
+	
+    
+    //resize titlecard
     function on_resize() {
         var w;
         var h;

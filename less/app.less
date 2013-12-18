@@ -26,8 +26,13 @@
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: "Gotham SSm", helvetica, arial, sans-serif;
 	font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif; 
-    color: #111; 
     -webkit-font-smoothing: antialiased;
+}
+
+body {
+	color: #fff;
+	transition: color 0.5s ease;
+	&.focused {color: #555;}
 }
 
 h1 { 
@@ -37,14 +42,12 @@ h1 {
 h2 { 
     font-weight: normal; 
     line-height: 1.2; 
-    color: #333; 
     margin-bottom: 22px; 
     font-size: 22px;
 }
 h3, h4, h5, h6 { 
     font-weight: normal; 
     line-height: 1.2; 
-    color: #999; 
     margin-bottom: 22px;
 }
 p { margin-bottom: 1.3em; }
@@ -122,7 +125,7 @@ background-color: #000;
 		}
 		
 		h1 {
-	        color: #fff;
+	        
 	        text-transform: uppercase;
 	        font-weight: bold;
 	        text-shadow: 0px 2px 2px rgba(0,0,0,0.5);
@@ -148,7 +151,7 @@ background-color: #000;
 	
 	    h2 {
 	    	font-size: 16px;
-	        color: #fff;
+	        
 	        text-shadow: 0px 2px 2px rgba(0,0,0,0.5);
 	        max-width: 500px;
 	        margin: 5px auto;
@@ -214,7 +217,7 @@ padding-top: 40px;
 	h2 {
 		font-size: 46px;
 		line-height: 1.5;
-		color: #fff;
+		
 		text-transform: uppercase;
 		text-align: center;
 		margin: 80px 0;
@@ -223,7 +226,7 @@ padding-top: 40px;
 	p {
 		font-size: 32px;
 		line-height: 1.5;
-		color: #fff;
+		
 	}
 }
 
@@ -248,7 +251,7 @@ font-size: 80px;
 line-height: 2;
 padding: 600px 0 400px 0;
 text-transform: uppercase;
-color: #fff;
+
 background: url('@{img-root}/7.jpg') no-repeat center center;
 		/*background: url('img/walk-title.jpg') no-repeat center center fixed; */
 		-webkit-background-size: cover;
@@ -260,16 +263,16 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 
 .intro {
 	.gradient(#19243C,#222222,#131c31);
-	color: #fff;
+	
 	text-shadow: 2px 2px 3px #1e1d1a;
 	p {font-size:32px;}
 }
 
 .wolf-watchers {
 	//.gradient(#393630,#393630,#625D57);
-	//color: #fff;
+	color: #333;
 	
-	.extended-caption p {color: #333;}
+	.focused &{color: #999;}
 }
 
 .caption {
@@ -298,7 +301,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 		z-index: 3;
 		font-size: 17px;
 		line-height: 1.5;
-		color: #fff;
+		
 		width: 300px;
 		padding: 20px;
 		}
@@ -306,13 +309,37 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 
 .toggle-captions {
 	position: fixed;
-	bottom: 10px;
-	left: 10px;
+	bottom: 0;
+	left: 0;
 	z-index: 12;
+	cursor: pointer;
+	padding: 15px;
+	background-color:rgba(0,0,0,0.5);
 	
-	p {color: #fff;}
+	p {
+		
+		line-height: 1;
+		margin: 0;
+		padding: 0 0 0 11px;
+		font-size: 12px;
+		text-transform: uppercase;
+		font-weight: bold;
+		display: inline-block;
+		
+		i {
+			
+			display: inline-block;
+			font-size: 18px;
+			margin-right: 5px;
+		}
+	}
 	
 }
+
+.focused .toggle-captions p, .focused .toggle-captions i {
+	padding-left: 0;
+	color: #fff;
+	}
 
 
 // Footer
