@@ -3,15 +3,19 @@ $(document).ready(function() {
     var $titlecard = $('.titlecard')
     var $titlecard_wrapper = $('.titlecard-wrapper');
     var $w = $(window);
-    
+    var $audio = $('#audio');
+    var $player = $('#pop-audio');
     var aspect_width = 16;
     var aspect_height = 9;
     var window_width;
     var window_height;
-    
-    
+    var AUDIO_LENGTH = 60;
+    var audio_supported = true;
+	/*if (Modernizr.audio) {
+	    audio_supported = true;
+	}*/
+	
     //toggle captions
-    
 	$( '.toggle-captions' ).click(function() {
 		$( '.edge-caption' ).fadeToggle( 'slow', function() {
 		});
@@ -21,6 +25,32 @@ $(document).ready(function() {
 		else
 		$(this).find('p').text('Show Captions');
 	});
+	
+	//audio player
+	//if (!audio_supported) { $audio.hide(); }
+
+    if (audio_supported) {
+        /*
+         * Load audio player
+         */
+        $player.jPlayer({
+            ready: function () {
+                $(this).jPlayer('setMedia', {
+                	mp3: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.mp3',
+                    oga: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.ogg',
+                    
+                }).jPlayer('pause');
+            },
+            play: function() { // To avoid both jPlayers playing together.
+                $(this).jPlayer('pauseOthers');
+            },
+            ended: function (event) {
+                $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+            },
+            swfPath: 'js/lib',
+            supplied: 'mp3, oga'
+        });
+    }
 	
     
     //resize titlecard
