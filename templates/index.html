@@ -23,10 +23,14 @@
 </script>
 {% endblock extra_head %}
 {% block content %}
-<div class="toggle-captions">
-	<i class="fa fa-picture-o"></i>
-	<p> Hide Captions</p>
+
+<div class="controls">
+	<div class="toggle-captions">
+		<i class="fa fa-picture-o"></i>
+		<p> Hide Captions</p>
+	</div>
 </div>
+<p class="image-metadata"></p>
 
 <div class="titlecard-wrapper">
 
@@ -54,15 +58,7 @@
 
 <div class="intro">
 
-	<div class="edge-to-edge">
 	
-		<img src="img/3.jpg" alt="wolf-titlecard" class="img-responsive">
-		<div class="edge-caption">
-			<p>In the mid-1990's the federal government reintroduced wolves to the Northern Rockies - transplanting 76 animals from Canada to Yellowstone and Central Idaho.</p>
-		</div>
-		<p class="image-metadata"> <span class="share-photo"><b>#1</b> <i class="fa fa-share-square-o"></i></span></p>
-		
-	</div>
 
 	<div class="container">
 		<div class="row">
@@ -80,6 +76,20 @@
 		</div><!--/row-->
 	</div><!--/container-->
 	
+	
+	<div class="edge-to-edge">
+	
+		<img src="img/3.jpg" alt="wolf-titlecard" class="img-responsive">
+		<div class="edge-caption">
+			<p>In the mid-1990's the federal government reintroduced wolves to the Northern Rockies - transplanting 76 animals from Canada to Yellowstone and Central Idaho.</p>
+		</div>
+		
+		<div class="share-this">
+			<h6><i class="fa fa-share-square-o share-photo"></i> SHARE</h6>
+		</div>
+		
+		
+	</div><!--/edge-to-edge-->
 	
 	
 	<div class="container">
@@ -204,7 +214,9 @@
 	                </div>
 	            </div>
 	        </div> <!-- end .jp-audio -->
-	    </div> <!-- end #audio -->					 
+	    </div> <!-- end #audio -->	
+	    
+	    <p>share this story</p>				 
 					 
 				</div><!--/col-->
 			</div><!--/row-->

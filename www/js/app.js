@@ -69,9 +69,9 @@ $(document).ready(function() {
         });
     });
 	
-	$('.share-photo').popover({
+	$('.share-this').popover({
         'selector': '',
-        'placement': 'top',
+        'placement': 'left',
         //'title': '<p>Share</p>',
         'content': '<p><i class="fa fa-twitter"></i></p><p><i class="fa fa-facebook-square"></i></p><p>Grab the link</p>',
         'html': 'true'

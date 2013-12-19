@@ -42,7 +42,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 body {
 	color: #fff;
 	.transition(color 0.5s ease);
-	&.focused {color: #555;}
+	//&.focused {color: #555;}
 }
 
 h1 { 
@@ -100,15 +100,22 @@ a.btn.btn-blue {
 
 // Content
 .image-metadata {
-margin: 5px 10px 0 20px;
 cursor: pointer;
 color: #ddd;
+position: fixed;
+bottom: 0;
+right: 0;
+background-color: #000;
+z-index: 10;
 } 
 
+
+
 .image-metadata b {
-	font-size: 18px;
+	font-size: 13px;
 	text-transform: uppercase;
 	color: #999;
+	padding-left: 10px;
 }
 
 .image-metadata i {
@@ -130,7 +137,7 @@ height: 100%;
 overflow: hidden;
 margin-bottom: 33px;
 position: absolute;
-z-index: 1;
+z-index: 100;
 top: 0;
 background-color: #000;
 cursor: pointer;
@@ -308,7 +315,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 	//.gradient(#393630,#393630,#625D57);
 	color: #333;
 	
-	.focused &{color: #999;}
+	//.focused &{color: #999;}
 }
 
 .caption {
@@ -328,30 +335,54 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 
 .edge-to-edge {
 	position: relative;
-	overflow: hidden;
 	
 	.edge-caption {
 		position: absolute;
-		top: 0;
-		right: 10px;
+		top: 20px;
+		right: 20px;
 		z-index: 3;
-		width: 300px;
-		padding: 20px;
-			p{
-				font-size: 17px;
+		width: 250px;
+			p {
+				opacity: .6;
+				.transition(opacity 0.5s ease);
+				font-size: 20px;
 				line-height: 1.5;
 			}
+	}
+	
+	.share-this {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		padding: 10px;
+		background-color: #000;
+		cursor: pointer;
+		opacity: 0;
+		.transition(opacity 1s ease);
+		h6 {
+			margin: 0;
+			font-size: 15px;
+			font-weight: bold;
 		}
+	}
+	
+	&:hover {
+		.share-this {opacity: 1;}
+		p {opacity: 1;}
+	    }
 }
 
-.toggle-captions {
+.controls {
 	position: fixed;
 	bottom: 0;
-	left: 0;
+	right: 0;
 	z-index: 12;
 	cursor: pointer;
 	padding: 15px;
 	background-color:rgba(0,0,0,0.5);
+}
+
+.toggle-captions {
 	
 	p {
 		
