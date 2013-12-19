@@ -52,6 +52,16 @@ $(document).ready(function() {
         });
     }
     
+    //titlecard smooth scroll
+    
+    $('.titlecard-wrapper').click(function() {
+		$.smoothScroll({
+			speed: 800,
+			scrollTarget: '.intro'
+		});
+		return false;
+	});
+    
     //share popover
     $(function () {
         $('body').popover({
@@ -63,7 +73,7 @@ $(document).ready(function() {
         'selector': '',
         'placement': 'top',
         //'title': '<p>Share</p>',
-        'content': '<i class="fa fa-twitter"></i>',
+        'content': '<p><i class="fa fa-twitter"></i></p><p><i class="fa fa-facebook-square"></i></p><p>Grab the link</p>',
         'html': 'true'
       });
     
