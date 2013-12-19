@@ -32,6 +32,7 @@
 @nav-text-hover: #b0b0b0;
 
 // General styles
+
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: "Gotham SSm", helvetica, arial, sans-serif;
 	font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif; 
@@ -98,6 +99,29 @@ a.btn.btn-blue {
 
 
 // Content
+.image-metadata {
+margin: 5px 10px 0 20px;
+cursor: pointer;
+color: #ddd;
+} 
+
+.image-metadata b {
+	font-size: 18px;
+	text-transform: uppercase;
+	color: #999;
+}
+
+.image-metadata i {
+	font-size: 18px;
+}
+
+.image-metadata .fa-twitter {
+	color: #000;
+	text-shadow: none;
+	font-size: 22px;
+}
+
+
 .titlecard-wrapper {
 width: 100%;
 height: 100%;
@@ -308,11 +332,12 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 		top: 0;
 		right: 10px;
 		z-index: 3;
-		font-size: 17px;
-		line-height: 1.5;
-		
 		width: 300px;
 		padding: 20px;
+			p{
+				font-size: 17px;
+				line-height: 1.5;
+			}
 		}
 }
 
@@ -353,6 +378,8 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 .audio-story {
 background-color: #eee;
 	color: #333;
+	position: relative;
+	z-index: 20;
 }
 
 // Footer
@@ -360,6 +387,10 @@ footer {
 	padding: 0 15px 10px 15px;
 	font-size: 10px;
 	border-top: 2px solid #e0e0e0;
+	position: relative;
+	z-index: 20;
+	background-color: #fff;
+	min-height: 70px;
 
 	ul { 
 	    list-style: none; 

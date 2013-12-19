@@ -51,6 +51,22 @@ $(document).ready(function() {
             supplied: 'mp3, oga'
         });
     }
+    
+    //share popover
+    $(function () {
+        $('body').popover({
+            selector: '[data-toggle="popover"]'
+        });
+    });
+	
+	$('.share-photo').popover({
+        'selector': '',
+        'placement': 'top',
+        //'title': '<p>Share</p>',
+        'content': '<i class="fa fa-twitter"></i>',
+        'html': 'true'
+      });
+    
 	
     
     //resize titlecard
