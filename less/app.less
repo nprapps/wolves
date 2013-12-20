@@ -40,7 +40,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 body {
-	color: #fff;
+	color: #333;
 	.transition(color 0.5s ease);
 	//&.focused {color: #555;}
 }
@@ -141,6 +141,7 @@ z-index: 100;
 top: 0;
 background-color: #000;
 cursor: pointer;
+color: #fff;
 
 	#title-text {
 		position: absolute;
@@ -267,7 +268,6 @@ padding-top: 40px;
 	p {
 		font-size: 32px;
 		line-height: 1.5;
-		
 	}
 }
 
@@ -304,7 +304,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 
 .intro {
 	.gradient(#19243C,#222222,#131c31);
-	
+	color: #fff;
 	text-shadow: 2px 2px 3px #1e1d1a;
 	p {font-size:24px;}
 }
@@ -320,38 +320,76 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 	color: #333;
 }
 
+.section-intro {
+	padding-top: 60px;
+	padding-bottom: 40px;
+	
+}
+
+.science {
+	.extended-caption {
+		border-bottom: 1px solid #ddd;
+	
+		h4 {
+			font-size: 48px;
+			font-weight: bold;
+			line-height: 1.1;
+			text-transform: uppercase;
+			margin-bottom: 0;
+			text-align: center;
+			
+		}
+		
+		h5 {
+			font-family: georgia;
+			font-size: 24px;
+			line-height: 1.5;
+			color: #555;
+			text-align: center;
+		}
+	}
+}
+
 .caption {
 	font-size: 12px;
 	line-height: 1.2;
 	margin: 5px 0;
 }
 
-.scientists {
-	h2 {
-		color: #222;
-	}
-	p {
-		color: #222;
-	}
+.side-by-side {
+	margin-top: 0;
+	margin-bottom: 100px;
+	color: #888;
+}
+
+.side-by-side h5 {
+	font-size: 18px;
+	line-height: 1.9;
+	font-family: georgia;
+	margin-top: 20px;
 }
 
 .edge-to-edge {
 	position: relative;
-	margin: 40px 0;
+	margin: 0;
 	
 	
 	.edge-caption {
 		position: absolute;
-		top: 20px;
-		right: 20px;
+		bottom: 0;
+		right: 0;
 		z-index: 3;
-		width: 250px;
-		color: #fff;
+		width: 100%;
 			p {
-				opacity: .6;
-				.transition(opacity 0.5s ease);
-				font-size: 20px;
-				line-height: 1.5;
+				color: #fff;
+				background-color: #000;
+				opacity: 0;
+				.transition(opacity 1s ease);
+				font-size: 14px;
+				line-height: 1.6;
+				text-align: right;
+				margin: 0;
+				padding: 20px;
 			}
 	}
 	
@@ -385,6 +423,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 	cursor: pointer;
 	padding: 15px;
 	background-color:rgba(0,0,0,0.5);
+	color: #fff;
 }
 
 .toggle-captions {
