@@ -254,10 +254,12 @@ margin-top: 44px;
 	margin: 30px 0;
 }
 
-
 .extended-caption {
-padding-top: 40px;
-
+	
+	.science &{
+		border-bottom: 1px solid #ddd;
+	}
+	
 	h2 {
 		font-size: 46px;
 		line-height: 1.5;
@@ -268,6 +270,24 @@ padding-top: 40px;
 	p {
 		font-size: 32px;
 		line-height: 1.5;
+	}
+
+	h4 {
+		font-size: 48px;
+		font-weight: bold;
+		line-height: 1.1;
+		text-transform: uppercase;
+		margin-bottom: 0;
+		text-align: center;
+		
+	}
+	
+	h5 {
+		font-family: georgia;
+		font-size: 24px;
+		line-height: 1.5;
+		color: #555;
+		text-align: center;
 	}
 }
 
@@ -327,27 +347,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 }
 
 .science {
-	.extended-caption {
-		border-bottom: 1px solid #ddd;
 	
-		h4 {
-			font-size: 48px;
-			font-weight: bold;
-			line-height: 1.1;
-			text-transform: uppercase;
-			margin-bottom: 0;
-			text-align: center;
-			
-		}
-		
-		h5 {
-			font-family: georgia;
-			font-size: 24px;
-			line-height: 1.5;
-			color: #555;
-			text-align: center;
-		}
-	}
 }
 
 .caption {
