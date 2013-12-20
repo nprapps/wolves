@@ -359,15 +359,21 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 .side-by-side {
 	margin-top: 0;
 	margin-bottom: 100px;
-	color: #888;
+	
+	h5 {
+		color: #888;
+		.transition(color .5s ease);
+		font-size: 18px;
+		line-height: 1.9;
+		font-family: georgia;
+		margin-top: 20px;
+	}
+	&:hover {
+		h5 {color: #444;}
+	}
 }
 
-.side-by-side h5 {
-	font-size: 18px;
-	line-height: 1.9;
-	font-family: georgia;
-	margin-top: 20px;
-}
+
 
 .edge-to-edge {
 	position: relative;
@@ -412,7 +418,7 @@ background: url('@{img-root}/7.jpg') no-repeat center center;
 	&:hover {
 		.share-this {opacity: 1;}
 		p {opacity: 1;}
-	    }
+	}
 }
 
 .controls {
