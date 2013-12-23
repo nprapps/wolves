@@ -55,7 +55,7 @@ $(document).ready(function() {
             },
             swfPath: 'js/lib',
             supplied: 'oga, mp3',
-            volume: volume_narration;
+            volume: volume_narration
         });
 
         $ambient_player.jPlayer({
