@@ -17,8 +17,8 @@ $(document).ready(function() {
     var currently_playing = null;
     
     var volume_narration = 1;
-    var volume_ambient_active = .3;
-    var volume_ambient_inactive = .03;
+    var volume_ambient_active = .5;
+    var volume_ambient_inactive = .1;
 
 	/*if (Modernizr.audio) {
 	    audio_supported = true;
@@ -113,7 +113,7 @@ $(document).ready(function() {
                 if (currently_playing != i) {
                     // if not, play the cuepoint
                     $player.jPlayer('play', cuepoints[i].audio_cue);
-                    $ambient_player.jPlayer('volume', volume_ambient_inactive);
+                    fade_ambient('out');
                     currently_playing = i;
                 }
                 num_visible++;
@@ -122,7 +122,7 @@ $(document).ready(function() {
         if (num_visible == 0) {
             console.log('no cues are visible');
             $player.jPlayer('pause');
-            $ambient_player.jPlayer('volume', volume_ambient_active);
+            fade_ambient('in');
             currently_playing = null;
         }
     }
@@ -131,6 +131,17 @@ $(document).ready(function() {
     $(window).on('scroll', _.debounce(function() {
         on_scroll()
     }, 100));
+    
+    function fade_ambient(dir) {
+        var end_vol;
+        
+        if (dir == 'in') {
+            end_vol = volume_ambient_active;
+        } else {
+            end_vol = volume_ambient_inactive;
+        }
+        $ambient_player.find('audio').animate({volume: end_vol}, 1000);
+    }
     
 
     //titlecard smooth scroll
