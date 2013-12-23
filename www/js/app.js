@@ -3,6 +3,8 @@ $(document).ready(function() {
     var $titlecard = $('.titlecard')
     var $titlecard_wrapper = $('.titlecard-wrapper');
     var $w = $(window);
+    var $ambient_audio = $('#audio-ambient');
+    var $ambient_player = $('#pop-audio-ambient');
     var $audio = $('#audio');
     var $player = $('#pop-audio');
     var aspect_width = 16;
@@ -11,6 +13,8 @@ $(document).ready(function() {
     var window_height;
     var AUDIO_LENGTH = 60;
     var audio_supported = true;
+    var cuepoints = [];
+
 	/*if (Modernizr.audio) {
 	    audio_supported = true;
 	}*/
@@ -36,24 +40,47 @@ $(document).ready(function() {
         $player.jPlayer({
             ready: function () {
                 $(this).jPlayer('setMedia', {
-                	mp3: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.mp3',
                     oga: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.ogg',
-                    
+                	mp3: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.mp3'
                 }).jPlayer('pause');
             },
-            play: function() { // To avoid both jPlayers playing together.
-                $(this).jPlayer('pauseOthers');
-            },
+            play: function() { },
             ended: function (event) {
                 $(this).jPlayer('pause', AUDIO_LENGTH - 1);
             },
             swfPath: 'js/lib',
-            supplied: 'mp3, oga'
+            supplied: 'oga, mp3'
+        });
+
+        $ambient_player.jPlayer({
+            ready: function () {
+                $(this).jPlayer('setMedia', {
+                	mp3: 'http://apps.npr.org/tshirt/prototypes/media/falcon-hood.mp3'
+                }).jPlayer('play', 2);
+            },
+            cssSelectorAncestor: '#jp_container_2',
+            loop: true,
+            supplied: 'mp3',
+            volume: .2
         });
     }
     
-    //titlecard smooth scroll
+
+    // get cuepoints
+    $('.wide-image').each(function(k,v) {
+        var this_img = $('.wide-image:eq(' + k + ')');
+        var this_cue = { start: Math.ceil(this_img.offset().top),
+                         end: Math.ceil(this_img.offset().top) + Math.ceil(this_img.height()) };
+        cuepoints.push(this_cue);
+    });
     
+    function on_scroll() {
+        console.log($(window).scrollTop());
+    }
+    $(window).on('scroll', on_scroll);
+    
+
+    //titlecard smooth scroll
     $('.titlecard-wrapper').click(function() {
 		$.smoothScroll({
 			speed: 800,
