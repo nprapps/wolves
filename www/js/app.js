@@ -83,6 +83,7 @@ $(document).ready(function() {
             rect.bottom >= 0
         );
     }
+
     $('.wide-image').each(function(k,v) {
         var this_img = $('.wide-image:eq(' + k + ')');
         
