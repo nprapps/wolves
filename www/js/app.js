@@ -15,6 +15,10 @@ $(document).ready(function() {
     var audio_supported = true;
     var cuepoints = [];
     var currently_playing = null;
+    
+    var volume_narration = 1;
+    var volume_ambient_active = .3;
+    var volume_ambient_inactive = .03;
 
 	/*if (Modernizr.audio) {
 	    audio_supported = true;
@@ -50,7 +54,8 @@ $(document).ready(function() {
                 $(this).jPlayer('pause', AUDIO_LENGTH - 1);
             },
             swfPath: 'js/lib',
-            supplied: 'oga, mp3'
+            supplied: 'oga, mp3',
+            volume: volume_narration;
         });
 
         $ambient_player.jPlayer({
@@ -63,7 +68,7 @@ $(document).ready(function() {
             cssSelectorAncestor: '#jp_container_2',
             loop: true,
             supplied: 'mp3',
-            volume: .2
+            volume: volume_ambient_active
         });
     }
     
@@ -100,7 +105,7 @@ $(document).ready(function() {
                 console.log('cue' + i + ' is visible');
                 if (currently_playing != i) {
                     $player.jPlayer('play', cuepoints[i].audio_cue);
-                    $ambient_player.jPlayer('volume', .03);
+                    $ambient_player.jPlayer('volume', volume_ambient_inactive);
                     currently_playing = i;
                 }
                 num_visible++;
@@ -109,7 +114,7 @@ $(document).ready(function() {
         if (num_visible == 0) {
             console.log('no cues are visible');
             $player.jPlayer('pause');
-            $ambient_player.jPlayer('volume', .3);
+            $ambient_player.jPlayer('volume', volume_ambient_active);
             currently_playing = null;
         }
     }
