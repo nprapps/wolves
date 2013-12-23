@@ -73,23 +73,16 @@ $(document).ready(function() {
     }
     
 
-    // get cuepoints
-    function is_visible(el) {
-        // if any part of the image is visible onscreen, returns true
-        var rect = document.getElementById(el).getBoundingClientRect();
-        return (
-            rect.top >= -rect.height &&
-            rect.top <= rect.height &&
-            rect.bottom >= 0
-        );
-    }
+    // CUEPOINTS
 
+    // FOR DEMO PURPOSES: Make every *other* .wide-image a cuepoint and assign an
+    // arbitrary audio timing to each
     $('.wide-image').each(function(k,v) {
+        var num_cuepoints = cuepoints.length;
         var this_img = $('.wide-image:eq(' + k + ')');
         
         // only make every *other* wide image a cuepoint (for demo purposes)
         if (k%2 == 0) {
-            var num_cuepoints = cuepoints.length;
             this_img.attr('id', 'cue' + num_cuepoints);
             cuepoints.push( {
                 'id': num_cuepoints,
@@ -98,13 +91,27 @@ $(document).ready(function() {
         }
     });
     
+    // if any part of the image is visible onscreen, returns true
+    function is_visible(el) {
+        var rect = document.getElementById(el).getBoundingClientRect();
+        return (
+            rect.top >= -rect.height &&
+            rect.top <= rect.height &&
+            rect.bottom >= 0
+        );
+    }
+    
     function on_scroll() {
         var num_visible = 0;
         
+        // loop through all cuepoints
         for (i = 0; i < cuepoints.length; i++) {
+            // check if this cuepoint is visible
             if (is_visible('cue' + i)) {
                 console.log('cue' + i + ' is visible');
+                // check if this cuepoint's audio is already playing
                 if (currently_playing != i) {
+                    // if not, play the cuepoint
                     $player.jPlayer('play', cuepoints[i].audio_cue);
                     $ambient_player.jPlayer('volume', volume_ambient_inactive);
                     currently_playing = i;
@@ -119,6 +126,8 @@ $(document).ready(function() {
             currently_playing = null;
         }
     }
+
+    // call on_scroll only after the scroll has completed
     $(window).on('scroll', _.debounce(function() {
         on_scroll()
     }, 100));
