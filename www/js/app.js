@@ -14,6 +14,7 @@ $(document).ready(function() {
     var AUDIO_LENGTH = 60;
     var audio_supported = true;
     var cuepoints = [];
+    var currently_playing = null;
 
 	/*if (Modernizr.audio) {
 	    audio_supported = true;
@@ -57,6 +58,7 @@ $(document).ready(function() {
                 $(this).jPlayer('setMedia', {
                 	mp3: 'http://apps.npr.org/tshirt/prototypes/media/falcon-hood.mp3'
                 }).jPlayer('play', 2);
+//                }).jPlayer('pause');
             },
             cssSelectorAncestor: '#jp_container_2',
             loop: true,
@@ -67,17 +69,53 @@ $(document).ready(function() {
     
 
     // get cuepoints
+    function is_visible(el) {
+        // if any part of the image is visible onscreen, returns true
+        var rect = document.getElementById(el).getBoundingClientRect();
+        return (
+            rect.top >= -rect.height &&
+            rect.top <= rect.height &&
+            rect.bottom >= 0
+        );
+    }
     $('.wide-image').each(function(k,v) {
         var this_img = $('.wide-image:eq(' + k + ')');
-        var this_cue = { start: Math.ceil(this_img.offset().top),
-                         end: Math.ceil(this_img.offset().top) + Math.ceil(this_img.height()) };
-        cuepoints.push(this_cue);
+        
+        // only make every *other* wide image a cuepoint (for demo purposes)
+        if (k%2 == 0) {
+            var num_cuepoints = cuepoints.length;
+            this_img.attr('id', 'cue' + num_cuepoints);
+            cuepoints.push( {
+                'id': num_cuepoints,
+                'audio_cue': 20 * num_cuepoints
+            });
+        }
     });
     
     function on_scroll() {
-        console.log($(window).scrollTop());
+        var num_visible = 0;
+        
+        for (i = 0; i < cuepoints.length; i++) {
+            if (is_visible('cue' + i)) {
+                console.log('cue' + i + ' is visible');
+                if (currently_playing != i) {
+                    $player.jPlayer('play', cuepoints[i].audio_cue);
+                    $ambient_player.jPlayer('volume', .03);
+                    currently_playing = i;
+                }
+                num_visible++;
+            }
+        }
+        if (num_visible == 0) {
+            console.log('no cues are visible');
+            $player.jPlayer('pause');
+            $ambient_player.jPlayer('volume', .3);
+            currently_playing = null;
+        }
     }
-    $(window).on('scroll', on_scroll);
+    $(window).on('scroll', _.debounce(function() {
+        on_scroll()
+    }, 100));
     
 
     //titlecard smooth scroll
