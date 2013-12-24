@@ -15,9 +15,10 @@ $(document).ready(function() {
     var audio_supported = true;
     var currently_playing = null;
     
-    var volume_narration = 1;
     var volume_ambient_active = .3;
     var volume_ambient_inactive = .1;
+    var volume_narration_active = 1;
+    var volume_narration_inactive = 0;
     
     var cuepoints = [
         { 'id': 0, 'audio_cue': 0, 'audio_end': 10 },
@@ -64,7 +65,7 @@ $(document).ready(function() {
             swfPath: 'js/lib',
             supplied: 'oga, mp3',
             timeupdate: check_end_cues,
-            volume: volume_narration
+            volume: volume_narration_active
         });
 
         $ambient_player.jPlayer({
@@ -117,7 +118,7 @@ $(document).ready(function() {
                 // check if this cuepoint's audio is already playing
                 if (currently_playing != i) {
                     // if not, play the cuepoint
-                    $player.jPlayer('play', cuepoints[i].audio_cue);
+                    fade_narration('in', cuepoints[i].audio_cue);
                     fade_ambient('out');
                     currently_playing = i;
                 }
@@ -126,9 +127,11 @@ $(document).ready(function() {
         }
         if (num_visible == 0) {
             console.log('no cues are visible');
-            $player.jPlayer('pause');
-            fade_ambient('in');
-            currently_playing = null;
+            if (currently_playing != null) {
+                fade_ambient('in');
+                fade_narration('out');
+                currently_playing = null;
+            }
         }
     }
     
@@ -137,7 +140,8 @@ $(document).ready(function() {
         if (currently_playing &&
             e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
             e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
-            $(this).jPlayer('pause');
+            fade_narration('out');
+//            $(this).jPlayer('pause');
         }
     }
 
@@ -155,6 +159,22 @@ $(document).ready(function() {
             end_vol = volume_ambient_inactive;
         }
         $ambient_player.find('audio').animate({volume: end_vol}, 1000);
+    }
+    
+    function fade_narration(dir, cue) {
+        var end_vol;
+        
+        if (dir == 'in') {
+            end_vol = volume_narration_active;
+            $player.find('audio').animate({volume: end_vol}, 700, function() {
+                $player.jPlayer('play', cue);
+            });
+        } else {
+            end_vol = volume_narration_inactive;
+            $player.find('audio').animate({volume: end_vol}, 700, function() {
+                $player.jPlayer('pause');
+            });
+        }
     }
     
 
