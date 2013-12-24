@@ -134,11 +134,10 @@ $(document).ready(function() {
     
     // stop audio when the end cuepoint is reached
     function check_end_cues(e) {
-        for (i = 0; i < cuepoints.length; i++) {
-            if (e.jPlayer.status.currentTime >= cuepoints[i].audio_end &&
-                e.jPlayer.status.currentTime <= (cuepoints[i].audio_end + 5)) {
-                $(this).jPlayer('pause');
-            }
+        if (currently_playing &&
+            e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
+            e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
+            $(this).jPlayer('pause');
         }
     }
 
