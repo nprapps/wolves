@@ -13,12 +13,20 @@ $(document).ready(function() {
     var window_height;
     var AUDIO_LENGTH = 60;
     var audio_supported = true;
-    var cuepoints = [];
     var currently_playing = null;
     
     var volume_narration = 1;
     var volume_ambient_active = .3;
     var volume_ambient_inactive = .1;
+    
+    var cuepoints = [
+        { 'id': 0, 'audio_cue': 0, 'audio_end': 10 },
+        { 'id': 1, 'audio_cue': 20, 'audio_end': 30 },
+        { 'id': 2, 'audio_cue': 40, 'audio_end': 50 },
+        { 'id': 3, 'audio_cue': 60, 'audio_end': 70 },
+        { 'id': 4, 'audio_cue': 80, 'audio_end': 90 },
+        { 'id': 5, 'audio_cue': 100, 'audio_end': 110 }
+    ];
 
 	/*if (Modernizr.audio) {
 	    audio_supported = true;
@@ -55,6 +63,7 @@ $(document).ready(function() {
             },
             swfPath: 'js/lib',
             supplied: 'oga, mp3',
+            timeupdate: check_end_cues,
             volume: volume_narration
         });
 
@@ -77,17 +86,13 @@ $(document).ready(function() {
 
     // FOR DEMO PURPOSES: Make every *other* .wide-image a cuepoint and assign an
     // arbitrary audio timing to each
+    var counter = 0;
     $('.wide-image').each(function(k,v) {
-        var num_cuepoints = cuepoints.length;
         var this_img = $('.wide-image:eq(' + k + ')');
-        
         // only make every *other* wide image a cuepoint (for demo purposes)
         if (k%2 == 0) {
-            this_img.attr('id', 'cue' + num_cuepoints);
-            cuepoints.push( {
-                'id': num_cuepoints,
-                'audio_cue': 20 * num_cuepoints
-            });
+            this_img.attr('id', 'cue' + counter);
+            counter++;
         }
     });
     
@@ -124,6 +129,15 @@ $(document).ready(function() {
             $player.jPlayer('pause');
             fade_ambient('in');
             currently_playing = null;
+        }
+    }
+    
+    // stop audio when the end cuepoint is reached
+    function check_end_cues(e) {
+        if (currently_playing &&
+            e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
+            e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
+            $(this).jPlayer('pause');
         }
     }
 
