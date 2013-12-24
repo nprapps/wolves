@@ -17,7 +17,7 @@ $(document).ready(function() {
     var currently_playing = null;
     
     var volume_narration = 1;
-    var volume_ambient_active = .5;
+    var volume_ambient_active = .3;
     var volume_ambient_inactive = .1;
 
 	/*if (Modernizr.audio) {
@@ -61,7 +61,7 @@ $(document).ready(function() {
         $ambient_player.jPlayer({
             ready: function () {
                 $(this).jPlayer('setMedia', {
-                	mp3: 'http://apps.npr.org/tshirt/prototypes/media/falcon-hood.mp3'
+                	mp3: 'https://dl.dropboxusercontent.com/u/2639930/wind2.mp3'
                 }).jPlayer('play', 2);
 //                }).jPlayer('pause');
             },
