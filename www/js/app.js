@@ -20,12 +20,12 @@ $(document).ready(function() {
     var volume_ambient_inactive = .1;
     
     var cuepoints = [
-        { 'id': 0, 'audio_cue': 0, 'audio_end': 20 },
-        { 'id': 1, 'audio_cue': 30, 'audio_end': 50 },
-        { 'id': 2, 'audio_cue': 60, 'audio_end': 80 },
-        { 'id': 3, 'audio_cue': 90, 'audio_end': 100 },
-        { 'id': 4, 'audio_cue': 120, 'audio_end': 140 },
-        { 'id': 5, 'audio_cue': 150, 'audio_end': 170 }
+        { 'id': 0, 'audio_cue': 0, 'audio_end': 10 },
+        { 'id': 1, 'audio_cue': 20, 'audio_end': 30 },
+        { 'id': 2, 'audio_cue': 40, 'audio_end': 50 },
+        { 'id': 3, 'audio_cue': 60, 'audio_end': 70 },
+        { 'id': 4, 'audio_cue': 80, 'audio_end': 90 },
+        { 'id': 5, 'audio_cue': 100, 'audio_end': 110 }
     ];
 
 	/*if (Modernizr.audio) {
@@ -132,10 +132,13 @@ $(document).ready(function() {
         }
     }
     
-    function check_end_cues() {
-        console.log('check_end_cues!');
+    // stop audio when the end cuepoint is reached
+    function check_end_cues(e) {
         for (i = 0; i < cuepoints.length; i++) {
-            // TODO
+            if (e.jPlayer.status.currentTime >= cuepoints[i].audio_end &&
+                e.jPlayer.status.currentTime <= (cuepoints[i].audio_end + 5)) {
+                $(this).jPlayer('pause');
+            }
         }
     }
 
