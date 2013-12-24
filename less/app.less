@@ -78,6 +78,7 @@ margin-bottom: 33px;
 position: absolute;
 z-index: 100;
 top: 0;
+left: 0;
 background-color: #000;
 cursor: pointer;
 color: #fff;
@@ -124,12 +125,9 @@ color: #fff;
 	        }
 	        
 	        @media @screen-large {
-		        font-size: 90px;
+		        font-size: 80px;
 	        }
 	        
-	        @media @screen-mega-above {
-		        font-size: 100px;
-	        }
 	
 	    }
 	
@@ -171,10 +169,12 @@ color: #fff;
 	}
 	
 	.titlecard {
-		position: relative;
+		position: absolute;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: 100%;
-		background: url('@{img-root}/INTRO01x.jpg') no-repeat center center;
+		background: url('@{img-root}/INTRO01x.jpg') no-repeat top left;
 		/*background: url('img/walk-title.jpg') no-repeat center center fixed; */
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
@@ -435,7 +435,7 @@ color: #fff;
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	z-index: 12;
+	z-index: 1000;
 	cursor: pointer;
 	padding: 15px;
 	background-color:rgba(0,0,0,0.5);
