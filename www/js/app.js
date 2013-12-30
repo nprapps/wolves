@@ -45,7 +45,7 @@ $(document).ready(function() {
 	});
 	
 	$('.caption-trigger').click(function() {
-		$( this ).parent('div').toggleClass('cap-on');
+		$( this ).toggleClass('cap-on');
 	});
 	
 	//audio player

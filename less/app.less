@@ -331,28 +331,28 @@ color: #fff;
 			bottom: 0;
 			right: 0;
 			z-index: 3;
+			.transition(opacity 1s ease);
+			opacity: 0;
 			
 			h6 {
-				color: #fff;
+				color: #ddd;
 				background-color: #000;
-				opacity: 0;
-				.transition(opacity 1s ease);
-				font-size: 14px;
-				line-height: 1.6;
 				text-align: right;
 				margin: 0;
-				padding: 20px;
+				font-size: 11px;
+				line-height: 1.4;
+				padding: 15px 15px 30px 15px;
+				@media @screen-small-above { 
+					font-size: 14px;
+					line-height: 1.6;
+					padding: 20px;
+				}
+				
 			}
 		}
 		&:hover {
 				.share-this {opacity: 1;}
-				h6 {opacity: 1;}
-		}
-		
-		&.cap-on {
-			.wide-caption {
-				h6 {opacity: 1;}
-			}
+				//h6 {opacity: 1;}
 		}
 	}
 	//adjusting caption width to account for image padding within the bootstrap grid
@@ -366,24 +366,37 @@ color: #fff;
     }
     
     .caption-trigger {
-		position: absolute;
-		bottom: 0;
-		right: 20px;
-		text-transform: uppercase;
-		font-size: 10px;
-		font-weight: bold;
-		color: #fff;
-		cursor: pointer;
-		z-index: 10;
-		@media @screen-small-above { 
-				display: none;
+    	cursor: pointer;
+    	
+    	span {
+    		position: absolute;
+			bottom: 0;
+			right: 20px;
+			text-transform: uppercase;
+			font-size: 10px;
+			font-weight: bold;
+			color: #ddd;
+			
+			z-index: 10;
+			@media @screen-small-above { 
+					
+			}
+			i {
+				font-size: 11px;
+				color: #fff;
+			}
+    	}
+    	&.cap-on {
+			.wide-caption {
+				opacity: 1;
+			}
+			i {
+				.rotate(45deg);
+			}
 		}
 	}
 	
-	.caption-trigger i {
-		font-size: 11px;
-		color: #fff;
-	}
+	
     
     #audio-ambient {
 	}
