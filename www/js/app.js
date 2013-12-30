@@ -141,7 +141,7 @@ $(document).ready(function() {
             e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
             e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
             fade_narration('out');
-//            $(this).jPlayer('pause');
+            $(this).jPlayer('pause'); /*PAUSE ALL AUDIO */
         }
     }
 
