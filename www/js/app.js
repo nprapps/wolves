@@ -39,9 +39,13 @@ $(document).ready(function() {
 		});
 		$('body').toggleClass('focused');
 		if ($(this).find('p').text() == 'Show Captions')
-		$(this).find('p').text('Hide Captions')
+		$(this).find('p').text('Hide Captions');
 		else
 		$(this).find('p').text('Show Captions');
+	});
+	
+	$('.caption-trigger').click(function() {
+		$( this ).parent('div').toggleClass('cap-on');
 	});
 	
 	//audio player
