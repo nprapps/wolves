@@ -15,9 +15,9 @@ $(document).ready(function() {
     var audio_supported = true;
     var currently_playing = null;
     
-    var volume_ambient_active = .3;
-    var volume_ambient_inactive = .1;
-    var volume_narration_active = 1;
+    var volume_ambient_active = 0;
+    var volume_ambient_inactive = 0;
+    var volume_narration_active = 0;
     var volume_narration_inactive = 0;
     
     var cuepoints = [
