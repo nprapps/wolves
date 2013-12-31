@@ -72,10 +72,10 @@ a:hover, a:active {
 	-moz-animation-fill-mode:both;
 	-ms-animation-fill-mode:both;
 	-o-animation-fill-mode:both;
-	animation-fill-mode:both;-webkit-animation-duration:8s;-moz-animation-duration:8s;-ms-animation-duration:8s;-o-animation-duration:8s;animation-duration:8s;}
+	animation-fill-mode:both;-webkit-animation-duration:9s;-moz-animation-duration:9s;-ms-animation-duration:9s;-o-animation-duration:9s;animation-duration:9s;}
 
 .animated {
-	.animation-delay(1s);
+	//.animation-delay(1s);
 }
 
 //Titlecard
@@ -98,8 +98,15 @@ color: #fff;
 		top: 0;
 		left: 0;
 		width: 100%;
-		z-index: 2;
+		z-index: 3;
 		text-align: center;
+		
+		&.animated{
+	-webkit-animation-fill-mode:both;
+	-moz-animation-fill-mode:both;
+	-ms-animation-fill-mode:both;
+	-o-animation-fill-mode:both;
+	animation-fill-mode:both;-webkit-animation-duration:2s;-moz-animation-duration:2s;-ms-animation-duration:2s;-o-animation-duration:2s;animation-duration:2s;}
 		
 		.npr-logo {
 			width: 70px;
@@ -162,12 +169,31 @@ color: #fff;
 	
 	.titlecard-mask {
 		position: absolute;
+		z-index: 3;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #000;
+		&.animated{
+		-webkit-animation-fill-mode:both;
+		-moz-animation-fill-mode:both;
+		-ms-animation-fill-mode:both;
+		-o-animation-fill-mode:both;
+		animation-fill-mode:both;-webkit-animation-duration:4s;-moz-animation-duration:4s;-ms-animation-duration:4s;-o-animation-duration:4s;animation-duration:4s;}
+	}
+	
+	.titlecard-first {
+		position: absolute;
 		z-index: 2;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
 		background-color: #000;
+		background: url('@{img-root}/wolf-titlecard-people.jpg') no-repeat top left fixed;
+		.background-size(cover);
+		.animation-delay(2s);
 	}
 	
 	.titlecard {
@@ -176,7 +202,7 @@ color: #fff;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: url('@{img-root}/INTRO01x.jpg') no-repeat top left fixed;
+		background: url('@{img-root}/wolves/INTRO01x_1400.jpg') no-repeat top left fixed;
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
