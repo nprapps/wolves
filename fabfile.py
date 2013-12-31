@@ -479,7 +479,7 @@ def cut_photos():
 
             print 'Cutting photo: %s at %ix%i' % (name.replace('_', ' '), width, height)
             img = img.resize((width, height), Image.ANTIALIAS)
-            img.save(output_path, quality=90)
+            img.save(output_path, quality=100)
 
 
 """
