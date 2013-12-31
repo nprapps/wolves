@@ -15,10 +15,10 @@ $(document).ready(function() {
     var audio_supported = true;
     var currently_playing = null;
     
-    var volume_ambient_active = 0;
-    var volume_ambient_inactive = 0;
-    var volume_narration_active = 0;
-    var volume_narration_inactive = 0;
+    var volume_ambient_active = 0; //.3
+    var volume_ambient_inactive = 0; // .1
+    var volume_narration_active = 0; //1
+    var volume_narration_inactive = 0; //0
     
     var cuepoints = [
         { 'id': 0, 'audio_cue': 0, 'audio_end': 10 },
@@ -46,6 +46,14 @@ $(document).ready(function() {
 	
 	$('.caption-trigger').click(function() {
 		$( this ).toggleClass('cap-on');
+	});
+	
+	$('.pt').click(function() {
+		$( '.titlecard-first' ).toggleClass('fadeOut');
+		if ($(this).text() == 'Hide Wolf')
+		$(this).text('Show Wolf');
+		else
+		$(this).text('Hide Wolf');
 	});
 	
 	//audio player
@@ -89,13 +97,13 @@ $(document).ready(function() {
 
     // CUEPOINTS
 
-    // FOR DEMO PURPOSES: Make every *other* .wide-image a cuepoint and assign an
+    // FOR DEMO PURPOSES: Make every *other* .edge-to-edge a cuepoint and assign an
     // arbitrary audio timing to each
     var counter = 0;
-    $('.wide-image').each(function(k,v) {
-        var this_img = $('.wide-image:eq(' + k + ')');
+    $('.edge-to-edge').each(function(k,v) {
+        var this_img = $('.edge-to-edge:eq(' + k + ')');
         // only make every *other* wide image a cuepoint (for demo purposes)
-        if (k%2 == 0) {
+        if (k%1 == 0) {
             this_img.attr('id', 'cue' + counter);
             counter++;
         }
@@ -145,7 +153,7 @@ $(document).ready(function() {
             e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
             e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
             fade_narration('out');
-            $(this).jPlayer('pause'); /*PAUSE ALL AUDIO */
+            //$(this).jPlayer('pause'); 
         }
     }
 
@@ -183,7 +191,7 @@ $(document).ready(function() {
     
 
     //titlecard smooth scroll
-    $('.titlecard-wrapper').click(function() {
+    $('#title-text').click(function() {
 		$.smoothScroll({
 			speed: 800,
 			scrollTarget: '.intro'
