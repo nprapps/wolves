@@ -124,8 +124,7 @@ color: #fff;
 		
 		h1 {
 	        text-transform: uppercase;
-	        .text-shadow(5px 2px 2px rgba(0,0,0,0.7));
-	        .opacity(.7);
+	        .text-shadow(3px 2px 2px rgba(0,0,0,0.7));
 	        margin: 0 auto;
 	        line-height: 1.3;
 	        max-width: 600px;
@@ -248,18 +247,28 @@ color: #fff;
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	width: 44px;
-	height: 44px;
 	z-index: 1000;
-	cursor: pointer;
-	padding: 15px;
-	background-color:rgba(0,0,0,0.5);
-	color: #fff;
 	
 	ul {
 		list-style: none;
-		margin: 0; 
-	    padding: 0 0 0 2px;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.section-nav {
+		color: #777;
+		margin: 0 0 20px 15px;
+
+	}
+	
+	.toggle-ambi {
+		width: 44px;
+		height: 44px;
+		padding: 15px;
+		background-color:rgba(0,0,0,0.5);
+		color: #fff;
+		cursor: pointer;
+		li {padding: 0 0 0 2px;}
 	}
 	.ambient-off {display: none;}
 	
@@ -429,7 +438,7 @@ color: #fff;
 			h6 {
 				color: #ddd;
 				background-color: #000;
-				text-align: right;
+				text-align: left;
 				margin: 0;
 				font-size: 11px;
 				line-height: 1.4;
@@ -437,7 +446,7 @@ color: #fff;
 				@media @screen-small-above { 
 					font-size: 14px;
 					line-height: 1.6;
-					padding: 20px;
+					padding: 20px 100px 20px 20px;
 				}
 				
 			}
@@ -459,24 +468,46 @@ color: #fff;
     
     .caption-trigger {
     	cursor: pointer;
-    	
-    	span {
+  
+    	.caption-label {
     		position: absolute;
 			bottom: 0;
 			right: 20px;
+			margin: 0;
+			padding: 0;
+			line-height: 1;
 			text-transform: uppercase;
 			font-size: 10px;
 			font-weight: bold;
 			color: #ddd;
-			
 			z-index: 10;
-			@media @screen-small-above { 
-					
-			}
 			i {
 				font-size: 11px;
 				color: #fff;
 			}
+			
+			@media @screen-small-above { 
+				
+				bottom: 20px;
+				right: 30px;
+				
+				b {
+					position: absolute;
+					bottom: 6px;
+					right: 26px;
+					font-size: 11px;
+					.opacity(0);
+					.transition(opacity 3s ease);
+				}
+				
+				i {
+					font-size: 22px;
+					.opacity(.5);
+					.transition(opacity 3s ease);
+				}
+				
+			}
+			
     	}
     	&.cap-on {
 			.wide-caption {
@@ -484,6 +515,12 @@ color: #fff;
 			}
 			i {
 				.rotate(45deg);
+			}
+		}
+		
+		&:hover {
+			.caption-label b, .caption-label i {
+			 .opacity(1);
 			}
 		}
 	}
