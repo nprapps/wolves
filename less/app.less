@@ -90,13 +90,13 @@ z-index: 100;
 top: 0;
 left: 0;
 background-color: #000;
-cursor: pointer;
 color: #fff;
 
 	#title-text {
 		position: absolute;
 		top: 0;
 		left: 0;
+		padding-top: 50px;
 		width: 100%;
 		z-index: 3;
 		text-align: center;
@@ -112,37 +112,28 @@ color: #fff;
 			width: 70px;
 			margin: 10px 0;
 			@media @screen-small-above { 
-			    width: 100px;
-				margin: 50px 0 15px 0;
+			    width: 80px;
+				//margin: 50px 0 15px 0;
 			}
 			
 			@media @screen-medium-above { 
-				margin-top: 110px;
+				//margin-top: 110px;
 			}
 			
 			@media @screen-large { 
-				margin-top: 150px;
+				//margin-top: 150px;
 			}
 		}
 		
 		h1 {
 	        text-transform: uppercase;
-	        font-weight: bold;
-	        text-shadow: 0px 2px 2px rgba(0,0,0,0.5);
+	        .text-shadow(5px 2px 2px rgba(0,0,0,0.7));
 	        margin: 0 auto;
-	        line-height: 1;
+	        line-height: 1.3;
 	        max-width: 600px;
 	
 	        @media @screen-small-above {
 		        font-size: 70px;
-	        }
-	        
-	        @media @screen-medium-above {
-		        font-size: 80px;
-	        }
-	        
-	        @media @screen-large {
-		        font-size: 80px;
 	        }
 	        
 	
@@ -150,19 +141,26 @@ color: #fff;
 	
 	    h2 {
 	    	font-size: 16px;
-	        text-shadow: 0px 2px 2px rgba(0,0,0,0.5);
-	        max-width: 500px;
+	        .text-shadow(0 2px 2px rgba(0,0,0,0.9));
+	        max-width: 240px;
 	        margin: 5px auto;
-	        //font-family: georgia, serif;
+	        color: #ccc;
 	        
 	        @media @screen-small-above {
-	        	margin: 20px auto 44px auto;
-		        font-size: 24px;
-				line-height: 1.2;
-				margin-bottom: 33px;
+	        	margin: 20px auto 0 auto;
+				line-height: 1.5;
 	        }
 	    }
 		
+		.credit {
+			margin-bottom: 30px;
+			
+			li {
+				line-height: 1.3;
+				font-size: 12px;
+				color: #ccc;
+			}
+		}
 		
 		
 	}
@@ -180,7 +178,7 @@ color: #fff;
 		-moz-animation-fill-mode:both;
 		-ms-animation-fill-mode:both;
 		-o-animation-fill-mode:both;
-		animation-fill-mode:both;-webkit-animation-duration:4s;-moz-animation-duration:4s;-ms-animation-duration:4s;-o-animation-duration:4s;animation-duration:4s;}
+		animation-fill-mode:both;-webkit-animation-duration:10s;-moz-animation-duration:10s;-ms-animation-duration:10s;-o-animation-duration:10s;animation-duration:10s;}
 	}
 	
 	.titlecard-first {
@@ -209,22 +207,68 @@ color: #fff;
 		background-size: cover;
 		//.animation-delay(1s);
 	}
+	
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+	
+	li {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+	
+	.begin-bar {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		z-index: 12;
+		.opacity(.6);
+		cursor: pointer;
+		
+		&:hover {
+			.opacity(1);
+		}
+		
+		p {
+			font-size: 24px;
+			background-color: #000;
+			padding: 10px;
+			width: 100px;
+			margin: 0 auto;
+			text-align: center;
+		}	
+	}
 }
 
-.begin-bar {
+.controls {
 	position: fixed;
-	bottom: 10px;
-	left: 20px;
+	bottom: 0;
+	right: 0;
+	width: 44px;
+	height: 44px;
+	z-index: 1000;
+	cursor: pointer;
+	padding: 15px;
+	background-color:rgba(0,0,0,0.5);
 	color: #fff;
-	z-index: 12;
 	
-	p {
-		font-size: 14px;
-		background-color: #000;
-		padding: 40px;
-		margin-bottom: 10px;
-	}	
+	ul {
+		list-style: none;
+		margin: 0; 
+	    padding: 0 0 0 2px;
+	}
+	.ambient-off {display: none;}
+	
+	.ambi-mute {
+		.ambient-on {display: none;}
+		.ambient-off {display: block;}
+	}
 }
+
+
 
 #content {
 	position: relative;
@@ -548,49 +592,6 @@ color: #fff;
 			font-size: 15px;
 			font-weight: bold;
 		}
-	}
-	
-	
-
-// toggle captions
-
-.controls {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	z-index: 1000;
-	cursor: pointer;
-	padding: 15px;
-	background-color:rgba(0,0,0,0.5);
-	color: #fff;
-	display: none;
-}
-
-.toggle-captions {
-	
-	p {
-		
-		line-height: 1;
-		margin: 0;
-		padding: 0 0 0 11px;
-		font-size: 12px;
-		text-transform: uppercase;
-		font-weight: bold;
-		display: inline-block;
-		
-		i {
-			
-			display: inline-block;
-			font-size: 18px;
-			margin-right: 5px;
-		}
-	}
-	
-}
-
-.focused .toggle-captions p, .focused .toggle-captions i {
-	padding-left: 0;
-	color: #fff;
 	}
 
 

@@ -33,28 +33,30 @@ $(document).ready(function() {
 	    audio_supported = true;
 	}*/
 	
-    //toggle captions
-	$( '.toggle-captions' ).click(function() {
-		$( '.edge-caption' ).fadeToggle( 'slow', function() {
-		});
-		$('body').toggleClass('focused');
-		if ($(this).find('p').text() == 'Show Captions')
-		$(this).find('p').text('Hide Captions');
-		else
-		$(this).find('p').text('Show Captions');
+    //toggle ambi
+	$( '.toggle-ambi' ).click(function() {
+		$( this ).toggleClass( "ambi-mute" );
 	});
 	
+	//captions
 	$('.caption-trigger').click(function() {
 		$( this ).toggleClass('cap-on');
 	});
 	
+	
+	/*
 	$('.pt').click(function() {
 		$( '.titlecard-first' ).toggleClass('fadeOut');
 		if ($(this).text() == 'Hide Wolf')
 		$(this).text('Show Wolf');
 		else
 		$(this).text('Hide Wolf');
-	});
+		$('body').toggleClass('focused');
+		if ($(this).find('p').text() == 'Show Captions')
+		$(this).find('p').text('Hide Captions');
+		else
+		$(this).find('p').text('Show Captions');
+	});*/
 	
 	//audio player
 	//if (!audio_supported) { $audio.hide(); }
@@ -191,7 +193,7 @@ $(document).ready(function() {
     
 
     //titlecard smooth scroll
-    $('#title-text').click(function() {
+    $('.begin-bar').click(function() {
 		$.smoothScroll({
 			speed: 800,
 			scrollTarget: '.intro'
