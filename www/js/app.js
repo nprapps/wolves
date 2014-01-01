@@ -39,7 +39,7 @@ $(document).ready(function() {
 	});
 	
 	//captions
-	$('.caption-trigger').click(function() {
+	$('.captioned').click(function() {
 		$( this ).toggleClass('cap-on');
 	});
 	
