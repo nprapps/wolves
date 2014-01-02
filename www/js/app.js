@@ -22,6 +22,16 @@ var unveil_images = function() {
     $container.find('img').unveil(800);
 };
 
+var setup_images = function() {
+    window_width = $w.width();
+    if (window_width < 769 && Modernizr.touch === true) {
+        _.each($container.find('img'), function(img){
+            $(img).attr('data-src', $(img).attr('data-src').replace('_1500', '_750'));
+        });
+    }
+    unveil_images();
+};
+
 var on_resize = function() {
     var w;
     var h;
@@ -189,6 +199,8 @@ $(document).ready(function() {
       });
 
     $(window).on('resize', on_resize);
+
+    // Init.
     on_resize();
-    unveil_images();
+    setup_images();
 });
