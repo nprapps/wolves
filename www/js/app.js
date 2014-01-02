@@ -110,6 +110,10 @@ $(document).ready(function() {
         else
         $(this).find('p').text('Show Captions');
     });*/
+    
+    //scrollspy
+    
+    $('body').scrollspy({ target: '.controls' });
 
     //titlecard smooth scroll
     $('.begin-bar').click(function() {
