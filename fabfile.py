@@ -9,6 +9,7 @@ from jinja2 import Template
 
 import app
 import app_config
+import envoy
 from etc import github
 
 """
@@ -462,24 +463,23 @@ def cron_test():
 App-specific
 """
 def cut_photos():
-    from PIL import Image
-
+    """
+    Thin wrapper over ImageMagick.
+    """
     output_dir = 'www/img/wolves/'
-    widths = [(690, 388), (1400, 788)]
+    widths = [(750, 422, "25%"), (1500, 844, "50%")]
     local('rm -rf %s*.jpg' % output_dir)
 
-    for path in glob('unversioned/*.*'):
+    for path in glob('unversioned/*.jpg'):
         filename = os.path.split(path)[-1]
         name = os.path.splitext(filename)[0]
 
-        img = Image.open(path)
-
-        for width, height in widths:
+        for width, height, proportion in widths:
             output_path = os.path.join(output_dir, '%s_%i.jpg' % (name, width))
 
             print 'Cutting photo: %s at %ix%i' % (name.replace('_', ' '), width, height)
-            img = img.resize((width, height), Image.ANTIALIAS)
-            img.save(output_path, quality=90)
+            r = envoy.run('convert -resize %s %s %s' % (proportion, path, output_path))
+
 
 
 """
