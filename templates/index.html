@@ -23,7 +23,7 @@
 </script>
 {% endblock extra_head %}
 {% block content %}
-<div class="titlecard-wrapper">
+<div id="top" class="titlecard-wrapper">
     <div id="title-text" class="animated fadeIn">
         <div class="container">
             <div class="row">
@@ -49,12 +49,12 @@
 
 <div class="controls">
 	<ul class="section-nav nav">
-		<li><a href="#intro"><i class="fa fa-circle"></i></a></li>
-		<li><a href="#watchers"><i class="fa fa-circle-o"></i></a></li>
-		<li><a href="#hunters"><i class="fa fa-circle-o"></i></a></li>
-		<li><a href="#science"><i class="fa fa-circle-o"></i></a></li>
-		<li><a href="#compromisers"><i class="fa fa-circle-o"></i></a></li>
-		<li><a href="#listen"><i class="fa fa-headphones"></i></a></li>
+		<li class="top-nav"><a href="#top"><i class="fa fa-circle"></i></a></li>
+		<li class="watchers-nav"><a href="#watchers"><i class="fa fa-circle"></i></a></li>
+		<li class="hunters-nav"><a href="#hunters"><i class="fa fa-circle"></i></a></li>
+		<li class="science-nav"><a href="#science"><i class="fa fa-circle"></i></a></li>
+		<li class="compromisers-nav"><a href="#compromisers"><i class="fa fa-circle"></i></a></li>
+		<li class="listen-nav"><a href="#audio-story"><i class="fa fa-headphones"></i></a></li>
 	</ul>
 	<ul class="toggle-ambi">
 		<li class="ambient-on"><i class="fa fa-volume-up"></i></li>
@@ -64,7 +64,6 @@
 
 <section id="content">
 <div id="intro">
-    <div class="section-intro">
         <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 "> <!--col-md-offset-1 -->
@@ -73,7 +72,6 @@
                     </div><!--/col-->
                 </div><!--/row-->
         </div><!--/container-->
-    </div><!--/section-intro-->
 
     <div class="container">
             <div class="row">
@@ -258,16 +256,15 @@
             </div><!--/col-->
         </div><!--/row-->
     </div><!--/container-->
+</div><!--/hunters-->
 
-    <div class="edge-to-edge captioned">
+<div id="science">
+	<div class="edge-to-edge captioned">
         <img src="img/transparent_1500.png" data-src="img/wolves/KICKER03x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
         <div class="caption-text"><h6>TK</h6></div>
         <p class="caption-label"><b>Caption</b> <i class="fa fa-plus-circle"></i></p>
     </div>
-
-</div><!--/hunters-->
-
-<div id="science">
+    
     <div class="section-intro">
         <div class="container">
                 <div class="row">

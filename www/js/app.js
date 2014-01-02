@@ -125,11 +125,60 @@ $(document).ready(function() {
 
     $('body').scrollspy({ target: '.controls' });
 
-    //titlecard smooth scroll
+    //smooth scroll events
     $('.begin-bar').click(function() {
         $.smoothScroll({
             speed: 800,
-            scrollTarget: '.intro'
+            scrollTarget: '#intro'
+        });
+        return false;
+    });
+    
+    $('.top-nav').click(function() {
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#top'
+        });
+        return false;
+    });
+    
+    $('.watchers-nav').click(function(event) {
+    	event.preventDefault();
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#watchers'
+        });
+        return false;
+    });
+    
+    $('.hunters-nav').click(function() {
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#hunters'
+        });
+        return false;
+    });
+    
+    $('.science-nav').click(function() {
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#science'
+        });
+        return false;
+    });
+    
+    $('.compromisers-nav').click(function() {
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#compromisers'
+        });
+        return false;
+    });
+    
+    $('.listen-nav').click(function() {
+        $.smoothScroll({
+            speed: 800,
+            scrollTarget: '#audio-story'
         });
         return false;
     });
