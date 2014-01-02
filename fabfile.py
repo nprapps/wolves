@@ -478,7 +478,7 @@ def cut_photos():
             output_path = os.path.join(output_dir, '%s_%i.jpg' % (name, width))
 
             print 'Cutting photo: %s at %ix%i' % (name.replace('_', ' '), width, height)
-            r = envoy.run('convert -resize %s %s %s' % (proportion, path, output_path))
+            envoy.run('convert -resize %s %s %s' % (proportion, path, output_path))
 
 
 """
