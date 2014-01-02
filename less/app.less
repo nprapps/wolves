@@ -396,18 +396,20 @@ color: #fff;
 	.side-by-side {
 		margin-top: 0;
 		
-		h5 {
-			
-			.transition(color .5s ease);
-			@media @screen-small-above { 
-				color: #888;
-				font-size: 15px;
-				margin-top: 20px;
-				line-height: 2;
+		div:first-child {
+			margin-bottom: 10px;
+		}
+		
+		@media @screen-small-above { 
+			div:first-child {
+			  margin-bottom: 30px;
 			}
 		}
-		&:hover {
-			h5 {color: #333;}
+		
+		@media @screen-medium-above { 
+			div:first-child {
+			  margin-bottom: 0;
+			}
 		}
 	}
 	
