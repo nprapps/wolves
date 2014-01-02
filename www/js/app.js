@@ -19,7 +19,7 @@ var volume_narration_active;
 var volume_narration_inactive;
 
 var unveil_images = function() {
-    $container.find('img').unveil($w.height() * 2);
+    $container.find('img').unveil($w.height() * 3);
 };
 
 var setup_images = function() {
@@ -133,7 +133,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.top-nav').click(function() {
         $.smoothScroll({
             speed: 800,
@@ -141,7 +141,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.watchers-nav').click(function(event) {
     	event.preventDefault();
         $.smoothScroll({
@@ -150,7 +150,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.hunters-nav').click(function() {
         $.smoothScroll({
             speed: 800,
@@ -158,7 +158,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.science-nav').click(function() {
         $.smoothScroll({
             speed: 800,
@@ -166,7 +166,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.compromisers-nav').click(function() {
         $.smoothScroll({
             speed: 800,
@@ -174,7 +174,7 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('.listen-nav').click(function() {
         $.smoothScroll({
             speed: 800,
