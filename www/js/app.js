@@ -19,7 +19,7 @@ var volume_narration_active;
 var volume_narration_inactive;
 
 var unveil_images = function() {
-    $container.find('img').unveil(800);
+    $container.find('img').unveil($w.height() * 2);
 };
 
 var setup_images = function() {
@@ -120,9 +120,9 @@ $(document).ready(function() {
         else
         $(this).find('p').text('Show Captions');
     });*/
-    
+
     //scrollspy
-    
+
     $('body').scrollspy({ target: '.controls' });
 
     //titlecard smooth scroll
