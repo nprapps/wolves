@@ -7,8 +7,8 @@
         $player.jPlayer({
             ready: function () {
                 $(this).jPlayer('setMedia', {
-                    oga: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.ogg',
-                	mp3: 'http://download.npr.org/anon.npr-mp3/npr/specials/2012/09/20120913_specials_cushman.mp3'
+                    mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                	oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
                 }).jPlayer('pause');
             },
             play: function() { },
@@ -16,7 +16,7 @@
                 $(this).jPlayer('pause', AUDIO_LENGTH - 1);
             },
             swfPath: 'js/lib',
-            supplied: 'oga, mp3',
+            supplied: 'mp3, oga',
             timeupdate: check_end_cues,
             volume: volume_narration_active
         });
@@ -24,13 +24,14 @@
         $ambient_player.jPlayer({
             ready: function () {
                 $(this).jPlayer('setMedia', {
-                	mp3: 'https://dl.dropboxusercontent.com/u/2639930/wind2.mp3'
+                	mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                	oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
                 }).jPlayer('play', 2);
 //                }).jPlayer('pause');
             },
             cssSelectorAncestor: '#jp_container_2',
             loop: true,
-            supplied: 'mp3',
+            supplied: 'mp3, oga',
             volume: volume_ambient_active
         });
     }
