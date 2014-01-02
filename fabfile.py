@@ -481,7 +481,6 @@ def cut_photos():
             r = envoy.run('convert -resize %s %s %s' % (proportion, path, output_path))
 
 
-
 """
 Destruction
 
