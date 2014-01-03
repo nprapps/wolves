@@ -127,7 +127,7 @@ color: #fff;
 	    }
 
 	    h2 {
-	    	font-size: 16px;
+	    	font-size: 17px;
 	        .text-shadow(0 2px 2px rgba(0,0,0,0.9));
 	        max-width: 240px;
 	        margin: 5px auto;
@@ -245,6 +245,18 @@ color: #fff;
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
+	
+	.touch & {
+		top: 0;
+		right: 0;
+		bottom: auto;
+		@media @screen-small-above {
+			top: auto;
+			bottom: 20px;
+			right: 20px;
+		}	
+	}
+	
 	z-index: 500;
 
 	ul {
@@ -255,6 +267,13 @@ color: #fff;
 
 	.section-nav {
 		margin: 0 0 15px 15px;
+		
+		.touch & {
+			display: none;
+			@media @screen-small-above {
+				display: block;
+			}	
+		}
 		
 		li {
 			font-size: 15px;
