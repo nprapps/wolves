@@ -127,7 +127,7 @@ color: #fff;
 	    }
 
 	    h2 {
-	    	font-size: 16px;
+	    	font-size: 17px;
 	        .text-shadow(0 2px 2px rgba(0,0,0,0.9));
 	        max-width: 240px;
 	        margin: 5px auto;
@@ -189,6 +189,11 @@ color: #fff;
 		height: 100%;
 		background: url('@{img-root}/wolves/INTRO01x_1500.jpg') no-repeat top left fixed;
 		.background-size(cover);
+		.opacity(.6);
+		
+		@media @screen-medium-above {
+			.opacity(1);
+		}
 
 		.touch & {
 			background: url('@{img-root}/wolves/INTRO01x_1500.jpg') no-repeat top left;
@@ -240,7 +245,19 @@ color: #fff;
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	z-index: 1000;
+	
+	.touch & {
+		top: 0;
+		right: 0;
+		bottom: auto;
+		@media @screen-small-above {
+			top: auto;
+			bottom: 20px;
+			right: 20px;
+		}	
+	}
+	
+	z-index: 500;
 
 	ul {
 		list-style: none;
@@ -250,6 +267,13 @@ color: #fff;
 
 	.section-nav {
 		margin: 0 0 15px 15px;
+		
+		.touch & {
+			display: none;
+			@media @screen-small-above {
+				display: block;
+			}	
+		}
 		
 		li {
 			font-size: 15px;
@@ -407,6 +431,11 @@ color: #fff;
 
 	.edge-to-edge {
 		margin-top: 60px;
+		img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
 	}
 
 	.kicker {
@@ -428,7 +457,7 @@ color: #fff;
 			position: absolute;
 			bottom: 0;
 			right: 0;
-			z-index: 3;
+			z-index: 1000;
 			.transition(opacity 1s ease);
 			opacity: 0;
 
@@ -458,7 +487,7 @@ color: #fff;
 			text-transform: uppercase;
 			font-weight: bold;
 			color: #ddd;
-			z-index: 10;
+			z-index: 1000;
 
 			b {
 				font-size: 10px;
@@ -536,14 +565,13 @@ color: #fff;
     }
 
 
-    #audio-ambient {
-	}
+    #audio-ambient {}
 
 	#audio-story {
 		background-color: #333;
 		color: #ddd;
 		position: relative;
-		z-index: 20;
+		z-index: 1000;
 
 		h3 {
 
@@ -647,9 +675,8 @@ color: #fff;
 footer {
 	padding: 0 15px 10px 15px;
 	font-size: 10px;
-	border-top: 2px solid #e0e0e0;
 	position: relative;
-	z-index: 20;
+	z-index: 1000;
 	background-color: #fff;
 	min-height: 70px;
 
@@ -713,36 +740,96 @@ footer {
 	}
 }
 
+/* Fluidbox styling starts here */
+a[data-fluidbox] {
+  background-color: #eee;
+  border: none;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  margin-bottom: 1.5rem;
+}
+a[data-fluidbox].fluidbox-opened {
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+}
+a[data-fluidbox] img {
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  max-width: 100%;
+  transition: all .25s ease-in-out;
+}
+
+a[class^='float'] {
+  margin: 1rem;
+  margin-top: 0;
+  width: 33.33333%;
+}
+a[class^='float'].float-left {
+  float: left;
+  margin-left: 0;
+}
+a[class^='float'].float-right {
+  float: right;
+  margin-right: 0;
+}
+
+#fluidbox-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 500;
+}
+
+.fluidbox-wrap {
+  background-position: center center;
+  .background-size(cover);
+  margin: 0 auto;
+  position: relative;
+  z-index: 400;
+  .transition(all .25s ease-in-out);
+}
+.fluidbox-opened .fluidbox-wrap {
+  z-index: 600;
+}
+
+.fluidbox-ghost {
+  .background-size(cover);
+  background-position: center center;
+  position: absolute;
+  .transition(all .25s ease-in-out);
+}
+
 // Media queries
 @media (max-width: 979px) {
-	nav .site-links-2 { display: none; }
 	footer {
 		.primary { float: none; }
 		.secondary ul, .secondary p { margin-left: 0; float: left; }
 	}
 }
 @media (max-width: 767px) {
-	nav, header, footer { margin-left: -20px; margin-right: -20px; }
-	nav .site-links { margin-left: 20px; }
 	footer {
 		.primary { display: none; }
 		.secondary p { float: left; font-size: 10px; color: #bccae5; }
 		.secondary ul { float: right; }
-		.secondary li { font-size: 10px; text-transform: none; }
-		.secondary a { color: #bccae5; }
+		.secondary li { 
+			font-size: 10px; 
+			text-transform: none; 
+			margin-left: 3px;
+			
+		}
+		.secondary a { 
+			color: #bccae5; 
+			border-right: 1px solid #eee;
+			padding-right: 2px;
+			}
 	}
 }
-@media (max-width: 480px) {
-	section.the-goods { margin-top: 33px; }
-	h1 { font-size: 26px; }
-	#story-meta p { font-size: 11px; }
-	nav .site-links {
-		li { display: none; }
-		.npr { display: block; }
-	}
-	header {
-		padding: 33px 20px;
-		h1 { font-size: 36px; }
-	}
-	footer { border-top: 1px solid #CCC; margin-top: 24px; }
-}
+
