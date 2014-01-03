@@ -102,8 +102,8 @@ $(document).ready(function() {
     });
 
     //captions
-    $('.captioned').click(function() {
-        $( this ).toggleClass('cap-on');
+    $('.caption-label').click(function() {
+        $( this ).parent( ".captioned" ).toggleClass('cap-on');
     });
 
 

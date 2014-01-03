@@ -433,7 +433,7 @@ color: #fff;
 			position: absolute;
 			bottom: 0;
 			right: 0;
-			z-index: 3;
+			z-index: 1000;
 			.transition(opacity 1s ease);
 			opacity: 0;
 
@@ -463,7 +463,7 @@ color: #fff;
 			text-transform: uppercase;
 			font-weight: bold;
 			color: #ddd;
-			z-index: 10;
+			z-index: 1000;
 
 			b {
 				font-size: 10px;
@@ -767,38 +767,21 @@ a[class^='float'].float-right {
 
 .fluidbox-wrap {
   background-position: center center;
-  background-size: cover;
+  .background-size(cover);
   margin: 0 auto;
   position: relative;
   z-index: 400;
-  transition: all .25s ease-in-out;
+  .transition(all .25s ease-in-out);
 }
 .fluidbox-opened .fluidbox-wrap {
   z-index: 600;
 }
 
 .fluidbox-ghost {
-  background-size: cover;
+  .background-size(cover);
   background-position: center center;
   position: absolute;
-  transition: all .25s ease-in-out;
-}
-
-.gallery {
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  /* Fix for iOS */
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-.gallery a {
-  margin-bottom: 1rem;
-}
-.gallery a.col-2 {
-  width: 49%;
-}
-.gallery a.col-3 {
-  width: 32%;
+  .transition(all .25s ease-in-out);
 }
 
 // Media queries
