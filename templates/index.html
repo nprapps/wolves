@@ -76,7 +76,9 @@
     <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/INTRO03x_1500.jpg" alt="" class="img-responsive">
+                	<a href="img/wolves/INTRO03x_1500.jpg" data-fluidbox>
+                    	<img src="img/transparent_1500.png" data-src="img/wolves/INTRO03x_1500.jpg" alt="" class="img-responsive">
+                	</a>
                 </div><!--/col-->
             </div><!--/row-->
             <div class="row">
@@ -496,4 +498,5 @@
 {% block extra_foot_js %}
     {{ JS.push('js/lib/jquery.smooth-scroll.min.js') }}
     {{ JS.push('js/lib/jquery.jplayer.js') }}
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js'></script>
 {% endblock %}

@@ -717,6 +717,90 @@ footer {
 	}
 }
 
+/* Fluidbox styling starts here */
+a[data-fluidbox] {
+  background-color: #eee;
+  border: none;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  margin-bottom: 1.5rem;
+}
+a[data-fluidbox].fluidbox-opened {
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+}
+a[data-fluidbox] img {
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  max-width: 100%;
+  transition: all .25s ease-in-out;
+}
+
+a[class^='float'] {
+  margin: 1rem;
+  margin-top: 0;
+  width: 33.33333%;
+}
+a[class^='float'].float-left {
+  float: left;
+  margin-left: 0;
+}
+a[class^='float'].float-right {
+  float: right;
+  margin-right: 0;
+}
+
+#fluidbox-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  cursor: -webkit-zoom-out;
+  cursor: -moz-zoom-out;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 500;
+}
+
+.fluidbox-wrap {
+  background-position: center center;
+  background-size: cover;
+  margin: 0 auto;
+  position: relative;
+  z-index: 400;
+  transition: all .25s ease-in-out;
+}
+.fluidbox-opened .fluidbox-wrap {
+  z-index: 600;
+}
+
+.fluidbox-ghost {
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  transition: all .25s ease-in-out;
+}
+
+.gallery {
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  /* Fix for iOS */
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+.gallery a {
+  margin-bottom: 1rem;
+}
+.gallery a.col-2 {
+  width: 49%;
+}
+.gallery a.col-3 {
+  width: 32%;
+}
+
 // Media queries
 @media (max-width: 979px) {
 	nav .site-links-2 { display: none; }
