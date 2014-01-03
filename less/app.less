@@ -189,6 +189,11 @@ color: #fff;
 		height: 100%;
 		background: url('@{img-root}/wolves/INTRO01x_1500.jpg') no-repeat top left fixed;
 		.background-size(cover);
+		.opacity(.6);
+		
+		@media @screen-medium-above {
+			.opacity(1);
+		}
 
 		.touch & {
 			background: url('@{img-root}/wolves/INTRO01x_1500.jpg') no-repeat top left;
@@ -240,7 +245,7 @@ color: #fff;
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	z-index: 1000;
+	z-index: 500;
 
 	ul {
 		list-style: none;
@@ -547,7 +552,7 @@ color: #fff;
 		background-color: #333;
 		color: #ddd;
 		position: relative;
-		z-index: 20;
+		z-index: 1000;
 
 		h3 {
 
@@ -651,9 +656,8 @@ color: #fff;
 footer {
 	padding: 0 15px 10px 15px;
 	font-size: 10px;
-	border-top: 2px solid #e0e0e0;
 	position: relative;
-	z-index: 20;
+	z-index: 1000;
 	background-color: #fff;
 	min-height: 70px;
 
@@ -786,34 +790,27 @@ a[class^='float'].float-right {
 
 // Media queries
 @media (max-width: 979px) {
-	nav .site-links-2 { display: none; }
 	footer {
 		.primary { float: none; }
 		.secondary ul, .secondary p { margin-left: 0; float: left; }
 	}
 }
 @media (max-width: 767px) {
-	nav, header, footer { margin-left: -20px; margin-right: -20px; }
-	nav .site-links { margin-left: 20px; }
 	footer {
 		.primary { display: none; }
 		.secondary p { float: left; font-size: 10px; color: #bccae5; }
 		.secondary ul { float: right; }
-		.secondary li { font-size: 10px; text-transform: none; }
-		.secondary a { color: #bccae5; }
+		.secondary li { 
+			font-size: 10px; 
+			text-transform: none; 
+			margin-left: 3px;
+			
+		}
+		.secondary a { 
+			color: #bccae5; 
+			border-right: 1px solid #eee;
+			padding-right: 2px;
+			}
 	}
 }
-@media (max-width: 480px) {
-	section.the-goods { margin-top: 33px; }
-	h1 { font-size: 26px; }
-	#story-meta p { font-size: 11px; }
-	nav .site-links {
-		li { display: none; }
-		.npr { display: block; }
-	}
-	header {
-		padding: 33px 20px;
-		h1 { font-size: 36px; }
-	}
-	footer { border-top: 1px solid #CCC; margin-top: 24px; }
-}
+
