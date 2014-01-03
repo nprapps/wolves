@@ -27,16 +27,6 @@
         };
     </script>
 
-    <!-- JS -->
-    {{ JS.push('js/app_config.js') }}
-    {{ JS.push('js/copy.js') }}
-    {{ JS.push('js/console.js') }}
-    {{ JS.push('js/lib/jquery-1.8.3.js') }}
-    {{ JS.push('js/lib/html5.js') }}
-    {{ JS.push('js/lib/modernizr.custom.76634.js') }}
-    {% block extra_head_js %}{% endblock extra_head_js %}
-    {{ JS.render('js/app-header.min.js') }}
-
     {# Twitter #}
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@nprapps">
@@ -89,14 +79,37 @@
 
     {% endblock outer_content %}
 
+    {{ JS.push('js/app_config.js') }}
+    {{ JS.push('js/copy.js') }}
+    {{ JS.push('js/console.js') }}
+    {{ JS.push('js/lib/jquery-1.8.3.js') }}
+    {{ JS.push('js/lib/html5.js') }}
+    {{ JS.push('js/lib/modernizr.custom.76634.js') }}
     {{ JS.push('js/lib/underscore.js') }}
     {{ JS.push('js/lib/moment.js') }}
     {{ JS.push('js/lib/bootstrap.js') }}
     {{ JS.push('js/lib/jquery.unveil.js') }}
+    {{ JS.push('js/lib/webfont.js') }}
+    {{ JS.push('js/lib/jquery.fluidbox.js') }}
+    {{ JS.push('js/lib/imagesloaded.js') }}
     {% block extra_foot_js %}{% endblock extra_foot_js %}
     {{ JS.push('js/templates.js') }}
     {{ JS.push('js/app.js') }}
     {{ JS.render('js/app-footer.min.js') }}
+
+    <script>
+        WebFont.load({
+             custom: {
+                 families: [
+                     'Gotham SSm:n4,n7'
+                 ],
+                 urls: [
+                     'http://s.npr.org/templates/css/fonts/GothamSSm.css'
+                 ]
+             },
+             timeout: 10000
+         });
+    </script>
 
     {% block extra_foot %}
     {% endblock extra_foot %}
