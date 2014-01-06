@@ -7,6 +7,7 @@ var $ambient_player;
 var $audio;
 var $player;
 var $waypoints;
+var $nav;
 var aspect_width;
 var aspect_height;
 var window_width;
@@ -22,10 +23,18 @@ var volume_narration_active;
 var volume_narration_inactive;
 
 var unveil_images = function() {
+    /*
+    * Loads images using jQuery unveil.
+    * Current depth: 3x the window height.
+    */
     $container.find('img').unveil($w.height() * 3);
 };
 
-var setup_images = function() {
+var sub_responsive_images = function() {
+    /*
+    * Replaces large images with small ones for tiny devices.
+    * Contains a test for non-tablet devices.
+    */
     window_width = $w.width();
     if (window_width < 769 && Modernizr.touch === true) {
         _.each($container.find('img'), function(img){
@@ -36,6 +45,9 @@ var setup_images = function() {
 };
 
 var on_resize = function() {
+    /*
+    * Handles resizing our full-width images.
+    */
     var w;
     var h;
     var w_optimal;
@@ -70,24 +82,42 @@ var on_resize = function() {
     $container.css('marginTop', window_height + 'px');
 };
 
-// stop audio when the end cuepoint is reached
-function check_end_cues(e) {
+var check_cues = function(e) {
+    /*
+    * Handles actions based on the cue.
+    * Example: Stops player when end cue is reached.
+    */
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
         $ambient_player.jPlayer("stop");
         currently_playing = false;
     }
-}
+};
 
-function fade_ambient(dir) {
-    var end_vol;
+var play_audio = function(times) {
+    /*
+    * Plays audio.
+    * Requires start and end cue points as a string, times, in this format:
+    * "<starting cue point in seconds>, <ending cue point in seconds>"
+    * Fades out existing audio clip if one is currently playing.
+    */
+    ambient_start = parseInt(times.split(',')[0], 0);
+    ambient_end = parseInt(times.split(',')[1], 0);
 
-    if (dir == 'in') {
-        end_vol = volume_ambient_active;
-    } else {
-        end_vol = volume_ambient_inactive;
+    var init = function() {
+        $ambient_player.jPlayer("play", ambient_start);
+        currently_playing = ambient_start;
+    };
+
+    if (currently_playing !== ambient_start) {
+        if (currently_playing !== false) {
+            $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
+                init();
+            });
+        } else {
+            init();
+        }
     }
-    $ambient_player.find('audio').animate({volume: end_vol}, 1000);
-}
+};
 
 $(document).ready(function() {
     $container = $('#content');
@@ -98,6 +128,9 @@ $(document).ready(function() {
     $ambient_player = $('#pop-audio-ambient');
     $audio = $('#audio');
     $player = $('#pop-audio');
+    $nav = $('.nav a');
+    $waypoints = $('.waypoint');
+
     aspect_width = 16;
     aspect_height = 9;
     AUDIO_LENGTH = 60;
@@ -122,7 +155,7 @@ $(document).ready(function() {
         },
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
-        timeupdate: check_end_cues,
+        timeupdate: check_cues,
         volume: volume_narration_active
     });
 
@@ -137,23 +170,13 @@ $(document).ready(function() {
         cssSelectorAncestor: '#jp_container_2',
         loop: true,
         supplied: 'mp3, oga',
-        timeupdate: check_end_cues,
+        timeupdate: check_cues,
         volume: volume_ambient_active
     });
 
-    $waypoints = $('.waypoint');
-
     // waypoints
     $waypoints.waypoint(function(direction){
-        var times = $(this).attr('data-waypoint');
-        ambient_start = parseInt(times.split(',')[0], 0);
-        ambient_end = parseInt(times.split(',')[1], 0);
-
-        if (direction === 'down' && currently_playing !== ambient_start) {
-            $ambient_player.jPlayer("play", ambient_start);
-            currently_playing = ambient_start;
-        }
-
+        play_audio($(this).attr('data-waypoint'));
     });
 
     //toggle ambi
@@ -165,21 +188,6 @@ $(document).ready(function() {
     $('.caption-label').click(function() {
         $( this ).parent( ".captioned" ).toggleClass('cap-on');
     });
-
-
-    /*
-    $('.pt').click(function() {
-        $( '.titlecard-first' ).toggleClass('fadeOut');
-        if ($(this).text() == 'Hide Wolf')
-        $(this).text('Show Wolf');
-        else
-        $(this).text('Hide Wolf');
-        $('body').toggleClass('focused');
-        if ($(this).find('p').text() == 'Show Captions')
-        $(this).find('p').text('Hide Captions');
-        else
-        $(this).find('p').text('Show Captions');
-    });*/
 
     //scrollspy
     $('body').scrollspy({ target: '.controls' });
@@ -193,209 +201,14 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.top-nav').click(function() {
+    $nav.on('click', function(){
+        var anchor = $(this).attr('href');
         $.smoothScroll({
             speed: 800,
-            scrollTarget: '#top'
+            scrollTarget: anchor
         });
         return false;
     });
-
-    $('.watchers-nav').click(function(event) {
-        event.preventDefault();
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#watchers'
-        });
-        return false;
-    });
-
-    $('.hunters-nav').click(function() {
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#hunters'
-        });
-        return false;
-    });
-
-    $('.science-nav').click(function() {
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#science'
-        });
-        return false;
-    });
-
-    $('.compromisers-nav').click(function() {
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#compromisers'
-        });
-        return false;
-    });
-
-    $('.listen-nav').click(function() {
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#audio-story'
-        });
-        return false;
-    });
-
-    //fluidbox
-
-    // Global variables
-      var $fb = $('a[data-fluidbox]'),
-          vpRatio;
-
-      // Add class
-      $fb.addClass('fluidbox');
-
-      // Create fluidbox modal background
-      $('body').append('<div id="fluidbox-overlay" />');
-
-      // The following events will force FB to close
-      var closeFb = function (){
-            $('a[data-fluidbox].fluidbox-opened').trigger('click');
-          },
-          positionFb = function ($activeFb){
-            // Get elements
-            var $img = $activeFb.find('img'),
-                $ghost = $activeFb.find('.fluidbox-ghost');
-
-            // Calculate offset and scale
-            var offsetY = $(window).scrollTop()-$img.offset().top+0.5*($img.data('imgHeight')*($img.data('imgScale')-1))+0.5*($(window).height()-$img.data('imgHeight')*$img.data('imgScale')),
-                offsetX = 0.5*($img.data('imgWidth')*($img.data('imgScale')-1))+0.5*($(window).width()-$img.data('imgWidth')*$img.data('imgScale'))-$img.offset().left,
-                scale = $img.data('imgScale');
-
-            // Animate ghost element
-            $ghost.css({
-              'transform': 'translate('+offsetX+'px,'+offsetY+'px) scale('+scale+')'
-            });
-          };
-
-      // Close Fluidbox when overlay is closed
-      $('#fluidbox-overlay').click(closeFb);
-
-      // Check if images are loaded first
-      $fb.imagesLoaded().done(function (){
-
-        // Create dynamic elements
-        $fb
-        .wrapInner('<div class="fluidbox-wrap" />')
-        .find('img')
-          .css({ opacity: 1 })
-          .after('<div class="fluidbox-ghost" />');
-
-        // Listen to resize event for calculations
-        $(window).resize(function (){
-
-          // Get viewport ratio
-          vpRatio = $(window).width() / $(window).height();
-
-          // Get dimensions and aspect ratios
-          $fb.each(function (){
-            var $img   = $(this).find('img'),
-                $ghost = $(this).find('.fluidbox-ghost'),
-                $wrap  = $(this).find('.fluidbox-wrap'),
-                data   = $img.data();
-
-            // Save image dimensions as jQuery object
-            data.imgWidth  = $img.width();
-            data.imgHeight = $img.height();
-            data.imgRatio  = $img.width() / $img.height();
-
-            // Resize and position ghost element
-            $ghost.css({
-              width: $img.width(),
-              height: $img.height(),
-              top: $img.offset().top - $wrap.offset().top,
-              left: $img.offset().left - $wrap.offset().left,
-            });
-
-            // Calculate scale based on orientation
-            if(vpRatio > data.imgRatio) {
-              data.imgScale = $(window).height()*0.95 / $img.height();
-            } else {
-              data.imgScale = $(window).width()*0.95 / $img.width();
-            }
-
-          });
-
-          // Reposition Fluidbox, but only when one is found to be opened
-          var $activeFb = $('a[data-fluidbox].fluidbox-opened');
-          if($activeFb.length > 0) positionFb($activeFb);
-
-        }).resize();
-
-        // Bind click event
-        $fb.click(function (e){
-
-          // Variables
-          var $activeFb = $(this),
-              $img   = $(this).find('img'),
-              $ghost = $(this).find('.fluidbox-ghost');
-
-          if($(this).data('fluidbox-state') === 0 || !$(this).data('fluidbox-state')) {
-            // State: Closed
-            // Action: Open fluidbox
-
-            // Switch state
-            $(this)
-            .data('fluidbox-state', 1)
-            .removeClass('fluidbox-closed')
-            .addClass('fluidbox-opened');
-
-            // Show overlay
-            $('#fluidbox-overlay').fadeIn();
-
-            // Set thumbnail image source as background image first, preload later
-            $ghost.css({
-              'background-image': 'url('+$img.attr('src')+')',
-              opacity: 1
-            });
-
-            // Hide original image
-            $img.css({ opacity: 0 });
-
-            // Preload ghost image
-            var ghostImg = new Image();
-            ghostImg.onload = function (){
-              $ghost.css({ 'background-image': 'url('+$activeFb.attr('href')+')' });
-            };
-            ghostImg.src = $(this).attr('href');
-
-            // Position Fluidbox
-            positionFb($(this));
-
-          } else {
-            // State: Open
-            // Action: Close fluidbox
-
-            // Switch state
-            $(this)
-            .data('fluidbox-state', 0)
-            .removeClass('fluidbox-opened')
-            .addClass('fluidbox-closed');
-
-            // Hide overlay
-            $('#fluidbox-overlay').fadeOut();
-
-            // Show original image
-            $img.css({ opacity: 1 });
-
-            // Reverse animation on wrapped elements
-            $ghost
-            .css({ 'transform': 'translate(0,0) scale(1)' })
-            .one('webkitTransitionEnd MSTransitionEnd oTransitionEnd otransitionend transitionend', function (){
-              // Wait for transntion to complete before hiding the ghost element
-              $ghost.css({ opacity: 0 });
-            });
-
-          }
-          e.preventDefault();
-        });
-      });
 
     //share popover
     $(function () {
@@ -414,9 +227,163 @@ $(document).ready(function() {
 
     $(window).on('resize', on_resize);
 
-    // Init.
+    //fluidbox
+
+    // Global variables
+    var $fb = $('a[data-fluidbox]'),
+      vpRatio;
+
+    // Add class
+    $fb.addClass('fluidbox');
+
+    // Create fluidbox modal background
+    $('body').append('<div id="fluidbox-overlay" />');
+
+    // The following events will force FB to close
+    var closeFb = function (){
+        $('a[data-fluidbox].fluidbox-opened').trigger('click');
+      },
+      positionFb = function ($activeFb){
+        // Get elements
+        var $img = $activeFb.find('img'),
+            $ghost = $activeFb.find('.fluidbox-ghost');
+
+        // Calculate offset and scale
+        var offsetY = $(window).scrollTop()-$img.offset().top+0.5*($img.data('imgHeight')*($img.data('imgScale')-1))+0.5*($(window).height()-$img.data('imgHeight')*$img.data('imgScale')),
+            offsetX = 0.5*($img.data('imgWidth')*($img.data('imgScale')-1))+0.5*($(window).width()-$img.data('imgWidth')*$img.data('imgScale'))-$img.offset().left,
+            scale = $img.data('imgScale');
+
+        // Animate ghost element
+        $ghost.css({
+          'transform': 'translate('+offsetX+'px,'+offsetY+'px) scale('+scale+')'
+        });
+      };
+
+    // Close Fluidbox when overlay is closed
+    $('#fluidbox-overlay').click(closeFb);
+
+    // Check if images are loaded first
+    $fb.imagesLoaded().done(function (){
+
+    // Create dynamic elements
+    $fb
+    .wrapInner('<div class="fluidbox-wrap" />')
+    .find('img')
+      .css({ opacity: 1 })
+      .after('<div class="fluidbox-ghost" />');
+
+    // Listen to resize event for calculations
+    $(window).resize(function (){
+
+      // Get viewport ratio
+      vpRatio = $(window).width() / $(window).height();
+
+      // Get dimensions and aspect ratios
+      $fb.each(function (){
+        var $img   = $(this).find('img'),
+            $ghost = $(this).find('.fluidbox-ghost'),
+            $wrap  = $(this).find('.fluidbox-wrap'),
+            data   = $img.data();
+
+        // Save image dimensions as jQuery object
+        data.imgWidth  = $img.width();
+        data.imgHeight = $img.height();
+        data.imgRatio  = $img.width() / $img.height();
+
+        // Resize and position ghost element
+        $ghost.css({
+          width: $img.width(),
+          height: $img.height(),
+          top: $img.offset().top - $wrap.offset().top,
+          left: $img.offset().left - $wrap.offset().left,
+        });
+
+        // Calculate scale based on orientation
+        if(vpRatio > data.imgRatio) {
+          data.imgScale = $(window).height()*0.95 / $img.height();
+        } else {
+          data.imgScale = $(window).width()*0.95 / $img.width();
+        }
+
+      });
+
+      // Reposition Fluidbox, but only when one is found to be opened
+      var $activeFb = $('a[data-fluidbox].fluidbox-opened');
+      if($activeFb.length > 0) positionFb($activeFb);
+
+    }).resize();
+
+    // Bind click event
+    $fb.click(function (e){
+
+      // Variables
+      var $activeFb = $(this),
+          $img   = $(this).find('img'),
+          $ghost = $(this).find('.fluidbox-ghost');
+
+      if($(this).data('fluidbox-state') === 0 || !$(this).data('fluidbox-state')) {
+        // State: Closed
+        // Action: Open fluidbox
+
+        // Switch state
+        $(this)
+        .data('fluidbox-state', 1)
+        .removeClass('fluidbox-closed')
+        .addClass('fluidbox-opened');
+
+        // Show overlay
+        $('#fluidbox-overlay').fadeIn();
+
+        // Set thumbnail image source as background image first, preload later
+        $ghost.css({
+          'background-image': 'url('+$img.attr('src')+')',
+          opacity: 1
+        });
+
+        // Hide original image
+        $img.css({ opacity: 0 });
+
+        // Preload ghost image
+        var ghostImg = new Image();
+        ghostImg.onload = function (){
+          $ghost.css({ 'background-image': 'url('+$activeFb.attr('href')+')' });
+        };
+        ghostImg.src = $(this).attr('href');
+
+        // Position Fluidbox
+        positionFb($(this));
+
+      } else {
+        // State: Open
+        // Action: Close fluidbox
+
+        // Switch state
+        $(this)
+        .data('fluidbox-state', 0)
+        .removeClass('fluidbox-opened')
+        .addClass('fluidbox-closed');
+
+        // Hide overlay
+        $('#fluidbox-overlay').fadeOut();
+
+        // Show original image
+        $img.css({ opacity: 1 });
+
+        // Reverse animation on wrapped elements
+        $ghost
+        .css({ 'transform': 'translate(0,0) scale(1)' })
+        .one('webkitTransitionEnd MSTransitionEnd oTransitionEnd otransitionend transitionend', function (){
+          // Wait for transntion to complete before hiding the ghost element
+          $ghost.css({ opacity: 0 });
+        });
+
+      }
+      e.preventDefault();
+    });
+    });
+
     on_resize();
-    setup_images();
+    sub_responsive_images();
 });
 
 // Defer pointer events on animated header
