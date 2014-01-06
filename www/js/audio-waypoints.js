@@ -1,41 +1,5 @@
 //audio player
 
-    if (audio_supported) {
-        /*
-         * Load audio player
-         */
-        $player.jPlayer({
-            ready: function () {
-                $(this).jPlayer('setMedia', {
-                    mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                    oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-                }).jPlayer('pause');
-            },
-            play: function() { },
-            ended: function (event) {
-                $(this).jPlayer('pause', AUDIO_LENGTH - 1);
-            },
-            swfPath: 'js/lib',
-            supplied: 'mp3, oga',
-            timeupdate: check_end_cues,
-            volume: volume_narration_active
-        });
-
-        $ambient_player.jPlayer({
-            ready: function () {
-                $(this).jPlayer('setMedia', {
-                    mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                    oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-                }).jPlayer('play', 2);
-//                }).jPlayer('pause');
-            },
-            cssSelectorAncestor: '#jp_container_2',
-            loop: true,
-            supplied: 'mp3, oga',
-            volume: volume_ambient_active
-        });
-    }
-
 
     // CUEPOINTS
 
@@ -89,31 +53,6 @@
         }
     }
 
-    // stop audio when the end cuepoint is reached
-    function check_end_cues(e) {
-        if (currently_playing &&
-            e.jPlayer.status.currentTime >= cuepoints[currently_playing].audio_end &&
-            e.jPlayer.status.currentTime <= (cuepoints[currently_playing].audio_end + 5)) {
-            fade_narration('out');
-            //$(this).jPlayer('pause');
-        }
-    }
-
-    // call on_scroll only after the scroll has completed
-    $(window).on('scroll', _.debounce(function() {
-        on_scroll();
-    }, 100));
-
-    function fade_ambient(dir) {
-        var end_vol;
-
-        if (dir == 'in') {
-            end_vol = volume_ambient_active;
-        } else {
-            end_vol = volume_ambient_inactive;
-        }
-        $ambient_player.find('audio').animate({volume: end_vol}, 1000);
-    }
 
     function fade_narration(dir, cue) {
         var end_vol;
