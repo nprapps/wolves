@@ -72,8 +72,7 @@ var on_resize = function() {
 
 // stop audio when the end cuepoint is reached
 function check_end_cues(e) {
-    console.log(e);
-    if (e.jPlayer.status.currentTime > parseFloat(ambient_end, 0)) {
+    if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
         $ambient_player.jPlayer("stop");
     }
 }
@@ -109,22 +108,22 @@ $(document).ready(function() {
     volume_narration_active = 1; // 1
     volume_narration_inactive = 0; // 0
 
-    // $player.jPlayer({
-    //     ready: function () {
-    //         $(this).jPlayer('setMedia', {
-    //             mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-    //             oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-    //         }).jPlayer('pause');
-    //     },
-    //     play: function() { },
-    //     ended: function (event) {
-    //         $(this).jPlayer('pause', AUDIO_LENGTH - 1);
-    //     },
-    //     swfPath: 'js/lib',
-    //     supplied: 'mp3, oga',
-    //     timeupdate: check_end_cues,
-    //     volume: volume_narration_active
-    // });
+    $player.jPlayer({
+        ready: function () {
+            $(this).jPlayer('setMedia', {
+                mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+            }).jPlayer('pause');
+        },
+        play: function() { },
+        ended: function (event) {
+            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+        },
+        swfPath: 'js/lib',
+        supplied: 'mp3, oga',
+        timeupdate: check_end_cues,
+        volume: volume_narration_active
+    });
 
     $ambient_player.jPlayer({
         ready: function () {
@@ -146,8 +145,8 @@ $(document).ready(function() {
     // waypoints
     $waypoints.waypoint(function(direction){
         var times = $(this).attr('data-waypoint');
-        ambient_start = times.split(',')[0];
-        ambient_end = times.split(',')[1];
+        ambient_start = parseInt(times.split(',')[0], 0);
+        ambient_end = parseInt(times.split(',')[1], 0);
         if (direction === 'down') {
             $ambient_player.jPlayer("play", ambient_start);
         }
