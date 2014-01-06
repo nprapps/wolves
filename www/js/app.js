@@ -6,6 +6,7 @@ var $ambient_audio;
 var $ambient_player;
 var $audio;
 var $player;
+var $waypoints;
 var aspect_width;
 var aspect_height;
 var window_width;
@@ -13,6 +14,8 @@ var window_height;
 var AUDIO_LENGTH;
 var audio_supported;
 var currently_playing;
+var ambient_start;
+var ambient_end;
 var volume_ambient_active;
 var volume_ambient_inactive;
 var volume_narration_active;
@@ -67,6 +70,25 @@ var on_resize = function() {
     $container.css('marginTop', window_height + 'px');
 };
 
+// stop audio when the end cuepoint is reached
+function check_end_cues(e) {
+    if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
+        $ambient_player.jPlayer("stop");
+        currently_playing = false;
+    }
+}
+
+function fade_ambient(dir) {
+    var end_vol;
+
+    if (dir == 'in') {
+        end_vol = volume_ambient_active;
+    } else {
+        end_vol = volume_ambient_inactive;
+    }
+    $ambient_player.find('audio').animate({volume: end_vol}, 1000);
+}
+
 $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
@@ -80,21 +102,59 @@ $(document).ready(function() {
     aspect_height = 9;
     AUDIO_LENGTH = 60;
     audio_supported = true;
-    currently_playing = null;
+    currently_playing = false;
 
-    volume_ambient_active = 0.3; // 0.3
+    volume_ambient_active = 0.5; // 0.3
     volume_ambient_inactive = 0.1; // 0.1
     volume_narration_active = 1; // 1
     volume_narration_inactive = 0; // 0
 
-    var cuepoints = [
-        { 'id': 0, 'audio_cue': 0, 'audio_end': 10 },
-        { 'id': 1, 'audio_cue': 20, 'audio_end': 30 },
-        { 'id': 2, 'audio_cue': 40, 'audio_end': 50 },
-        { 'id': 3, 'audio_cue': 60, 'audio_end': 70 },
-        { 'id': 4, 'audio_cue': 80, 'audio_end': 90 },
-        { 'id': 5, 'audio_cue': 100, 'audio_end': 110 }
-    ];
+    $player.jPlayer({
+        ready: function () {
+            $(this).jPlayer('setMedia', {
+                mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+            }).jPlayer('pause');
+        },
+        play: function() { },
+        ended: function (event) {
+            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+        },
+        swfPath: 'js/lib',
+        supplied: 'mp3, oga',
+        timeupdate: check_end_cues,
+        volume: volume_narration_active
+    });
+
+    $ambient_player.jPlayer({
+        ready: function () {
+            $(this).jPlayer('setMedia', {
+                mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+            }).jPlayer('pause');
+        },
+        swfPath: 'js/lib',
+        cssSelectorAncestor: '#jp_container_2',
+        loop: true,
+        supplied: 'mp3, oga',
+        timeupdate: check_end_cues,
+        volume: volume_ambient_active
+    });
+
+    $waypoints = $('.waypoint');
+
+    // waypoints
+    $waypoints.waypoint(function(direction){
+        var times = $(this).attr('data-waypoint');
+        ambient_start = parseInt(times.split(',')[0], 0);
+        ambient_end = parseInt(times.split(',')[1], 0);
+
+        if (direction === 'down' && currently_playing !== ambient_start) {
+            $ambient_player.jPlayer("play", ambient_start);
+            currently_playing = ambient_start;
+        }
+
+    });
 
     //toggle ambi
     $( '.toggle-ambi' ).click(function() {
@@ -358,6 +418,7 @@ $(document).ready(function() {
     on_resize();
     setup_images();
 });
+
 // Defer pointer events on animated header
 $(window).load(function (){
   $('header').css({
