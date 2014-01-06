@@ -88,6 +88,7 @@ var check_cues = function(e) {
     * Example: Stops player when end cue is reached.
     */
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
+        console.log('stopping at ' + ambient_end);
         $ambient_player.jPlayer("stop");
         currently_playing = false;
     }
@@ -104,16 +105,20 @@ var play_audio = function(times) {
     ambient_end = parseInt(times.split(',')[1], 0);
 
     var init = function() {
+        console.log('starting at ' + ambient_start);
         $ambient_player.jPlayer("play", ambient_start);
+        $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
         currently_playing = ambient_start;
     };
 
     if (currently_playing !== ambient_start) {
         if (currently_playing !== false) {
             $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
+                console.log('fading!');
                 init();
             });
         } else {
+            console.log('starting!');
             init();
         }
     }
