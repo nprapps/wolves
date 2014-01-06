@@ -107,6 +107,7 @@ var play_audio = function(times) {
     var init = function() {
         console.log('starting at ' + ambient_start);
         $ambient_player.jPlayer("play", ambient_start);
+        console.log($ambient_player.data("jPlayer").status.volume);
         $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
         currently_playing = ambient_start;
     };
@@ -136,6 +137,9 @@ $(document).ready(function() {
     $nav = $('.nav a');
     $waypoints = $('.waypoint');
 
+    ambient_start = 120;
+    ambient_end = 187;
+
     aspect_width = 16;
     aspect_height = 9;
     AUDIO_LENGTH = 60;
@@ -154,12 +158,15 @@ $(document).ready(function() {
                 oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
             }).jPlayer('pause');
         },
-        play: function() { },
+        play: function() {
+            $(this).jPlayer('play', 0);
+        },
         ended: function (event) {
             $(this).jPlayer('pause', AUDIO_LENGTH - 1);
         },
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
+        loop: false,
         timeupdate: check_cues,
         volume: volume_narration_active
     });
@@ -169,11 +176,11 @@ $(document).ready(function() {
             $(this).jPlayer('setMedia', {
                 mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
                 oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-            }).jPlayer('pause');
+            }).jPlayer('play', ambient_start);
         },
         swfPath: 'js/lib',
         cssSelectorAncestor: '#jp_container_2',
-        loop: true,
+        loop: false,
         supplied: 'mp3, oga',
         timeupdate: check_cues,
         volume: volume_ambient_active
@@ -181,7 +188,7 @@ $(document).ready(function() {
 
     // waypoints
     $waypoints.waypoint(function(direction){
-        play_audio($(this).attr('data-waypoint'));
+        play_audio($(this).attr('data-' + direction + '-waypoint'));
     });
 
     //toggle ambi
@@ -386,7 +393,6 @@ $(document).ready(function() {
       e.preventDefault();
     });
     });
-
     on_resize();
     sub_responsive_images();
 });
