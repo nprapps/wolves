@@ -63,13 +63,34 @@ a:hover, a:active {
 	-moz-animation-fill-mode:both;
 	-ms-animation-fill-mode:both;
 	-o-animation-fill-mode:both;
-	animation-fill-mode:both;-webkit-animation-duration:9s;-moz-animation-duration:9s;-ms-animation-duration:9s;-o-animation-duration:9s;animation-duration:9s;}
+	animation-fill-mode:both;
+	-webkit-animation-duration:9s;-moz-animation-duration:9s;-ms-animation-duration:9s;-o-animation-duration:9s;animation-duration:9s;}
 
 .animated {
 	//.animation-delay(1s);
 }
 
 //Titlecard
+
+@-webkit-keyframes titleFade {
+	0% {opacity: .7;}
+	100% {opacity: .3;}
+}
+
+@-moz-keyframes titleFade {
+	0% {opacity: .7;}
+	100% {opacity: .3;}
+}
+
+@-o-keyframes titleFade {
+	0% {opacity: .7;}
+	100% {opacity: .3;}
+}
+
+@keyframes titleFade {
+	0% {opacity: .7;}
+	100% {opacity: .3;}
+}
 
 .titlecard-wrapper {
 width: 100%;
@@ -176,8 +197,9 @@ color: #fff;
 		background-color: #000;
 		background: url('@{img-root}/wolf-titlecard-people.jpg') no-repeat top left;
 		.background-size(cover);
+		.animation-name(titleFade);
 		&.animated{
-			.animation-duration(12s);
+			.animation-duration(6s);
 		}
 	}
 
