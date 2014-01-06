@@ -8,19 +8,20 @@ var $audio;
 var $player;
 var $waypoints;
 var $nav;
-var aspect_width;
-var aspect_height;
-var window_width;
-var window_height;
-var AUDIO_LENGTH;
-var audio_supported;
-var currently_playing;
-var ambient_start;
-var ambient_end;
-var volume_ambient_active;
-var volume_ambient_inactive;
-var volume_narration_active;
-var volume_narration_inactive;
+var $begin;
+var $toggle_ambient;
+var ambient_is_paused = false;
+var ambient_start = 120;
+var ambient_end = 187;
+var aspect_width = 16;
+var aspect_height = 9;
+var AUDIO_LENGTH = 60;
+var audio_supported = true;
+var currently_playing = false;
+var volume_ambient_active = 0.5;
+var volume_ambient_inactive = 0.1;
+var volume_narration_active = 1;
+var volume_narration_inactive = 0;
 
 var unveil_images = function() {
     /*
@@ -38,7 +39,10 @@ var sub_responsive_images = function() {
     window_width = $w.width();
     if (window_width < 769 && Modernizr.touch === true) {
         _.each($container.find('img'), function(img){
-            $(img).attr('data-src', $(img).attr('data-src').replace('_1500', '_750'));
+            if ($(img).attr('data-src')){
+                var responsive_image = $(img).attr('data-src').replace('_1500', '_750');
+                $(img).attr('data-src', responsive_image);
+            }
         });
     }
     unveil_images();
@@ -88,7 +92,8 @@ var check_cues = function(e) {
     * Example: Stops player when end cue is reached.
     */
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
-        console.log('stopping at ' + ambient_end);
+
+        // Don't pause the player, stop the player.
         $ambient_player.jPlayer("stop");
         currently_playing = false;
     }
@@ -101,27 +106,69 @@ var play_audio = function(times) {
     * "<starting cue point in seconds>, <ending cue point in seconds>"
     * Fades out existing audio clip if one is currently playing.
     */
+
+    // Set the start and ent times as ints.
     ambient_start = parseInt(times.split(',')[0], 0);
     ambient_end = parseInt(times.split(',')[1], 0);
 
     var init = function() {
-        console.log('starting at ' + ambient_start);
-        $ambient_player.jPlayer("play", ambient_start);
-        console.log($ambient_player.data("jPlayer").status.volume);
-        $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
+        /*
+        * Initializes the actual audio.
+        * If we're paused, update the state and the start_time for the player.
+        * Just don't actually play any audio.
+        */
+        $ambient_player.jPlayer("pause", ambient_start);
         currently_playing = ambient_start;
+        if (ambient_is_paused) {
+            return;
+        }
+        $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
+        $ambient_player.jPlayer("start");
     };
 
+    // Test if we're in a section that's already playing.
     if (currently_playing !== ambient_start) {
+
+        // Test if we're in the middle of a currently playing clip.
         if (currently_playing !== false) {
+
+            // If in a currently playing clip, fade the previous clip before starting this one.
             $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
-                console.log('fading!');
                 init();
             });
         } else {
-            console.log('starting!');
+
+            // Start this clip, otherwise.
             init();
         }
+    }
+};
+
+var on_ambient_player_ready = function() {
+    /*
+    * A helper function for declaring the ambient player to be ready.
+    * Loads on button click for iOS/mobile.
+    * Loads on initialization for desktop.
+    */
+    $ambient_player.jPlayer('setMedia', {
+        mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+        oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+    }).jPlayer('play', ambient_start);
+};
+
+var on_toggle_ambient_click =  function() {
+    /*
+    * Handles the "mute/pause" button clicks.
+    */
+    $(this).toggleClass("ambi-mute");
+
+    // Don't like this but it's viable.
+    if ($(this).hasClass('ambi-mute')) {
+        ambient_is_paused = true;
+        $ambient_player.jPlayer('pause');
+    } else {
+        ambient_is_paused = false;
+        $ambient_player.jPlayer('play');
     }
 };
 
@@ -136,21 +183,10 @@ $(document).ready(function() {
     $player = $('#pop-audio');
     $nav = $('.nav a');
     $waypoints = $('.waypoint');
+    $begin = $('.begin-bar');
+    $toggle_ambient = $( '.toggle-ambi' );
 
-    ambient_start = 120;
-    ambient_end = 187;
-
-    aspect_width = 16;
-    aspect_height = 9;
-    AUDIO_LENGTH = 60;
-    audio_supported = true;
-    currently_playing = false;
-
-    volume_ambient_active = 0.5; // 0.3
-    volume_ambient_inactive = 0.1; // 0.1
-    volume_narration_active = 1; // 1
-    volume_narration_inactive = 0; // 0
-
+    // Set up the narration player.
     $player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
@@ -171,13 +207,18 @@ $(document).ready(function() {
         volume: volume_narration_active
     });
 
+    // Load the ambient audio player.
+    // Set up a ready function.
+    var ready_func = on_ambient_player_ready;
+
+    // If it's mobile, don't load a ready function.
+    if (Modernizr.touch){
+        ready_func = null;
+    }
+
+    // Set up the ambient player.
     $ambient_player.jPlayer({
-        ready: function () {
-            $(this).jPlayer('setMedia', {
-                mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-            }).jPlayer('play', ambient_start);
-        },
+        ready: ready_func,
         swfPath: 'js/lib',
         cssSelectorAncestor: '#jp_container_2',
         loop: false,
@@ -186,15 +227,13 @@ $(document).ready(function() {
         volume: volume_ambient_active
     });
 
-    // waypoints
+    // Waypoints
     $waypoints.waypoint(function(direction){
         play_audio($(this).attr('data-' + direction + '-waypoint'));
     });
 
-    //toggle ambi
-    $( '.toggle-ambi' ).click(function() {
-        $( this ).toggleClass( "ambi-mute" );
-    });
+    // Mute button
+    $toggle_ambient.on('click', on_toggle_ambient_click);
 
     //captions
     $('.caption-label').click(function() {
@@ -204,15 +243,15 @@ $(document).ready(function() {
     //scrollspy
     $('body').scrollspy({ target: '.controls' });
 
-    //smooth scroll events
-    $('.begin-bar').click(function() {
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: '#intro'
-        });
+    // Smooth scroll for the "begin" button.
+    // Also sets up the ambient player.
+    $begin.on('click', function() {
+        if (Modernizr.touch) { on_ambient_player_ready(); }
+        $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
         return false;
     });
 
+    // Smooth scroll for the nav.
     $nav.on('click', function(){
         var anchor = $(this).attr('href');
         $.smoothScroll({
