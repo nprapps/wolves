@@ -466,7 +466,7 @@ color: #fff;
 	//wide image
 	.captioned {
 		position: relative;
-		cursor: pointer;
+		//cursor: pointer;
 
 
 		&.cap-on {
@@ -477,7 +477,7 @@ color: #fff;
 
 		.caption-text {
 			position: absolute;
-			bottom: 0;
+			bottom: 22px;
 			right: 0;
 			z-index: 1000;
 			.transition(opacity 1s ease);
@@ -500,19 +500,22 @@ color: #fff;
 			}
 		}
 		.caption-label {
-    		position: absolute;
-			bottom: 5px;
-			right: 20px;
+    		position: relative;
+			text-align: right;
 			margin: 0;
 			padding: 0;
 			line-height: 1;
 			text-transform: uppercase;
 			font-weight: bold;
-			color: #ddd;
 			z-index: 1000;
+			cursor: pointer;
 
 			b {
 				font-size: 10px;
+				color: #444;
+				padding-bottom: 5px;
+				letter-spacing: 1px;
+				border-bottom: 2px solid #ddd;
 				.touch & {
 					display: none;
 				}
@@ -521,28 +524,27 @@ color: #fff;
 
 			i {
 				font-size: 11px;
-				color: #fff;
+				color: #555;
 			}
 
 
 			@media @screen-small-above {
 
-				bottom: 15px;
-				right: 30px;
 
 				b {
-					position: absolute;
-					bottom: 2px;
-					right: 22px;
 					font-size: 11px;
-					.opacity(0);
-					.transition(opacity 3s ease);
+					.opacity(.4);
+					.transition(opacity 1s ease);
+					&:hover {
+						.opacity(1);
+					}
 				}
 
 				i {
 					font-size: 16px;
-					.opacity(.5);
+					.opacity(1);
 					.transition(opacity 3s ease);
+					display: none;
 				}
 
 			}
@@ -558,17 +560,20 @@ color: #fff;
 				i {
 					.rotate(45deg);
 				}
-				b {
+				/*b {
 					.opacity(0) !important;
-				}
+				}*/
 			}
 
 		}
 
 		&:hover {
-			.caption-label b, .caption-label i {
+			/*.caption-label b, .caption-label i {
 			 .opacity(1);
 			}
+			.caption-text {
+				.opacity(1);
+			}*/
 		}
 
 		&:hover {
@@ -679,7 +684,7 @@ color: #fff;
 				cursor: pointer;
 				&:hover {
 					color: #ccc;
-					background: #777;
+					background: #6d8ac4;
 				}
 				
 			}
@@ -832,7 +837,7 @@ footer {
 	}
 }
 
-/* Fluidbox styling starts here */
+/* Fluidbox */
 a[data-fluidbox] {
   background-color: #eee;
   border: none;
