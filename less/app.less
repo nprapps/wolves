@@ -468,18 +468,11 @@ color: #fff;
 		position: relative;
 		//cursor: pointer;
 
-
-		&.cap-on {
-			.caption-text {
-				h6 {opacity: 1;}
-			}
-		}
-
 		.caption-text {
 			position: absolute;
 			bottom: 22px;
-			right: 0;
-			z-index: 1000;
+			left: 0;
+			z-index: 500;
 			.transition(opacity 1s ease);
 			opacity: 0;
 
@@ -501,20 +494,20 @@ color: #fff;
 		}
 		.caption-label {
     		position: relative;
-			text-align: right;
+			text-align: left;
 			margin: 0;
 			padding: 0;
 			line-height: 1;
 			text-transform: uppercase;
 			font-weight: bold;
-			z-index: 1000;
 			cursor: pointer;
 
 			b {
 				font-size: 10px;
-				color: #444;
-				padding-bottom: 1px;
-				border-bottom: 2px solid #ddd;
+				color: #ccc;
+				letter-spacing: 1px;
+				position: relative;
+				top: -1px;
 				.touch & {
 					display: none;
 				}
@@ -523,7 +516,7 @@ color: #fff;
 
 			i {
 				font-size: 11px;
-				color: #000;
+				color: #ccc;
 			}
 
 
@@ -531,28 +524,32 @@ color: #fff;
 
 				b {
 					font-size: 11px;
-					.opacity(.4);
-					.transition(opacity 2s ease);
+					.transition(color 1s ease);
 				}
 
 				i {
 					font-size: 16px;
-					.opacity(.2);
-					.transition(opacity 2s ease);
+					.transition(color 1s ease);
 				}
 
 			}
 			
-			&:hover {
-				i {.opacity(1);}
-
+		&:hover {
+			b, i {
+				color: #444;
 			}
+		}
+		
 
     	}
 
     	&.cap-on {
 			.caption-text {
 				opacity: 1;
+			}
+			
+			.caption-label b, .caption-label i {
+				color: #444;
 			}
 
 			.caption-label {
@@ -566,20 +563,15 @@ color: #fff;
 			}
 
 		}
-
-		&:hover {
-			/*.caption-label b, .caption-label i {
-			 .opacity(1);
+		
+		&.edge-to-edge {
+			.caption-label {
+				padding-left: 10px;
 			}
-			.caption-text {
-				.opacity(1);
-			}*/
+		
 		}
 
-		&:hover {
-				.share-this {opacity: 1;}
-				//h6 {opacity: 1;}
-		}
+
 	}
 	//adjusting caption width to account for image padding within the bootstrap grid
     .row {
