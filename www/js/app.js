@@ -74,6 +74,7 @@ var on_resize = function() {
 function check_end_cues(e) {
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
         $ambient_player.jPlayer("stop");
+        currently_playing = false;
     }
 }
 
@@ -101,7 +102,7 @@ $(document).ready(function() {
     aspect_height = 9;
     AUDIO_LENGTH = 60;
     audio_supported = true;
-    currently_playing = null;
+    currently_playing = false;
 
     volume_ambient_active = 0.5; // 0.3
     volume_ambient_inactive = 0.1; // 0.1
@@ -147,9 +148,12 @@ $(document).ready(function() {
         var times = $(this).attr('data-waypoint');
         ambient_start = parseInt(times.split(',')[0], 0);
         ambient_end = parseInt(times.split(',')[1], 0);
-        if (direction === 'down') {
+
+        if (direction === 'down' && currently_playing !== ambient_start) {
             $ambient_player.jPlayer("play", ambient_start);
+            currently_playing = ambient_start;
         }
+
     });
 
     //toggle ambi
