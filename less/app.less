@@ -200,7 +200,7 @@ color: #fff;
 		.background-size(cover);
 		.animation-name(titleFade);
 		&.animated{
-			.animation-duration(6s);
+			.animation-duration(9s);
 		}
 	}
 
@@ -366,6 +366,10 @@ color: #fff;
 			line-height: 1.7;
 		}
 	}
+	
+	.img-responsive {
+		width: 100%;
+	}
 
 	.extended-title {
 		p {
@@ -509,9 +513,7 @@ color: #fff;
 				letter-spacing: 1px;
 				position: relative;
 				top: -1px;
-				.touch & {
-					display: none;
-				}
+				
 			}
 
 
@@ -539,6 +541,15 @@ color: #fff;
 			b, i {
 				color: #444;
 			}
+		}
+		
+		.touch & {
+			&:hover {
+			b, i {
+				color: #ccc;
+			}
+		}
+				
 		}
 		
 
