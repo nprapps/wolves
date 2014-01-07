@@ -11,8 +11,8 @@ var $nav;
 var $begin;
 var $toggle_ambient;
 var ambient_is_paused = false;
-var ambient_start = 120;
-var ambient_end = 187;
+var ambient_start = 0;
+var ambient_end = 30;
 var aspect_width = 16;
 var aspect_height = 9;
 var AUDIO_LENGTH = 60;
@@ -107,6 +107,8 @@ var play_audio = function(times) {
     * Fades out existing audio clip if one is currently playing.
     */
 
+    console.log(times);
+
     // Set the start and ent times as ints.
     ambient_start = parseInt(times.split(',')[0], 0);
     ambient_end = parseInt(times.split(',')[1], 0);
@@ -118,7 +120,7 @@ var play_audio = function(times) {
         * Just don't actually play any audio.
         */
         $ambient_player.jPlayer("pause", ambient_start);
-        currently_playing = ambient_start;
+        currently_playing = true;
         if (ambient_is_paused) {
             return;
         }
@@ -126,33 +128,29 @@ var play_audio = function(times) {
         $ambient_player.jPlayer("start");
     };
 
-    // Test if we're in a section that's already playing.
-    if (currently_playing !== ambient_start) {
+    // Test if we're in the middle of a currently playing clip.
+    if (currently_playing) {
 
-        // Test if we're in the middle of a currently playing clip.
-        if (currently_playing !== false) {
-
-            // If in a currently playing clip, fade the previous clip before starting this one.
-            $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
-                init();
-            });
-        } else {
-
-            // Start this clip, otherwise.
+        // If in a currently playing clip, fade the previous clip before starting this one.
+        $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
             init();
-        }
+        });
+    } else {
+
+        // Start this clip, otherwise.
+        init();
     }
 };
 
 var on_ambient_player_ready = function() {
     /*
-    * A helper function for declaring the ambient player to be ready.
+    * A helper function for declaring the AMBIENT PLAYER to be ready.
     * Loads on button click for iOS/mobile.
     * Loads on initialization for desktop.
     */
     $ambient_player.jPlayer('setMedia', {
-        mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-        oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+        mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+        oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
     }).jPlayer('play', ambient_start);
 };
 
@@ -186,12 +184,12 @@ $(document).ready(function() {
     $begin = $('.begin-bar');
     $toggle_ambient = $( '.toggle-ambi' );
 
-    // Set up the narration player.
+    // Set up the STORY NARRATION player.
     $player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
-                mp3: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                oga: 'http://media.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+                mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
             }).jPlayer('pause');
         },
         play: function() {
@@ -258,6 +256,7 @@ $(document).ready(function() {
             speed: 800,
             scrollTarget: anchor
         });
+        // play_audio($(anchor).attr('data-down-waypoint'));
         return false;
     });
 
