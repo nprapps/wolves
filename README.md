@@ -80,6 +80,8 @@ cd wolves
 npm install less universal-jst -g --prefix node_modules
 mkvirtualenv --no-site-packages wolves
 pip install -r requirements.txt
+brew install imagemagick libjpeg libpng
+fab cut_images
 ```
 
 Project secrets
@@ -231,7 +233,7 @@ To install your crontab set `INSTALL_CRONTAB` to `True` in `app_config.py`. Cron
 Install web services
 ---------------------
 
-Web services are configured in the `confs/` folder. 
+Web services are configured in the `confs/` folder.
 
 Running ``fab setup_server`` will deploy your confs if you have set ``DEPLOY_TO_SERVERS`` and ``DEPLOY_WEB_SERVICES`` both to ``True`` at the top of ``app_config.py``.
 
