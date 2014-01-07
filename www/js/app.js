@@ -22,6 +22,7 @@ var volume_ambient_active = 0.5;
 var volume_ambient_inactive = 0.1;
 var volume_narration_active = 1;
 var volume_narration_inactive = 0;
+var first_page_load = true;
 
 var unveil_images = function() {
     /*
@@ -168,6 +169,58 @@ var on_toggle_ambient_click =  function() {
     }
 };
 
+var on_waypoint = function(element, direction) {
+    /*
+    * Events to fire when waypoints are reached.
+    */
+
+    // Grab the waypoints for audio.
+    // Varies by direction.
+    if ($(element).attr('data-' + direction + '-waypoint')) {
+        play_audio($(element).attr('data-' + direction + '-waypoint'));
+    }
+
+    // Grab the waypoints for images.
+    if ($(element).attr('id')) {
+        setHashSilently($(element).attr('id'));
+    }
+};
+
+var setHashSilently = function(hash){
+    /*
+    * Sets the hash without calling on_hash_changed.
+    */
+    hasher.changed.active = false;
+    hasher.setHash(hash);
+    hasher.changed.active = true;
+};
+
+var on_hash_changed = function(new_hash, old_hash) {
+    /*
+    * When the hash changes, do things.
+    */
+
+    // This helps solve the conflict between hasher and waypoints.
+    // Default to hasher on first
+    if (first_page_load) {
+        first_page_load = false;
+        $waypoints.waypoint(function(direction){
+            on_waypoint(this, direction);
+        });
+    }
+
+    // Naked URLs should get /#/top.
+    if (!new_hash) {
+        new_hash = 'top';
+    }
+
+    // Smooth scroll to the new hash.
+    $.smoothScroll({
+        speed: 800,
+        scrollTarget: '#' + new_hash
+    });
+};
+
 $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
@@ -221,11 +274,6 @@ $(document).ready(function() {
         supplied: 'mp3, oga',
         timeupdate: check_cues,
         volume: volume_ambient_active
-    });
-
-    // Waypoints
-    $waypoints.waypoint(function(direction){
-        play_audio($(this).attr('data-' + direction + '-waypoint'));
     });
 
     // Mute button
@@ -429,8 +477,13 @@ $(document).ready(function() {
       e.preventDefault();
     });
     });
+
     on_resize();
     sub_responsive_images();
+
+    hasher.changed.add(on_hash_changed);
+    hasher.initialized.add(on_hash_changed);
+    hasher.init();
 });
 
 // Defer pointer events on animated header

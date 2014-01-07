@@ -10,8 +10,9 @@
 
 {% endblock extra_head %}
 {% block content %}
-<div id="top" class="titlecard-wrapper waypoint" data-down-waypoint="0,53">
+<div class="titlecard-wrapper">
     <div id="title-text" class="animated fadeIn">
+    <div id="top" style="top:1px;position:absolute;" class="waypoint" data-down-waypoint="0,53" data-up-waypoint="0,53"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -51,7 +52,7 @@
 </div>
 
 <section id="content">
-<div id="intro">
+<div id="intro" class="waypoint">
         <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2" > <!--col-md-offset-1 -->
@@ -65,7 +66,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <a href="img/wolves/INTRO03x_1500.jpg" data-fluidbox>
-                        <img src="img/transparent_1500.png" data-src="img/wolves/INTRO03x_1500.jpg" alt="" class="img-responsive">
+                        <img src="img/transparent_1500.png" data-src="img/wolves/INTRO03x_1500.jpg" alt="" class="img-responsive waypoint" id="intro03x">
                     </a>
                 </div><!--/col-->
             </div><!--/row-->
@@ -76,7 +77,7 @@
             </div><!--/row-->
             <div class="row">
                 <div class="col-md-12">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/INTRO02x_1500.jpg" alt="" class="img-responsive">
+                    <img id="intro02x" src="img/transparent_1500.png" data-src="img/wolves/INTRO02x_1500.jpg" alt="" class="img-responsive waypoint">
                 </div><!--/col-->
             </div><!--/row-->
             <div class="row">
@@ -88,7 +89,7 @@
             <div class="row">
                 <div class="col-md-12 captioned">
                 <a href="img/wolves/WATCHERS01x_1500.jpg" data-fluidbox>
-                    <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS01x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                    <img id="watchers01x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS01x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                 </a>
                     <div class="caption-text"><h6>Doug Smith on the site of wolf re-introduction, Idaho.</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
@@ -105,7 +106,7 @@
 <div id="watchers" class="waypoint" data-down-waypoint="57,117" data-up-waypoint="0,53">
 
     <div class="edge-to-edge">
-        <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS03x_1500.jpg" alt="wolf-titlecard">
+        <img id="watchers03x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS03x_1500.jpg" class="waypoint" alt="wolf-titlecard">
     </div>
 
     <div class="container">
@@ -118,7 +119,7 @@
             </div><!--/row-->
             <div class="row">
                 <div class="col-md-12 captioned">
-                <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS04x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                <img id="watchers04x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS04x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                 <div class="caption-text"><h6>Rick McKintyre of the Yellowstone Wolf Project leads a class about wolves.</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
                 </div>
@@ -126,13 +127,13 @@
 
             <div class="row side-by-side">
                 <div class="col-md-6 captioned">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS05x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                    <img id="watchers05x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS05x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                     <div class="caption-text"><h6>Rick McKintyre.</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
 
                 </div>
                 <div class="col-md-6 captioned">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS06x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                    <img id="watchers06x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS06x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                     <div class="caption-text"><h6>Paw print.</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
                 </div>
@@ -145,7 +146,7 @@
             </div><!--/row-->
             <div class="row">
                 <div class="col-md-12 captioned">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS08x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                    <img id="watchers08x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS08x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                     <div class="caption-text"><h6>Members of the Yellowstone Wolf Project track the park&#39;s ten wolf packs. They also help point tourists to the best places to see wolves. [A line about why they like wolves/why wolves matter/deserve protection.]</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
                 </div>
@@ -157,7 +158,7 @@
             </div><!--/row-->
             <div class="row">
                 <div class="col-md-12 captioned">
-                    <img src="img/transparent_1500.png" data-src="img/wolves/WATCHERS09x_1500.jpg" alt="wolf-titlecard" class="img-responsive">
+                    <img id="watchers09x" src="img/transparent_1500.png" data-src="img/wolves/WATCHERS09x_1500.jpg" alt="wolf-titlecard" class="img-responsive waypoint">
                     <div class="caption-text"><h6>tk.</h6></div>
                     <p class="caption-label"><i class="fa fa-plus-circle"></i> <b>Caption</b> </p>
                 </div>
@@ -167,7 +168,7 @@
 
 <div id="hunters" class="waypoint" data-down-waypoint="122,194" data-up-waypoint="57,117">
     <div class="edge-to-edge">
-        <img src="img/transparent_1500.png" data-src="img/wolves/HUNTERS01x_1500.jpg" alt="wolf-titlecard">
+        <img id="hunters01x" src="img/transparent_1500.png" data-src="img/wolves/HUNTERS01x_1500.jpg" alt="wolf-titlecard" class="waypoint">
     </div>
 
     <div class="container">
@@ -493,7 +494,4 @@
 
 {% endblock %}
 {% block extra_foot_js %}
-    {{ JS.push('js/lib/jquery.smooth-scroll.min.js') }}
-    {{ JS.push('js/lib/jquery.jplayer.js') }}
-    {{ JS.push('js/lib/jquery.jplayer.fade.js') }}
 {% endblock %}
