@@ -12,7 +12,7 @@ var $begin;
 var $toggle_ambient;
 var ambient_is_paused = false;
 var ambient_start = 0;
-var ambient_end = 30;
+var ambient_end = 53;
 var aspect_width = 16;
 var aspect_height = 9;
 var AUDIO_LENGTH = 60;
@@ -107,8 +107,6 @@ var play_audio = function(times) {
     * Fades out existing audio clip if one is currently playing.
     */
 
-    console.log(times);
-
     // Set the start and ent times as ints.
     ambient_start = parseInt(times.split(',')[0], 0);
     ambient_end = parseInt(times.split(',')[1], 0);
@@ -125,7 +123,7 @@ var play_audio = function(times) {
             return;
         }
         $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
-        $ambient_player.jPlayer("start");
+        $ambient_player.jPlayer("play");
     };
 
     // Test if we're in the middle of a currently playing clip.
@@ -149,8 +147,8 @@ var on_ambient_player_ready = function() {
     * Loads on initialization for desktop.
     */
     $ambient_player.jPlayer('setMedia', {
-        mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-        oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+        mp3: 'http://s3.amazonaws.com/stage-apps.npr.org/wolves/WOLVESclips2.mp3',
+        oga: 'http://s3.amazonaws.com/stage-apps.npr.org/wolves/WOLVESclips2.ogg'
     }).jPlayer('play', ambient_start);
 };
 
@@ -185,25 +183,25 @@ $(document).ready(function() {
     $toggle_ambient = $( '.toggle-ambi' );
 
     // Set up the STORY NARRATION player.
-    $player.jPlayer({
-        ready: function () {
-            $(this).jPlayer('setMedia', {
-                mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-            }).jPlayer('pause');
-        },
-        play: function() {
-            $(this).jPlayer('play', 0);
-        },
-        ended: function (event) {
-            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
-        },
-        swfPath: 'js/lib',
-        supplied: 'mp3, oga',
-        loop: false,
-        timeupdate: check_cues,
-        volume: volume_narration_active
-    });
+    // $player.jPlayer({
+    //     ready: function () {
+    //         $(this).jPlayer('setMedia', {
+    //             mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+    //             oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+    //         }).jPlayer('pause');
+    //     },
+    //     play: function() {
+    //         $(this).jPlayer('play', 0);
+    //     },
+    //     ended: function (event) {
+    //         $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+    //     },
+    //     swfPath: 'js/lib',
+    //     supplied: 'mp3, oga',
+    //     loop: false,
+    //     timeupdate: check_cues,
+    //     volume: volume_narration_active
+    // });
 
     // Load the ambient audio player.
     // Set up a ready function.
