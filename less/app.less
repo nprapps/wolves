@@ -58,18 +58,135 @@ a:hover, a:active {
     text-decoration: none;
 }
 
-.animated{
+//animations
+
+.animated {
 	-webkit-animation-fill-mode:both;
 	-moz-animation-fill-mode:both;
 	-ms-animation-fill-mode:both;
 	-o-animation-fill-mode:both;
 	animation-fill-mode:both;
 	.animation-duration(9s);
-	}
+}
 
 .animated {
 	//.animation-delay(1s);
 }
+
+//fadeIn
+
+@-webkit-keyframes fadeIn {
+	0% {opacity: 0;}	
+	100% {opacity: 1;}
+}
+
+@-moz-keyframes fadeIn {
+	0% {opacity: 0;}	
+	100% {opacity: 1;}
+}
+
+@-o-keyframes fadeIn {
+	0% {opacity: 0;}	
+	100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+	0% {opacity: 0;}	
+	100% {opacity: 1;}
+}
+
+.fadeIn {
+	-webkit-animation-name: fadeIn;
+	-moz-animation-name: fadeIn;
+	-o-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+//fadeInUp
+
+@-webkit-keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(20px);
+	}
+	
+	100% {
+		opacity: 1;
+		-webkit-transform: translateY(0);
+	}
+}
+
+@-moz-keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-moz-transform: translateY(20px);
+	}
+	
+	100% {
+		opacity: 1;
+		-moz-transform: translateY(0);
+	}
+}
+
+@-o-keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		-o-transform: translateY(20px);
+	}
+	
+	100% {
+		opacity: 1;
+		-o-transform: translateY(0);
+	}
+}
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.fadeInUp {
+	-webkit-animation-name: fadeInUp;
+	-moz-animation-name: fadeInUp;
+	-o-animation-name: fadeInUp;
+	animation-name: fadeInUp;
+}
+
+//fadeOut
+@-webkit-keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+@-moz-keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+@-o-keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+@keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+.fadeOut {
+	-webkit-animation-name: fadeOut;
+	-moz-animation-name: fadeOut;
+	-o-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
 
 //Titlecard
 
@@ -312,6 +429,28 @@ color: #fff;
 			&.active{
 				a {
 					color: #777;
+				}
+			}
+		}
+		
+		.listen-nav {
+			position: relative;
+			strong {
+				position: absolute;
+				top: 0;
+				left: -180px;
+				width: 180px;
+				overflow: hidden;
+				font-size: 11px;
+				color: #ccc;
+				text-transform: uppercase;
+				.opacity(0);
+				.transition(opacity 1s ease);
+				.text-shadow(1px 1px 0 #777);
+			}
+			&:hover {
+				strong {
+					.opacity(1);
 				}
 			}
 		}
