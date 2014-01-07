@@ -64,7 +64,8 @@ a:hover, a:active {
 	-ms-animation-fill-mode:both;
 	-o-animation-fill-mode:both;
 	animation-fill-mode:both;
-	-webkit-animation-duration:9s;-moz-animation-duration:9s;-ms-animation-duration:9s;-o-animation-duration:9s;animation-duration:9s;}
+	.animation-duration(9s);
+	}
 
 .animated {
 	//.animation-delay(1s);
@@ -150,9 +151,9 @@ color: #fff;
 	    h2 {
 	    	font-size: 17px;
 	        .text-shadow(0 2px 2px rgba(0,0,0,0.9));
-	        color: #efdada;
 	        max-width: 240px;
 	        margin: 5px auto;
+	        color: #ccc;
 
 	        @media @screen-small-above {
 	        	margin: 20px auto 0 auto;
@@ -306,10 +307,7 @@ color: #fff;
 			}
 			&.active{
 				a {
-					font-size: 11px;
-					padding-left: 2px;
-					line-height: 2.8;
-					color: #888;
+					color: #777;
 				}
 			}
 		}
@@ -557,7 +555,7 @@ color: #fff;
 
 			.caption-label {
 				i {
-					/*.rotate(45deg);*/
+					.rotate(45deg);
 					.opacity(1);
 				}
 				/*b {
