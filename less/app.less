@@ -185,6 +185,7 @@ color: #fff;
 		&.animated{
 			.animation-duration(10s);
 		}
+		.ie9 & {display: none;}
 	}
 
 	.titlecard-first {
@@ -200,8 +201,10 @@ color: #fff;
 		.background-size(cover);
 		.animation-name(titleFade);
 		&.animated{
-			.animation-duration(6s);
+			.animation-duration(9s);
 		}
+		
+		.ie9 & {display: none;}
 	}
 
 	.titlecard {
@@ -304,6 +307,7 @@ color: #fff;
 
 			a {
 				color: #ccc;
+				outline: 0;
 			}
 			&.active{
 				a {
@@ -366,6 +370,10 @@ color: #fff;
 			line-height: 1.7;
 		}
 	}
+	
+	.img-responsive {
+		width: 100%;
+	}
 
 	.extended-title {
 		p {
@@ -393,7 +401,7 @@ color: #fff;
 			font-size: 20px;
 			@media @screen-small-above {
 				padding: 40px 0 0 0;
-				font-size: 40px;
+				font-size: 27px;
 			}
 		}
 		&.long-quote {
@@ -509,9 +517,7 @@ color: #fff;
 				letter-spacing: 1px;
 				position: relative;
 				top: -1px;
-				.touch & {
-					display: none;
-				}
+				
 			}
 
 
@@ -535,14 +541,21 @@ color: #fff;
 
 			}
 
-		&:hover {
-			b, i {
-				color: #444;
+			&:hover {
+				b, i {
+					color: #444;
+				}
+			}
+			
+			.touch & {
+				&:hover {
+					b, i {
+						color: #ccc;
+					}
+				}
+				
 			}
 		}
-
-
-    	}
 
     	&.cap-on {
 			.caption-text {
