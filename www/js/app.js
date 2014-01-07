@@ -10,6 +10,7 @@ var $waypoints;
 var $nav;
 var $begin;
 var $toggle_ambient;
+var visited_waypoints = [];
 var ambient_is_paused = false;
 var ambient_start = 0;
 var ambient_end = 53;
@@ -174,6 +175,8 @@ var on_waypoint = function(element, direction) {
     * Events to fire when waypoints are reached.
     */
 
+    var waypoint = $(element).attr('id');
+
     // Grab the waypoints for audio.
     // Varies by direction.
     if ($(element).attr('data-' + direction + '-waypoint')) {
@@ -181,8 +184,13 @@ var on_waypoint = function(element, direction) {
     }
 
     // Grab the waypoints for images.
-    if ($(element).attr('id')) {
-        setHashSilently($(element).attr('id'));
+    // These are more numerous than the audio waypoints.
+    if (waypoint) {
+        if (visited_waypoints.indexOf(waypoint) == -1) {
+            visited_waypoints.push(waypoint);
+            _gaq.push(['_trackEvent', 'Waypoints', 'Visited waypoint' + waypoint, APP_CONFIG.PROJECT_NAME, 1]);
+        }
+        setHashSilently(waypoint);
     }
 };
 
