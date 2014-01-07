@@ -90,13 +90,18 @@
     {{ JS.push('js/lib/bootstrap.js') }}
     {{ JS.push('js/lib/jquery.unveil.js') }}
     {{ JS.push('js/lib/webfont.js') }}
-    {% block extra_foot_js %}{% endblock extra_foot_js %}
+    {{ JS.push('js/lib/jquery.smooth-scroll.min.js') }}
+    {{ JS.push('js/lib/jquery.jplayer.js') }}
+    {{ JS.push('js/lib/jquery.jplayer.fade.js') }}
     {{ JS.push('js/lib/jquery.fluidbox.js') }}
     {{ JS.push('js/lib/jquery.waypoints.js') }}
+    {{ JS.push('js/lib/signals.js') }}
+    {{ JS.push('js/lib/hasher.js') }}
+    {{ JS.push('js/lib/jquery.imagesloaded.js') }}
+    {% block extra_foot_js %}{% endblock extra_foot_js %}
     {{ JS.push('js/templates.js') }}
     {{ JS.push('js/app.js') }}
     {{ JS.render('js/app-footer.min.js') }}
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.0.4/jquery.imagesloaded.min.js'></script>
 
     <script>
         WebFont.load({
