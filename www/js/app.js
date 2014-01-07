@@ -209,10 +209,12 @@ var on_hash_changed = function(new_hash, old_hash) {
         });
     }
 
+    // Naked URLs should get /#/top.
     if (!new_hash) {
         new_hash = 'top';
     }
 
+    // Smooth scroll to the new hash.
     $.smoothScroll({
         speed: 800,
         scrollTarget: '#' + new_hash
