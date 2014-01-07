@@ -18,7 +18,7 @@ var aspect_height = 9;
 var AUDIO_LENGTH = 60;
 var audio_supported = true;
 var currently_playing = false;
-var volume_ambient_active = 0.5;
+var volume_ambient_active = 0.7;
 var volume_ambient_inactive = 0.1;
 var volume_narration_active = 1;
 var volume_narration_inactive = 0;
@@ -215,10 +215,7 @@ var on_hash_changed = function(new_hash, old_hash) {
     }
 
     // Smooth scroll to the new hash.
-    $.smoothScroll({
-        speed: 800,
-        scrollTarget: '#' + new_hash
-    });
+    $(window).scrollTop($('#' + new_hash).offset().top);
 };
 
 $(document).ready(function() {
@@ -297,12 +294,8 @@ $(document).ready(function() {
 
     // Smooth scroll for the nav.
     $nav.on('click', function(){
-        var anchor = $(this).attr('href');
-        $.smoothScroll({
-            speed: 800,
-            scrollTarget: anchor
-        });
-        // play_audio($(anchor).attr('data-down-waypoint'));
+        var hash = $(this).attr('href').replace('#', '');
+        $.smoothScroll({ speed: 800, scrollTarget: '#' + hash });
         return false;
     });
 
