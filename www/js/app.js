@@ -190,6 +190,8 @@ var on_waypoint = function(element, direction) {
             visited_waypoints.push(waypoint);
             _gaq.push(['_trackEvent', 'Waypoints', 'Visited waypoint' + waypoint, APP_CONFIG.PROJECT_NAME, 1]);
         }
+
+        // Don't trigger any hasher events as you scroll through the site.
         setHashSilently(waypoint);
     }
 };
@@ -209,7 +211,6 @@ var on_hash_changed = function(new_hash, old_hash) {
     */
 
     // This helps solve the conflict between hasher and waypoints.
-    // Default to hasher on first
     if (first_page_load) {
         first_page_load = false;
         $waypoints.waypoint(function(direction){
@@ -241,25 +242,25 @@ $(document).ready(function() {
     $toggle_ambient = $( '.toggle-ambi' );
 
     // Set up the STORY NARRATION player.
-    // $player.jPlayer({
-    //     ready: function () {
-    //         $(this).jPlayer('setMedia', {
-    //             mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-    //             oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
-    //         }).jPlayer('pause');
-    //     },
-    //     play: function() {
-    //         $(this).jPlayer('play', 0);
-    //     },
-    //     ended: function (event) {
-    //         $(this).jPlayer('pause', AUDIO_LENGTH - 1);
-    //     },
-    //     swfPath: 'js/lib',
-    //     supplied: 'mp3, oga',
-    //     loop: false,
-    //     timeupdate: check_cues,
-    //     volume: volume_narration_active
-    // });
+    $player.jPlayer({
+        ready: function () {
+            $(this).jPlayer('setMedia', {
+                mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+                oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+            }).jPlayer('pause');
+        },
+        play: function() {
+            $(this).jPlayer('play', 0);
+        },
+        ended: function (event) {
+            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+        },
+        swfPath: 'js/lib',
+        supplied: 'mp3, oga',
+        loop: false,
+        timeupdate: check_cues,
+        volume: volume_narration_active
+    });
 
     // Load the ambient audio player.
     // Set up a ready function.
