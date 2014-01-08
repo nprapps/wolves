@@ -31,7 +31,12 @@ var unveil_images = function() {
     * Loads images using jQuery unveil.
     * Current depth: 3x the window height.
     */
-    $container.find('img').unveil($w.height() * 3);
+    if (Modernizr.touch) {
+        $container.find('img').unveil($(document).height());
+    }
+    else {
+        $container.find('img').unveil($w.height() * 3);
+    }
 };
 
 var sub_responsive_images = function() {
@@ -184,37 +189,6 @@ var on_waypoint = function(element, direction) {
         // Don't trigger any hasher events as you scroll through the site.
         setHashSilently(waypoint);
     }
-};
-
-var setHashSilently = function(hash){
-    /*
-    * Sets the hash without calling on_hash_changed.
-    */
-    hasher.changed.active = false;
-    hasher.setHash(hash);
-    hasher.changed.active = true;
-};
-
-var on_hash_changed = function(new_hash, old_hash) {
-    /*
-    * When the hash changes, do things.
-    */
-
-    // This helps solve the conflict between hasher and waypoints.
-    if (first_page_load) {
-        first_page_load = false;
-        $waypoints.waypoint(function(direction){
-            on_waypoint(this, direction);
-        }, { offset: $w.height() / 3 });
-    }
-
-    // Naked URLs should get /#/top.
-    if (!new_hash) {
-        new_hash = 'top';
-    }
-
-    // Smooth scroll to the new hash.
-    $(window).scrollTop($('#' + new_hash).offset().top);
 };
 
 $(document).ready(function() {
@@ -483,10 +457,9 @@ $(document).ready(function() {
 
     on_resize();
     sub_responsive_images();
-
-    hasher.changed.add(on_hash_changed);
-    hasher.initialized.add(on_hash_changed);
-    hasher.init();
+    $waypoints.waypoint(function(direction){
+        on_waypoint(this, direction);
+    }, { offset: $w.height() / 3 });
 });
 
 // Defer pointer events on animated header
