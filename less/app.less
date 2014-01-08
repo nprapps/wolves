@@ -611,14 +611,13 @@ color: #fff;
 	.kicker {
 		.edge-to-edge {margin-top: 0;}
 	}
-	//wide image
+	
 	.captioned {
 		position: relative;
-		//cursor: pointer;
 
 		.caption-text {
 			position: absolute;
-			bottom: 22px;
+			bottom: 26px;
 			left: 0;
 			z-index: 500;
 			.transition(opacity 1s ease);
@@ -639,11 +638,14 @@ color: #fff;
 				}
 
 			}
+			@media @screen-small-above {
+				bottom: 22px;
+			}
 		}
 		.caption-label {
     		position: relative;
 			text-align: left;
-			margin: 0;
+			margin: 10px 0 0 0;
 			padding: 0;
 			line-height: 1;
 			text-transform: uppercase;
@@ -651,7 +653,7 @@ color: #fff;
 			cursor: pointer;
 
 			b {
-				font-size: 10px;
+				font-size: 11px;
 				color: #ccc;
 				letter-spacing: 1px;
 				position: relative;
@@ -661,12 +663,14 @@ color: #fff;
 
 
 			i {
-				font-size: 11px;
+				font-size: 16px;
 				color: #ccc;
 			}
 
 
 			@media @screen-small-above {
+			
+				margin: 0;
 
 				b {
 					font-size: 11px;
