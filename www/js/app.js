@@ -413,11 +413,12 @@ $(document).ready(function() {
 
     // Bind click event
     $fb.click(function (e){
-
       // Variables
       var $activeFb = $(this),
           $img   = $(this).find('img'),
           $ghost = $(this).find('.fluidbox-ghost');
+
+      _gaq.push(['_trackEvent', 'Photo', 'Zoomed on ' + $img.attr('src'), APP_CONFIG.PROJECT_NAME, 1]);
 
       if($(this).data('fluidbox-state') === 0 || !$(this).data('fluidbox-state')) {
         // State: Closed
