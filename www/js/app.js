@@ -31,7 +31,12 @@ var unveil_images = function() {
     * Loads images using jQuery unveil.
     * Current depth: 3x the window height.
     */
-    $container.find('img').unveil($(document).height() / 2);
+    if (Modernizr.touch) {
+        $container.find('img').unveil($(document).height());
+    }
+    else {
+        $container.find('img').unveil($w.height() * 3);
+    }
 };
 
 var sub_responsive_images = function() {
@@ -176,8 +181,8 @@ var on_waypoint = function(element, direction) {
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
-};
 
+};
 
 $(document).ready(function() {
     $container = $('#content');
@@ -445,6 +450,9 @@ $(document).ready(function() {
 
     on_resize();
     sub_responsive_images();
+    $waypoints.waypoint(function(direction){
+        on_waypoint(this, direction);
+    }, { offset: $w.height() / 3 });
 });
 
 // Defer pointer events on animated header
