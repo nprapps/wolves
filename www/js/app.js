@@ -258,7 +258,10 @@ $(document).ready(function() {
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
     $begin.on('click', function() {
-        if (Modernizr.touch) { on_ambient_player_ready(); }
+        if (Modernizr.touch) { 
+        	on_ambient_player_ready();
+        	$( "#content" ).addClass( "touch-begin" );
+        }
         $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
         return false;
     });
