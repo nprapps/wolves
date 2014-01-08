@@ -31,7 +31,12 @@ var unveil_images = function() {
     * Loads images using jQuery unveil.
     * Current depth: 3x the window height.
     */
-    $container.find('img').unveil($(document).height() / 2);
+    if (Modernizr.touch) {
+        $container.find('img').unveil($(document).height());
+    }
+    else {
+        $container.find('img').unveil($w.height() * 3);
+    }
 };
 
 var sub_responsive_images = function() {
