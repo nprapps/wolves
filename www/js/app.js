@@ -176,8 +176,15 @@ var on_waypoint = function(element, direction) {
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
-};
 
+    // Grab the waypoints for images.
+    // These are more numerous than the audio waypoints.
+    if (waypoint) {
+
+        // Don't trigger any hasher events as you scroll through the site.
+        setHashSilently(waypoint);
+    }
+};
 
 $(document).ready(function() {
     $container = $('#content');
@@ -445,6 +452,9 @@ $(document).ready(function() {
 
     on_resize();
     sub_responsive_images();
+    $waypoints.waypoint(function(direction){
+        on_waypoint(this, direction);
+    }, { offset: $w.height() / 3 });
 });
 
 // Defer pointer events on animated header
