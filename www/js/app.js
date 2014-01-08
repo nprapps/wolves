@@ -182,13 +182,6 @@ var on_waypoint = function(element, direction) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
 
-    // Grab the waypoints for images.
-    // These are more numerous than the audio waypoints.
-    if (waypoint) {
-
-        // Don't trigger any hasher events as you scroll through the site.
-        setHashSilently(waypoint);
-    }
 };
 
 $(document).ready(function() {
