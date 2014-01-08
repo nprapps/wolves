@@ -328,7 +328,6 @@ $(document).ready(function() {
     $('#fluidbox-overlay').click(closeFb);
 
     // Check if images are loaded first
-    $fb.imagesLoaded().done(function (){
 
     // Create dynamic elements
     $fb
@@ -445,7 +444,6 @@ $(document).ready(function() {
 
       }
       e.preventDefault();
-    });
     });
 
     on_resize();
