@@ -10,7 +10,8 @@ var $waypoints;
 var $nav;
 var $begin;
 var $toggle_ambient;
-var visited_waypoints = [];
+var $button_download_audio;
+var $button_toggle_caption;
 var ambient_is_paused = false;
 var ambient_start = 0;
 var ambient_end = 53;
@@ -53,39 +54,32 @@ var sub_responsive_images = function() {
 var on_resize = function() {
     /*
     * Handles resizing our full-width images.
+    * Makes decisions based on the window size.
     */
     var w;
     var h;
     var w_optimal;
     var h_optimal;
-    var w_offset = 0;
-    var h_offset = 0;
 
-    window_width = $w.width();
-    window_height = $w.height();
+    // Calculate optimal width if height is constrained to window height.
+    w_optimal = ($w.height() * aspect_width) / aspect_height;
 
-    // calculate optimal width if height is constrained to window height
-    w_optimal = (window_height * aspect_width) / aspect_height;
+    // Calculate optimal height if width is constrained to window width.
+    h_optimal = ($w.width() * aspect_height) / aspect_width;
 
-    // calculate optimal height if width is constrained to window width
-    h_optimal = (window_width * aspect_height) / aspect_width;
+    // Decide whether to go with optimal height or width.
+    w = $w.width();
+    h = h_optimal;
 
-    // decide whether to go with optimal height or width
-    if (w_optimal > window_width) {
+    if (w_optimal > $w.width()) {
         w = w_optimal;
-        h = window_height;
-    } else {
-        w = window_width;
-        h = h_optimal;
+        h = $w.height();
     }
-    w_offset = (window_width - w) / 2;
-    h_offset = (window_height - h) / 2;
 
-    // size the divs accordingly
+    // Size the divs accordingly.
     $titlecard.width(w + 'px').height(h + 'px');
-    //$titlecard.css('margin', h_offset + 'px ' + w_offset + 'px');
-    $titlecard_wrapper.height(window_height + 'px');
-    $container.css('marginTop', window_height + 'px');
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
 };
 
 var check_cues = function(e) {
@@ -186,10 +180,6 @@ var on_waypoint = function(element, direction) {
     // Grab the waypoints for images.
     // These are more numerous than the audio waypoints.
     if (waypoint) {
-        if (visited_waypoints.indexOf(waypoint) == -1) {
-            visited_waypoints.push(waypoint);
-            _gaq.push(['_trackEvent', 'Waypoints', 'Visited waypoint' + waypoint, APP_CONFIG.PROJECT_NAME, 1]);
-        }
 
         // Don't trigger any hasher events as you scroll through the site.
         setHashSilently(waypoint);
@@ -215,7 +205,7 @@ var on_hash_changed = function(new_hash, old_hash) {
         first_page_load = false;
         $waypoints.waypoint(function(direction){
             on_waypoint(this, direction);
-        });
+        }, { offset: $w.height() / 3 });
     }
 
     // Naked URLs should get /#/top.
@@ -240,6 +230,8 @@ $(document).ready(function() {
     $waypoints = $('.waypoint');
     $begin = $('.begin-bar');
     $toggle_ambient = $( '.toggle-ambi' );
+    $button_download_audio = $('#download-audio');
+    $button_toggle_caption = $('.caption-label');
 
     // Set up the STORY NARRATION player.
     $player.jPlayer({
@@ -251,9 +243,11 @@ $(document).ready(function() {
         },
         play: function() {
             $(this).jPlayer('play', 0);
+            _gaq.push(['_trackEvent', 'Audio', 'Started story audio', APP_CONFIG.PROJECT_NAME, 1]);
         },
         ended: function (event) {
             $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+            _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
         },
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
@@ -286,7 +280,8 @@ $(document).ready(function() {
     $toggle_ambient.on('click', on_toggle_ambient_click);
 
     //captions
-    $('.caption-label').click(function() {
+    $button_toggle_caption.on('click', function() {
+        _gaq.push(['_trackEvent', 'Captions', 'Clicked caption button', APP_CONFIG.PROJECT_NAME, 1]);
         $( this ).parent( ".captioned" ).toggleClass('cap-on');
     });
 
@@ -306,6 +301,11 @@ $(document).ready(function() {
         var hash = $(this).attr('href').replace('#', '');
         $.smoothScroll({ speed: 800, scrollTarget: '#' + hash });
         return false;
+    });
+
+    $button_download_audio.on('click', function(){
+        _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
+        console.log('Downloaded story audio mp3');
     });
 
     //share popover
