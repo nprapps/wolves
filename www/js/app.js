@@ -430,7 +430,7 @@ $(document).ready(function() {
         .addClass('fluidbox-closed');
 
         // Hide overlay
-        $('#fluidbox-overlay').fadeOut();
+        $('#fluidbox-overlay').fadeOut(250);
 
         // Show original image
         $img.css({ opacity: 1 });
@@ -438,10 +438,10 @@ $(document).ready(function() {
         // Reverse animation on wrapped elements
         $ghost
         .css({ 'transform': 'translate(0,0) scale(1)' })
-        .one('webkitTransitionEnd MSTransitionEnd oTransitionEnd otransitionend transitionend', function (){
-          // Wait for transntion to complete before hiding the ghost element
-          $ghost.css({ opacity: 0 });
-        });
+        // .one('webkitTransitionEnd MSTransitionEnd oTransitionEnd otransitionend transitionend', function (){
+        //   // Wait for transntion to complete before hiding the ghost element
+        //   $ghost.css({ opacity: 0 });
+        // });
 
       }
       e.preventDefault();
