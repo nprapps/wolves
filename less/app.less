@@ -772,10 +772,14 @@ color: #fff;
     }
 
 	#audio-story {
-		background-color: #333;
+		background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
+		.background-size(cover);
 		color: #ddd;
 		position: relative;
 		padding-bottom: 40px;
+		padding-top: 50px;
+		
+		.row {margin: 20px 0 0 0;}
 
 		h3 {
 			margin: 0;
@@ -795,6 +799,10 @@ color: #fff;
 				text-align: right;
 
 			}
+		}
+		
+		h6 {
+			margin: 0 0 5px 0;
 		}
 
 		ul {
@@ -825,7 +833,11 @@ color: #fff;
 			}
 		}
 
-		p {margin: 0;}
+		p {
+			margin: 0;
+			font-size: 16px;
+			color: #aaa;
+			}
 
 		a, a:link, a:visited {
 	    color: #eee;
