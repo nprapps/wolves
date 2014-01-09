@@ -14,6 +14,7 @@ var $button_download_audio;
 var $button_toggle_caption;
 var $lightbox;
 var $lightbox_image;
+var $story_player_button;
 var ambient_is_paused = false;
 var ambient_start = 0;
 var ambient_end = 53;
@@ -337,6 +338,7 @@ $(document).ready(function() {
     $button_download_audio = $('#download-audio');
     $button_toggle_caption = $('.caption-label');
     $overlay = $('#fluidbox-overlay');
+    $story_player_button = $('#jp_container_1 .jp-play');
 
     // Set up the STORY NARRATION player.
     $player.jPlayer({
@@ -348,7 +350,6 @@ $(document).ready(function() {
         },
         play: function() {
             $(this).jPlayer('play', 0);
-            _gaq.push(['_trackEvent', 'Audio', 'Started story audio', APP_CONFIG.PROJECT_NAME, 1]);
         },
         ended: function (event) {
             $(this).jPlayer('pause', AUDIO_LENGTH - 1);
@@ -421,6 +422,11 @@ $(document).ready(function() {
     $button_download_audio.on('click', function(){
         _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
         console.log('Downloaded story audio mp3');
+    });
+    
+    $story_player_button.on('click', function(){
+        _gaq.push(['_trackEvent', 'Audio', 'played audio story', APP_CONFIG.PROJECT_NAME, 1]);
+        $player.jPlayer('play');
     });
 
     //share popover
