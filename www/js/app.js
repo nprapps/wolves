@@ -173,15 +173,20 @@ var on_toggle_ambient_click =  function() {
 
 var on_waypoint = function(element, direction) {
     /*
-    * Waypoint reached event.
+    * Event for reaching a waypoint.
     */
 
+    // Get the waypoint name.
     var waypoint = $(element).attr('id');
 
-    // Grab the waypoints for audio.
-    // Varies by direction.
+    // Get the directionally-varied waypoint for audio.
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
+    }
+
+    // Kill audio on the final waypoint.
+    if (waypoint == 'quote-hilary-zaranek' && direction == 'down'){
+        $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
     }
 
 };
@@ -435,8 +440,13 @@ $(document).ready(function() {
 
     $(window).on('resize', on_resize);
 
+    // Initial window sizing.
     on_resize();
+
+    // Decide on image sizes.
     sub_responsive_images();
+
+    // Initialize waypoints.
     $waypoints.waypoint(function(direction){
         on_waypoint(this, direction);
     }, { offset: $w.height() / 3 });
