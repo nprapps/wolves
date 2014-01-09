@@ -193,12 +193,27 @@ var on_waypoint = function(element, direction) {
 };
 
 var lightbox_image = function(element) {
+    /* We built our own lightbox functions because the other
+    alternatives did not fit our needs. Specifically, we wanted
+    more control over transitions and didn't require image substitution.
+    You'll note that there are three functions. This is because we need
+    to fade the lightbox in and out, but removing/adding it to the
+    document is instantaneous with CSS. */
+
+    // add lightbox to document
     $('body').append('<div id="lightbox"></div>')
 
     $lightbox = $('#lightbox');
     var $el = $(element);
 
-    // fade in the overlay
+    // get clicked image, add it to lightbox
+
+    var new_image_src = $el.attr('src');
+
+    $lightbox.append('<img src="' + new_image_src + '" id="lightbox_image">');
+    $lightbox_image = $('#lightbox_image');
+
+    // set styles on lightbox
 
     $lightbox.css({
         display: 'block',
@@ -210,14 +225,12 @@ var lightbox_image = function(element) {
         'z-index': 500,
     });
 
+    // stupid debouncing so we can transition
     fade = _.debounce(fade_lightbox_in, 1)
 
     fade();
 
-    var new_image_src = $el.attr('src');
-
-    $lightbox.append('<img src="' + new_image_src + '" id="lightbox_image">');
-    $lightbox_image = $('#lightbox_image');
+    // set image proportions
 
     var lightbox_width = w;
 
@@ -244,6 +257,8 @@ var lightbox_image = function(element) {
     var lightbox_top = ($w.height() - lightbox_height) / 2
     var lightbox_left = ($w.width() - lightbox_width) / 2
 
+    // set styles on image
+
     $lightbox_image.css({
         'width': lightbox_width + 'px',
         'height': lightbox_height + 'px',
@@ -253,14 +268,13 @@ var lightbox_image = function(element) {
         'left': lightbox_left + 'px',
     })
 
+    // disable scrolling
+
     $('body').css({
         overflow: 'hidden'
     });
 
-    // disable scrolling
-
-
-    // listen for click
+    // listen for click to close lightbox
 
     $lightbox.on('click', remove_lightbox);
 }
@@ -268,27 +282,35 @@ var lightbox_image = function(element) {
 var remove_lightbox = function() {
     $el = $('#lightbox');
 
+    // fade out lightbox
+
     $el.css({
         opacity: 0,
     });
 
+    // re-enable scrolling
+
     $('body').css({
         overflow: 'auto'
     });
+
+    // stupid debounce so transition actually happens
 
     fade = _.debounce(fade_lightbox_out, 250);
     fade();
 }
 
 var fade_lightbox_in = function() {
-    console.log('fade in');
+    // fade lightbox in
+
     $lightbox.css({
         opacity: 1
     });
 }
 
 var fade_lightbox_out = function() {
-    console.log('faaaaaaaaade ouuuuuut agaaaaain');
+    // destroy the lightbox
+
     $lightbox.remove();
 }
 
@@ -383,6 +405,7 @@ $(document).ready(function() {
         return false;
     });
 
+    // call lightbox on a click, but only if it's not a mobile device
     if (!Modernizr.touch) {
         $('.img-responsive, img.waypoint').on('click', function() {
             lightbox_image(this);
