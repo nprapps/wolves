@@ -27,6 +27,11 @@ var volume_ambient_inactive = 0.1;
 var volume_narration_active = 1;
 var volume_narration_inactive = 0;
 var first_page_load = true;
+var w;
+var h;
+var w_optimal;
+var h_optimal;
+var fade;
 
 var unveil_images = function() {
     /*
@@ -63,10 +68,16 @@ var on_resize = function() {
     * Handles resizing our full-width images.
     * Makes decisions based on the window size.
     */
-    var w;
-    var h;
-    var w_optimal;
-    var h_optimal;
+    // Size the divs accordingly.
+
+    aspect_ratio();
+
+    $titlecard.width(w + 'px').height(h + 'px');
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
+};
+
+var aspect_ratio = function() {
 
     // Calculate optimal width if height is constrained to window height.
     w_optimal = ($w.height() * aspect_width) / aspect_height;
@@ -82,12 +93,7 @@ var on_resize = function() {
         w = w_optimal;
         h = $w.height();
     }
-
-    // Size the divs accordingly.
-    $titlecard.width(w + 'px').height(h + 'px');
-    $titlecard_wrapper.height($w.height() + 'px');
-    $container.css('marginTop', $w.height() + 'px');
-};
+}
 
 var check_cues = function(e) {
     /*
@@ -202,19 +208,54 @@ var lightbox_image = function(element) {
         bottom: 0,
         right: 0,
         'z-index': 500,
-        opacity: 1
     });
+
+    fade = _.debounce(fade_lightbox_in, 1)
+
+    fade();
 
     var new_image_src = $el.attr('src');
 
     $lightbox.append('<img src="' + new_image_src + '" id="lightbox_image">');
     $lightbox_image = $('#lightbox_image');
 
+    var lightbox_width = w;
+
+    if (lightbox_width > $w.width()) {
+        lightbox_width = $w.width();
+    }
+
+    var lightbox_height = ((lightbox_width * 9) / 16)
+
+    if (lightbox_width > $w.height()) {
+        lightbox_top = (lightbox_height - $w.height()) / 2
+    }
+
+    if (lightbox_height > $w.height()) {
+        lightbox_width = ($w.height() * 16) / 9;
+        lightbox_height = $w.height();
+    }
+
+    if (lightbox_width > $w.width()) {
+        lightbox_height = ($w.width() * 9) / 16;
+        lightbox_width = $w.width();
+    }
+
+    var lightbox_top = ($w.height() - lightbox_height) / 2
+    var lightbox_left = ($w.width() - lightbox_width) / 2
+
     $lightbox_image.css({
-        'max-width': $w.width() - 10 + 'px',
-        'max-height': $w.height() - 10 + 'px',
-        'opacity': 1
+        'width': lightbox_width + 'px',
+        'height': lightbox_height + 'px',
+        'opacity': 1,
+        'position': 'absolute',
+        'top': lightbox_top + 'px',
+        'left': lightbox_left + 'px',
     })
+
+    $('body').css({
+        overflow: 'hidden'
+    });
 
     // disable scrolling
 
@@ -225,19 +266,30 @@ var lightbox_image = function(element) {
 }
 
 var remove_lightbox = function() {
-    console.log('fired');
     $el = $('#lightbox');
-
-    $el.find('img').css({
-        opacity: 0
-    });
 
     $el.css({
         opacity: 0,
-        position: 'relative'
     });
 
-    $el.remove();
+    $('body').css({
+        overflow: 'auto'
+    });
+
+    fade = _.debounce(fade_lightbox_out, 250);
+    fade();
+}
+
+var fade_lightbox_in = function() {
+    console.log('fade in');
+    $lightbox.css({
+        opacity: 1
+    });
+}
+
+var fade_lightbox_out = function() {
+    console.log('faaaaaaaaade ouuuuuut agaaaaain');
+    $lightbox.remove();
 }
 
 
@@ -316,7 +368,7 @@ $(document).ready(function() {
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
     $begin.on('click', function() {
-        if (Modernizr.touch) { 
+        if (Modernizr.touch) {
         	on_ambient_player_ready();
         	$( "#content" ).addClass( "touch-begin" );
         }
@@ -331,9 +383,11 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.img-responsive').on('click', function() {
-        lightbox_image(this);
-    });
+    if (!Modernizr.touch) {
+        $('.img-responsive, img.waypoint').on('click', function() {
+            lightbox_image(this);
+        });
+    }
 
     $button_download_audio.on('click', function(){
         _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
