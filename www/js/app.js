@@ -68,16 +68,6 @@ var on_resize = function() {
     * Handles resizing our full-width images.
     * Makes decisions based on the window size.
     */
-    // Size the divs accordingly.
-
-    aspect_ratio();
-
-    $titlecard.width(w + 'px').height(h + 'px');
-    $titlecard_wrapper.height($w.height() + 'px');
-    $container.css('marginTop', $w.height() + 'px');
-};
-
-var aspect_ratio = function() {
 
     // Calculate optimal width if height is constrained to window height.
     w_optimal = ($w.height() * aspect_width) / aspect_height;
@@ -93,7 +83,11 @@ var aspect_ratio = function() {
         w = w_optimal;
         h = $w.height();
     }
-}
+
+    $titlecard.width(w + 'px').height(h + 'px');
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
+};
 
 var check_cues = function(e) {
     /*
@@ -179,7 +173,7 @@ var on_toggle_ambient_click =  function() {
 
 var on_waypoint = function(element, direction) {
     /*
-    * Events to fire when waypoints are reached.
+    * Waypoint reached event.
     */
 
     var waypoint = $(element).attr('id');
@@ -193,28 +187,27 @@ var on_waypoint = function(element, direction) {
 };
 
 var lightbox_image = function(element) {
-    /* We built our own lightbox functions because the other
-    alternatives did not fit our needs. Specifically, we wanted
-    more control over transitions and didn't require image substitution.
-    You'll note that there are three functions. This is because we need
-    to fade the lightbox in and out, but removing/adding it to the
-    document is instantaneous with CSS. */
+    /*
+    * We built our own lightbox function.
+    * We wanted more control over transitions and didn't
+    * require image substitution.
+    * You'll note that there are three functions.
+    * This is because we need to fade the lightbox in and out,
+    * but removing/adding it to the document is instantaneous with CSS.
+    */
 
-    // add lightbox to document
-    $('body').append('<div id="lightbox"></div>')
+    // Add lightbox to the document.
+    $('body').append('<div id="lightbox"></div>');
 
+    // Get our elements.
     $lightbox = $('#lightbox');
     var $el = $(element);
 
-    // get clicked image, add it to lightbox
-
-    var new_image_src = $el.attr('src');
-
-    $lightbox.append('<img src="' + new_image_src + '" id="lightbox_image">');
+    // Get the clicked image and add it to lightbox.
+    $lightbox.append('<img src="' + $el.attr('src') + '" id="lightbox_image">');
     $lightbox_image = $('#lightbox_image');
 
-    // set styles on lightbox
-
+    // Base styles for the lightbox.
     $lightbox.css({
         display: 'block',
         position: 'fixed',
@@ -225,40 +218,46 @@ var lightbox_image = function(element) {
         'z-index': 500,
     });
 
-    // stupid debouncing so we can transition
-    fade = _.debounce(fade_lightbox_in, 1)
-
+    // Transition with debounce.
+    fade = _.debounce(fade_lightbox_in, 1);
     fade();
 
-    // set image proportions
-
+    // Grab Wes's properly sized width.
     var lightbox_width = w;
 
+    // Sometimes, this is wider than the window, shich is bad.
     if (lightbox_width > $w.width()) {
         lightbox_width = $w.width();
     }
 
-    var lightbox_height = ((lightbox_width * 9) / 16)
+    // Set the hight as a proportion of the image width.
+    var lightbox_height = ((lightbox_width * aspect_height) / aspect_width);
 
+    // Sometimes the lightbox width is greater than the window height.
+    // Center it vertically.
     if (lightbox_width > $w.height()) {
-        lightbox_top = (lightbox_height - $w.height()) / 2
+        lightbox_top = (lightbox_height - $w.height()) / 2;
     }
 
+    // Sometimes the lightbox height is greater than the window height.
+    // Resize the image to fit.
     if (lightbox_height > $w.height()) {
-        lightbox_width = ($w.height() * 16) / 9;
+        lightbox_width = ($w.height() * aspect_width) / aspect_height;
         lightbox_height = $w.height();
     }
 
+    // Sometimes the lightbox width is greater than the window width.
+    // Resize the image to fit.
     if (lightbox_width > $w.width()) {
-        lightbox_height = ($w.width() * 9) / 16;
+        lightbox_height = ($w.width() * aspect_height) / aspect_width;
         lightbox_width = $w.width();
     }
 
-    var lightbox_top = ($w.height() - lightbox_height) / 2
-    var lightbox_left = ($w.width() - lightbox_width) / 2
+    // Set the top and left offsets.
+    var lightbox_top = ($w.height() - lightbox_height) / 2;
+    var lightbox_left = ($w.width() - lightbox_width) / 2;
 
-    // set styles on image
-
+    // Set styles on the lightbox image.
     $lightbox_image.css({
         'width': lightbox_width + 'px',
         'height': lightbox_height + 'px',
@@ -266,53 +265,55 @@ var lightbox_image = function(element) {
         'position': 'absolute',
         'top': lightbox_top + 'px',
         'left': lightbox_left + 'px',
-    })
+    });
 
-    // disable scrolling
-
+    // Disable scrolling while the lightbox is present.
     $('body').css({
         overflow: 'hidden'
     });
 
-    // listen for click to close lightbox
+    // On click, remove the lightbox.
+    $lightbox.on('click', on_remove_lightbox);
+};
 
-    $lightbox.on('click', remove_lightbox);
-}
+var on_remove_lightbox = function() {
+    /*
+    * Handles the click event.
+    */
 
-var remove_lightbox = function() {
+    // Set the element.
     $el = $('#lightbox');
 
-    // fade out lightbox
-
+    // Fade to black.
     $el.css({
         opacity: 0,
     });
 
-    // re-enable scrolling
-
+    // Un-disable scrolling.
     $('body').css({
         overflow: 'auto'
     });
 
-    // stupid debounce so transition actually happens
-
+    // Debounce the fade.
     fade = _.debounce(fade_lightbox_out, 250);
     fade();
-}
+};
 
 var fade_lightbox_in = function() {
-    // fade lightbox in
-
+    /*
+    * Fade in event.
+    */
     $lightbox.css({
         opacity: 1
     });
-}
+};
 
 var fade_lightbox_out = function() {
-    // destroy the lightbox
-
+    /*
+    * Fade out event.
+    */
     $lightbox.remove();
-}
+};
 
 
 $(document).ready(function() {
@@ -391,8 +392,8 @@ $(document).ready(function() {
     // Also sets up the ambient player.
     $begin.on('click', function() {
         if (Modernizr.touch) {
-        	on_ambient_player_ready();
-        	$( "#content" ).addClass( "touch-begin" );
+            on_ambient_player_ready();
+            $( "#content" ).addClass( "touch-begin" );
         }
         $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
         return false;
