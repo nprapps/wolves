@@ -384,7 +384,7 @@ $(document).ready(function() {
     });
 
     if (!Modernizr.touch) {
-        $('.img-responsive').on('click', function() {
+        $('.img-responsive, img.waypoint').on('click', function() {
             lightbox_image(this);
         });
     }
