@@ -27,6 +27,10 @@ var volume_ambient_inactive = 0.1;
 var volume_narration_active = 1;
 var volume_narration_inactive = 0;
 var first_page_load = true;
+var w;
+var h;
+var w_optimal;
+var h_optimal;
 
 var unveil_images = function() {
     /*
@@ -63,10 +67,16 @@ var on_resize = function() {
     * Handles resizing our full-width images.
     * Makes decisions based on the window size.
     */
-    var w;
-    var h;
-    var w_optimal;
-    var h_optimal;
+    // Size the divs accordingly.
+
+    aspect_ratio();
+
+    $titlecard.width(w + 'px').height(h + 'px');
+    $titlecard_wrapper.height($w.height() + 'px');
+    $container.css('marginTop', $w.height() + 'px');
+};
+
+var aspect_ratio = function() {
 
     // Calculate optimal width if height is constrained to window height.
     w_optimal = ($w.height() * aspect_width) / aspect_height;
@@ -82,12 +92,7 @@ var on_resize = function() {
         w = w_optimal;
         h = $w.height();
     }
-
-    // Size the divs accordingly.
-    $titlecard.width(w + 'px').height(h + 'px');
-    $titlecard_wrapper.height($w.height() + 'px');
-    $container.css('marginTop', $w.height() + 'px');
-};
+}
 
 var check_cues = function(e) {
     /*
@@ -210,10 +215,38 @@ var lightbox_image = function(element) {
     $lightbox.append('<img src="' + new_image_src + '" id="lightbox_image">');
     $lightbox_image = $('#lightbox_image');
 
+    var lightbox_width = w;
+
+    if (lightbox_width > $w.width()) {
+        lightbox_width = $w.width();
+    }
+
+    var lightbox_height = ((lightbox_width * 9) / 16)
+
+    if (lightbox_width > $w.height()) {
+        lightbox_top = (lightbox_height - $w.height()) / 2
+    }
+
+    if (lightbox_height > $w.height()) {
+        lightbox_width = ($w.height() * 16) / 9;
+        lightbox_height = $w.height();
+    }
+
+    if (lightbox_width > $w.width()) {
+        lightbox_height = ($w.width() * 9) / 16;
+        lightbox_width = $w.width();
+    }
+
+    var lightbox_top = ($w.height() - lightbox_height) / 2
+    var lightbox_left = ($w.width() - lightbox_width) / 2
+
     $lightbox_image.css({
-        'max-width': $w.width() - 10 + 'px',
-        'max-height': $w.height() - 10 + 'px',
-        'opacity': 1
+        'width': lightbox_width + 'px',
+        'height': lightbox_height + 'px',
+        'opacity': 1,
+        'position': 'absolute',
+        'top': lightbox_top + 'px',
+        'left': lightbox_left + 'px',
     })
 
     // disable scrolling
@@ -316,7 +349,7 @@ $(document).ready(function() {
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
     $begin.on('click', function() {
-        if (Modernizr.touch) { 
+        if (Modernizr.touch) {
         	on_ambient_player_ready();
         	$( "#content" ).addClass( "touch-begin" );
         }
