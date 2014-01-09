@@ -152,13 +152,6 @@ a:hover, a:active {
 	}
 }
 
-.fadeInUp {
-	-webkit-animation-name: fadeInUp;
-	-moz-animation-name: fadeInUp;
-	-o-animation-name: fadeInUp;
-	animation-name: fadeInUp;
-}
-
 //fadeOut
 @-webkit-keyframes fadeOut {
 	0% {opacity: 1;}
@@ -221,6 +214,9 @@ left: 0;
 background-color: #000;
 color: #fff;
 
+	.touch & {
+		z-index: 10000;
+	}
 
 	#title-text {
 		position: absolute;
@@ -376,14 +372,21 @@ color: #fff;
 		z-index: 12;
 		.opacity(.6);
 		cursor: pointer;
+		.animation-name(fadeInUp);
+		.animation-duration(1s);
+		.animation-delay(4s);
+		
+		.touch & {
+			bottom: 20px;
+			.animation-name(fadeIn);
+			.animation-duration(3s);
+			.animation-delay(1s);
+			
+			i {display: none;}
+		}
 
 		&:hover {
 			.opacity(1);
-		}
-
-		&.animated{
-			.animation-duration(1s);
-			.animation-delay(4s);
 		}
 
 		p {
