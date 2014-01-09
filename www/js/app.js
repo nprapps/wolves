@@ -150,8 +150,8 @@ var on_ambient_player_ready = function() {
     * Loads on initialization for desktop.
     */
     $ambient_player.jPlayer('setMedia', {
-        mp3: 'http://s3.amazonaws.com/stage-apps.npr.org/wolves/WOLVESclips2.mp3',
-        oga: 'http://s3.amazonaws.com/stage-apps.npr.org/wolves/WOLVESclips2.ogg'
+        mp3: 'http://stage-apps.npr.org/wolves/audio/ambient.mp3',
+        oga: 'http://stage-apps.npr.org/wolves/audio/ambient.ogg'
     }).jPlayer('play', ambient_start);
 };
 
