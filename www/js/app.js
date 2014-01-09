@@ -31,6 +31,7 @@ var w;
 var h;
 var w_optimal;
 var h_optimal;
+var fade;
 
 var unveil_images = function() {
     /*
@@ -207,8 +208,11 @@ var lightbox_image = function(element) {
         bottom: 0,
         right: 0,
         'z-index': 500,
-        opacity: 1
     });
+
+    fade = _.debounce(fade_lightbox_in, 1)
+
+    fade();
 
     var new_image_src = $el.attr('src');
 
@@ -262,23 +266,30 @@ var lightbox_image = function(element) {
 }
 
 var remove_lightbox = function() {
-    console.log('fired');
     $el = $('#lightbox');
-
-    $el.find('img').css({
-        opacity: 0
-    });
 
     $el.css({
         opacity: 0,
-        position: 'relative'
     });
 
     $('body').css({
         overflow: 'auto'
     });
 
-    $el.remove();
+    fade = _.debounce(fade_lightbox_out, 250);
+    fade();
+}
+
+var fade_lightbox_in = function() {
+    console.log('fade in');
+    $lightbox.css({
+        opacity: 1
+    });
+}
+
+var fade_lightbox_out = function() {
+    console.log('faaaaaaaaade ouuuuuut agaaaaain');
+    $lightbox.remove();
 }
 
 
