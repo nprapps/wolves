@@ -249,6 +249,10 @@ var lightbox_image = function(element) {
         'left': lightbox_left + 'px',
     })
 
+    $('body').css({
+        overflow: 'hidden'
+    });
+
     // disable scrolling
 
 
@@ -268,6 +272,10 @@ var remove_lightbox = function() {
     $el.css({
         opacity: 0,
         position: 'relative'
+    });
+
+    $('body').css({
+        overflow: 'auto'
     });
 
     $el.remove();
@@ -364,9 +372,11 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.img-responsive').on('click', function() {
-        lightbox_image(this);
-    });
+    if (!Modernizr.touch) {
+        $('.img-responsive').on('click', function() {
+            lightbox_image(this);
+        });
+    }
 
     $button_download_audio.on('click', function(){
         _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
