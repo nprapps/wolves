@@ -393,6 +393,10 @@ $(document).ready(function() {
 
     //scrollspy
     $('body').scrollspy({ target: '.controls' });
+    
+    $('[data-spy="scroll"]').each(function () {
+	  var $spy = $(this).scrollspy('refresh');
+	});
 
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
