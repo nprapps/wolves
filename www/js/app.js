@@ -57,15 +57,24 @@ var sub_responsive_images = function() {
     * Replaces large images with small ones for tiny devices.
     * Contains a test for non-tablet devices.
     */
-    window_width = $w.width();
-    if (window_width < 769 && Modernizr.touch === true) {
+
+    // If the window is narrow and this is a touch device ...
+    if ($w.width() < 769 && Modernizr.touch === true) {
+
+        // Loop over our images ...
         _.each($container.find('img'), function(img){
+
+            // If the image has a data-src attribute ...
             if ($(img).attr('data-src')){
+
+                // Sub in the responsive image from that data-src attribute.
                 var responsive_image = $(img).attr('data-src').replace('_1500', '_750');
                 $(img).attr('data-src', responsive_image);
             }
         });
     }
+
+    // Call unveil afterwards.
     unveil_images();
 };
 
