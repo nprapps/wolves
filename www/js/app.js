@@ -4,8 +4,8 @@ var $titlecard_wrapper;
 var $w;
 var $ambient_audio;
 var $ambient_player;
-var $audio;
-var $player;
+var $story_audio;
+var $story_player;
 var $waypoints;
 var $nav;
 var $begin;
@@ -20,7 +20,8 @@ var ambient_start = 0;
 var ambient_end = 53;
 var aspect_width = 16;
 var aspect_height = 9;
-var AUDIO_LENGTH_STRING = '19:15';
+var story_start = 0;
+var story_end = 830;
 var audio_supported = true;
 var currently_playing = false;
 var volume_ambient_active = 1;
@@ -90,7 +91,32 @@ var on_resize = function() {
     $container.css('marginTop', $w.height() + 'px');
 };
 
-var check_cues = function(e) {
+var on_story_timeupdate = function(e) {
+    /*
+    * Handles the time updates for the story player.
+    */
+
+    // If we reach the end, stop playing AND send a Google event.
+    if (e.jPlayer.status.currentTime > parseInt(story_end, 0)) {
+        $story_player.jPlayer('stop');
+        _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
+    }
+
+    // Count down when playing but for the initial time, show the length of the audio.
+
+    // Set the time to the current time ...
+    var time_text = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
+
+    // ... unless it's the initial state. In that case, show the length of the audio.
+    if (parseInt(e.jPlayer.status.currentTime, 0) === 0) {
+        time_text = $.jPlayer.convertTime(story_end);
+    }
+
+    // Write the current time to our time div.
+    $('.current-time').text(time_text);
+};
+
+var on_ambient_timeupdate = function(e) {
     /*
     * Handles actions based on the cue.
     * Example: Stops player when end cue is reached.
@@ -98,7 +124,7 @@ var check_cues = function(e) {
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
 
         // Don't pause the player, stop the player.
-        $ambient_player.jPlayer("stop");
+        $ambient_player.jPlayer('stop');
         currently_playing = false;
     }
 };
@@ -323,8 +349,8 @@ $(document).ready(function() {
     $w = $(window);
     $ambient_audio = $('#audio-ambient');
     $ambient_player = $('#pop-audio-ambient');
-    $audio = $('#audio');
-    $player = $('#pop-audio');
+    $story_audio = $('#audio');
+    $story_player = $('#pop-audio');
     $nav = $('.nav a');
     $waypoints = $('.waypoint');
     $begin = $('.begin-bar');
@@ -335,20 +361,14 @@ $(document).ready(function() {
     $story_player_button = $('#jp_container_1 .jp-play');
 
     // Set up the STORY NARRATION player.
-    $player.jPlayer({
+    $story_player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
                 mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
                 oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
             }).jPlayer('pause');
         },
-        play: function() {
-            $(this).jPlayer('play', 0);
-        },
-        ended: function (event) {
-            $(this).jPlayer('stop');
-            _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
-        },
+        timeupdate: on_story_timeupdate,
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
         loop: false,
@@ -371,7 +391,7 @@ $(document).ready(function() {
         cssSelectorAncestor: '#jp_container_2',
         loop: false,
         supplied: 'mp3, oga',
-        timeupdate: check_cues,
+        timeupdate: on_ambient_timeupdate,
         volume: volume_ambient_active
     });
 
@@ -423,7 +443,7 @@ $(document).ready(function() {
 
     $story_player_button.on('click', function(){
         _gaq.push(['_trackEvent', 'Audio', 'Played audio story', APP_CONFIG.PROJECT_NAME, 1]);
-        $player.jPlayer('play');
+        $story_player.jPlayer('play');
     });
 
     $(window).on('scroll', function() {
