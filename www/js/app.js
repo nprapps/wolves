@@ -103,7 +103,6 @@ var on_story_timeupdate = function(e) {
     }
 
     // Count down when playing but for the initial time, show the length of the audio.
-
     // Set the time to the current time ...
     var time_text = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
 
@@ -118,8 +117,8 @@ var on_story_timeupdate = function(e) {
 
 var on_ambient_timeupdate = function(e) {
     /*
-    * Handles actions based on the cue.
-    * Example: Stops player when end cue is reached.
+    * Handles the time updates for the ambient player.
+    * Stops audio based on cue points rather than the end of the clip.
     */
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
 
