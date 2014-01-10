@@ -20,7 +20,7 @@ var ambient_start = 0;
 var ambient_end = 53;
 var aspect_width = 16;
 var aspect_height = 9;
-var AUDIO_LENGTH = 60;
+var AUDIO_LENGTH_STRING = '19:15';
 var audio_supported = true;
 var currently_playing = false;
 var volume_ambient_active = 1;
@@ -184,12 +184,6 @@ var on_waypoint = function(element, direction) {
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
-
-    // Kill audio on the final waypoint.
-    if (waypoint == 'quote-hilary-zaranek' && direction == 'down'){
-        $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
-    }
-
 };
 
 var lightbox_image = function(element) {
@@ -352,13 +346,12 @@ $(document).ready(function() {
             $(this).jPlayer('play', 0);
         },
         ended: function (event) {
-            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
+            $(this).jPlayer('stop');
             _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
         },
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
         loop: false,
-        timeupdate: check_cues,
         volume: volume_narration_active
     });
 
@@ -393,10 +386,10 @@ $(document).ready(function() {
 
     //scrollspy
     $('body').scrollspy({ target: '.controls' });
-    
+
     $('[data-spy="scroll"]').each(function () {
-	  var $spy = $(this).scrollspy('refresh');
-	});
+        var $spy = $(this).scrollspy('refresh');
+    });
 
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
@@ -427,10 +420,16 @@ $(document).ready(function() {
         _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
         console.log('Downloaded story audio mp3');
     });
-    
+
     $story_player_button.on('click', function(){
-        _gaq.push(['_trackEvent', 'Audio', 'played audio story', APP_CONFIG.PROJECT_NAME, 1]);
+        _gaq.push(['_trackEvent', 'Audio', 'Played audio story', APP_CONFIG.PROJECT_NAME, 1]);
         $player.jPlayer('play');
+    });
+
+    $(window).on('scroll', function() {
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
+            $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
+        }
     });
 
     //share popover
