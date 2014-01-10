@@ -41,9 +41,13 @@ var unveil_images = function() {
     * Current depth: 3x the window height.
     */
     if (Modernizr.touch) {
+        // If we're on a touch device, just load all the images.
+        // Seems backwards, but iOS Safari and Android have terrible scroll event
+        // handling that doesn't allow unveil to progressively load images.
         $container.find('img').unveil($(document).height());
     }
     else {
+        // Otherwise, start loading at 3x the window height.
         $container.find('img').unveil($w.height() * 3);
     }
 };
@@ -157,13 +161,11 @@ var play_audio = function(times) {
 
     // Test if we're in the middle of a currently playing clip.
     if (currently_playing) {
-
         // If in a currently playing clip, fade the previous clip before starting this one.
         $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
             init();
         });
     } else {
-
         // Start this clip, otherwise.
         init();
     }
@@ -188,10 +190,13 @@ var on_toggle_ambient_click =  function() {
     $(this).toggleClass("ambi-mute");
 
     // Don't like this but it's viable.
+    // We've got a global "is paused" state, too.
     if ($(this).hasClass('ambi-mute')) {
+        // If the mute button is on, pause the audio.
         ambient_is_paused = true;
         $ambient_player.jPlayer('pause');
     } else {
+        // Otherwise, let the player play.
         ambient_is_paused = false;
         $ambient_player.jPlayer('play');
     }
