@@ -15,6 +15,7 @@ var $button_toggle_caption;
 var $lightbox;
 var $lightbox_image;
 var $story_player_button;
+var $enlarge;
 var ambient_is_paused = true;
 var ambient_start = 0;
 var ambient_end = 53;
@@ -78,7 +79,7 @@ var sub_responsive_images = function() {
     unveil_images();
 };
 
-var on_resize = function() {
+var on_window_resize = function() {
     /*
     * Handles resizing our full-width images.
     * Makes decisions based on the window size.
@@ -236,6 +237,54 @@ var on_begin_click = function() {
     return false;
 };
 
+var button_toggle_caption_click = function() {
+    /*
+    * Click handler for the caption toggle.
+    */
+    _gaq.push(['_trackEvent', 'Captions', 'Clicked caption button', APP_CONFIG.PROJECT_NAME, 1]);
+    $( this ).parent( ".captioned" ).toggleClass('cap-on');
+};
+
+var on_nav_click = function(){
+    /*
+    * Click handler for navigation element clicks.
+    */
+    var hash = $(this).attr('href').replace('#', '');
+    $.smoothScroll({ speed: 800, scrollTarget: '#' + hash });
+    return false;
+};
+
+var on_lightbox_click = function() {
+    /*
+    * Click handler for lightboxed photos.
+    */
+    if (!Modernizr.touch) {
+        lightbox_image(this);
+    }
+};
+
+var on_button_download_audio_click = function(){
+    /*
+    * Click handler for the download button.
+    */
+    _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
+    console.log('Downloaded story audio mp3');
+};
+
+var on_story_player_button_click = function(){
+    /*
+    * Click handler for the story player "play" button.
+    */
+    _gaq.push(['_trackEvent', 'Audio', 'Played audio story', APP_CONFIG.PROJECT_NAME, 1]);
+    $story_player.jPlayer('play');
+};
+
+var on_window_scroll = function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
+        $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
+    }
+};
+
 var on_waypoint = function(element, direction) {
     /*
     * Event for reaching a waypoint.
@@ -388,7 +437,6 @@ $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
     $titlecard_wrapper = $('.titlecard-wrapper');
-    //$opener = $('.opener');
     $w = $(window);
     $ambient_audio = $('#audio-ambient');
     $ambient_player = $('#pop-audio-ambient');
@@ -402,6 +450,7 @@ $(document).ready(function() {
     $button_toggle_caption = $('.caption-label');
     $overlay = $('#fluidbox-overlay');
     $story_player_button = $('#jp_container_1 .jp-play');
+    $enlarge = $('.enlarge');
 
     // Set up the STORY NARRATION player.
     $story_player.jPlayer({
@@ -438,83 +487,39 @@ $(document).ready(function() {
         volume: volume_ambient_active
     });
 
-    // Mute button
     $toggle_ambient.on('click', on_toggle_ambient_click);
 
-    //captions
-    $button_toggle_caption.on('click', function() {
-        _gaq.push(['_trackEvent', 'Captions', 'Clicked caption button', APP_CONFIG.PROJECT_NAME, 1]);
-        $( this ).parent( ".captioned" ).toggleClass('cap-on');
-    });
+    $button_toggle_caption.on('click', button_toggle_caption_click);
 
-    //scrollspy
+    $begin.on('click', on_begin_click);
+
+    $nav.on('click', on_nav_click);
+
+    $enlarge.find('img').on('click', on_lightbox_click);
+
+    $button_download_audio.on('click', on_button_download_audio_click);
+
+    $story_player_button.on('click', on_story_player_button_click);
+
+    $(window).on('scroll', on_window_scroll);
+
+    $(window).on('resize', on_window_resize);
+
+    // Scrollspy
     $('body').scrollspy({ target: '.controls' });
 
     $('[data-spy="scroll"]').each(function () {
         var $spy = $(this).scrollspy('refresh');
     });
 
-    // Smooth scroll for the "begin" button.
-    // Also sets up the ambient player.
-    $begin.on('click', on_begin_click);
+    on_window_resize();
 
-    // Smooth scroll for the nav.
-    $nav.on('click', function(){
-        var hash = $(this).attr('href').replace('#', '');
-        $.smoothScroll({ speed: 800, scrollTarget: '#' + hash });
-        return false;
-    });
-
-    // call lightbox on a click, but only if it's not a mobile device
-    if (!Modernizr.touch) {
-        $('.enlarge').find('img').on('click', function() {
-            lightbox_image(this);
-        });
-    }
-
-    $button_download_audio.on('click', function(){
-        _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
-        console.log('Downloaded story audio mp3');
-    });
-
-    $story_player_button.on('click', function(){
-        _gaq.push(['_trackEvent', 'Audio', 'Played audio story', APP_CONFIG.PROJECT_NAME, 1]);
-        $story_player.jPlayer('play');
-    });
-
-    $(window).on('scroll', function() {
-        if($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
-            $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
-        }
-    });
-
-    //share popover
-    $(function () {
-        $('body').popover({
-            selector: '[data-toggle="popover"]'
-        });
-    });
-
-    $('.share-this').popover({
-        'selector': '',
-        'placement': 'left',
-        //'title': '<p>Share</p>',
-        'content': '<p><i class="fa fa-twitter"></i></p><p><i class="fa fa-facebook-square"></i></p><p>Grab the link</p>',
-        'html': 'true'
-      });
-
-    $(window).on('resize', on_resize);
-
-    // Initial window sizing.
-    on_resize();
-
-    // Decide on image sizes.
     sub_responsive_images();
 
-    // Initialize waypoints.
     $waypoints.waypoint(function(direction){
         on_waypoint(this, direction);
     }, { offset: $w.height() / 3 });
+
 });
 
 // Defer pointer events on animated header
