@@ -738,9 +738,6 @@ color: #fff;
 					.rotate(45deg);
 					.opacity(1);
 				}
-				/*b {
-					.opacity(0) !important;
-				}*/
 			}
 
 		}
@@ -1041,11 +1038,22 @@ footer {
 
 /* lightbox */
 #lightbox {
-  background-color: rgba(0, 0, 0, 0.85);
-  cursor: pointer;
-  display: none;
-  opacity: 0;
-  .transition(all .25s ease-in-out);
+	background-color: rgba(0, 0, 0, 0.85);
+	cursor: pointer;
+	display: none;
+	opacity: 0;
+	.transition(all .25s ease-in-out);
+  
+	.close-lightbox {
+		position: absolute;
+		top: 20px;
+		right: 18px;
+		font-size: 30px;
+		color: #c0c0c0;
+		.rotate(45deg);
+		z-index: 1;
+		.opacity(.7);
+	}
 }
 
 #lightbox img {

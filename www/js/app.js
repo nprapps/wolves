@@ -236,7 +236,7 @@ var lightbox_image = function(element) {
     */
 
     // Add lightbox to the document.
-    $('body').append('<div id="lightbox"></div>');
+    $('body').append('<div id="lightbox"><i class="fa fa-plus-circle close-lightbox"></i></div>');
 
     // Get our elements.
     $lightbox = $('#lightbox');
