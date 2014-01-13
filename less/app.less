@@ -2,7 +2,7 @@
 @import "less/lib/font-awesome/font-awesome";
 @import "less/adhesion";
 @import "less/lib/prefixer";
-@import "less/lib/animate";
+//@import "less/lib/animate";
 
 
 // Global variables
@@ -107,7 +107,7 @@ a:hover, a:active {
 @-webkit-keyframes fadeInUp {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateY(20px);
+		-webkit-transform: translateY(30px);
 	}
 
 	100% {
@@ -119,7 +119,7 @@ a:hover, a:active {
 @-moz-keyframes fadeInUp {
 	0% {
 		opacity: 0;
-		-moz-transform: translateY(20px);
+		-moz-transform: translateY(30px);
 	}
 
 	100% {
@@ -131,7 +131,7 @@ a:hover, a:active {
 @-o-keyframes fadeInUp {
 	0% {
 		opacity: 0;
-		-o-transform: translateY(20px);
+		-o-transform: translateY(30px);
 	}
 
 	100% {
@@ -143,7 +143,7 @@ a:hover, a:active {
 @keyframes fadeInUp {
 	0% {
 		opacity: 0;
-		transform: translateY(20px);
+		transform: translateY(30px);
 	}
 
 	100% {
@@ -185,22 +185,22 @@ a:hover, a:active {
 
 @-webkit-keyframes titleFade {
 	0% {opacity: .7;}
-	100% {opacity: .3;}
+	100% {opacity: .2;}
 }
 
 @-moz-keyframes titleFade {
 	0% {opacity: .7;}
-	100% {opacity: .3;}
+	100% {opacity: .2;}
 }
 
 @-o-keyframes titleFade {
 	0% {opacity: .7;}
-	100% {opacity: .3;}
+	100% {opacity: .2;}
 }
 
 @keyframes titleFade {
 	0% {opacity: .7;}
-	100% {opacity: .3;}
+	100% {opacity: .2;}
 }
 
 .titlecard-wrapper {
@@ -217,29 +217,48 @@ color: #fff;
 	.touch & {
 		z-index: 10000;
 	}
+	
+	.headphone-prompt {
+		position: absolute;
+		bottom: 20px;
+		left: 0;
+		width: 100%;
+		z-index: 12;
+		.animation-name(fadeIn);
+		.animation-duration(6s);
+		text-align: center;
+		h6 {
+			font-size: 12px;
+			letter-spacing: 4px;
+			text-transform: uppercase;
+			color: #ddd;
+			
+		}
+		
+	}
 
 	#title-text {
 		position: absolute;
 		top: 0;
 		left: 0;
+		z-index: 4;
 		padding-top: 20px;
 		@media @screen-small-above {
 	        padding-top: 50px;
         }
 
 		width: 100%;
-		z-index: 3;
 		text-align: center;
 
 		&.animated{
-			.animation-duration(2s);
+			.animation-duration(7s);
 		}
 
 		.npr-logo {
 			width: 70px;
 			margin: 10px 0;
 			@media @screen-small-above {
-			    width: 80px;
+			    width: 100px;
 				//margin: 50px 0 15px 0;
 			}
 
@@ -263,15 +282,16 @@ color: #fff;
 	        @media @screen-small-above {
 	        	line-height: 1.3;
 		        font-size: 70px;
+		        font-weight: bold;
 	        }
 
 
 	    }
 
 	    h2 {
-	    	font-size: 17px;
+	    	font-size: 24px;
 	        .text-shadow(0 2px 2px rgba(0,0,0,0.9));
-	        max-width: 240px;
+	        max-width: 340px;
 	        margin: 5px auto;
 	        color: #ccc;
 
@@ -291,7 +311,7 @@ color: #fff;
 				line-height: 1.3;
 				font-size: 12px;
 				@media @screen-small-above {
-		        	font-size: 10px;
+		        	font-size: 13px;
 		        }
 				color: #ccc;
 			}
@@ -365,45 +385,27 @@ color: #fff;
 	}
 
 	.begin-bar {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		z-index: 12;
-		.opacity(.6);
-		cursor: pointer;
-		.animation-name(fadeInUp);
-		.animation-duration(1s);
-		.animation-delay(4s);
-
-		.touch & {
-			bottom: 20px;
-			.animation-name(fadeIn);
-			.animation-duration(3s);
-			.animation-delay(1s);
-
-			i {display: none;}
-		}
-
-		&:hover {
-			.opacity(1);
-		}
+		
+		margin-top: 60px;
+		
 
 		p {
-			font-size: 24px;
-			background-color: #000;
+			cursor: pointer;
+			font-size: 15px;
+			background-color: #fff;
+			color: #222;
 			padding: 10px;
 			width: 100px;
 			margin: 0 auto;
 			text-align: center;
-
-			strong {
-				font-size: 13px;
-				display: block;
-				letter-spacing: 1px;
-				color: #aaa;
-				text-transform: uppercase;
-			}
+			text-transform: uppercase;
+			//.transition(all 1s ease);
+		}
+		&:hover {
+			p {
+				color: #fff;
+				background-color: #111;
+			}	
 		}
 	}
 }
