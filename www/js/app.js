@@ -4,8 +4,8 @@ var $titlecard_wrapper;
 var $w;
 var $ambient_audio;
 var $ambient_player;
-var $audio;
-var $player;
+var $story_audio;
+var $story_player;
 var $waypoints;
 var $nav;
 var $begin;
@@ -20,7 +20,8 @@ var ambient_start = 0;
 var ambient_end = 53;
 var aspect_width = 16;
 var aspect_height = 9;
-var AUDIO_LENGTH = 60;
+var story_start = 0;
+var story_end = 830;
 var audio_supported = true;
 var currently_playing = false;
 var volume_ambient_active = 1;
@@ -40,9 +41,13 @@ var unveil_images = function() {
     * Current depth: 3x the window height.
     */
     if (Modernizr.touch) {
+        // If we're on a touch device, just load all the images.
+        // Seems backwards, but iOS Safari and Android have terrible scroll event
+        // handling that doesn't allow unveil to progressively load images.
         $container.find('img').unveil($(document).height());
     }
     else {
+        // Otherwise, start loading at 3x the window height.
         $container.find('img').unveil($w.height() * 3);
     }
 };
@@ -52,15 +57,24 @@ var sub_responsive_images = function() {
     * Replaces large images with small ones for tiny devices.
     * Contains a test for non-tablet devices.
     */
-    window_width = $w.width();
-    if (window_width < 769 && Modernizr.touch === true) {
+
+    // If the window is narrow and this is a touch device ...
+    if ($w.width() < 769 && Modernizr.touch === true) {
+
+        // Loop over our images ...
         _.each($container.find('img'), function(img){
+
+            // If the image has a data-src attribute ...
             if ($(img).attr('data-src')){
+
+                // Sub in the responsive image from that data-src attribute.
                 var responsive_image = $(img).attr('data-src').replace('_1500', '_750');
                 $(img).attr('data-src', responsive_image);
             }
         });
     }
+
+    // Call unveil afterwards.
     unveil_images();
 };
 
@@ -90,15 +104,39 @@ var on_resize = function() {
     $container.css('marginTop', $w.height() + 'px');
 };
 
-var check_cues = function(e) {
+var on_story_timeupdate = function(e) {
     /*
-    * Handles actions based on the cue.
-    * Example: Stops player when end cue is reached.
+    * Handles the time updates for the story player.
+    */
+
+    // If we reach the end, stop playing AND send a Google event.
+    if (e.jPlayer.status.currentTime > parseInt(story_end, 0)) {
+        $story_player.jPlayer('stop');
+        _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
+    }
+
+    // Count down when playing but for the initial time, show the length of the audio.
+    // Set the time to the current time ...
+    var time_text = $.jPlayer.convertTime(e.jPlayer.status.currentTime);
+
+    // ... unless it's the initial state. In that case, show the length of the audio.
+    if (parseInt(e.jPlayer.status.currentTime, 0) === 0) {
+        time_text = $.jPlayer.convertTime(story_end);
+    }
+
+    // Write the current time to our time div.
+    $('.current-time').text(time_text);
+};
+
+var on_ambient_timeupdate = function(e) {
+    /*
+    * Handles the time updates for the ambient player.
+    * Stops audio based on cue points rather than the end of the clip.
     */
     if (e.jPlayer.status.currentTime > parseInt(ambient_end, 0)) {
 
         // Don't pause the player, stop the player.
-        $ambient_player.jPlayer("stop");
+        $ambient_player.jPlayer('stop');
         currently_playing = false;
     }
 };
@@ -132,13 +170,11 @@ var play_audio = function(times) {
 
     // Test if we're in the middle of a currently playing clip.
     if (currently_playing) {
-
         // If in a currently playing clip, fade the previous clip before starting this one.
         $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
             init();
         });
     } else {
-
         // Start this clip, otherwise.
         init();
     }
@@ -163,10 +199,13 @@ var on_toggle_ambient_click =  function() {
     $(this).toggleClass("ambi-mute");
 
     // Don't like this but it's viable.
+    // We've got a global "is paused" state, too.
     if ($(this).hasClass('ambi-mute')) {
+        // If the mute button is on, pause the audio.
         ambient_is_paused = true;
         $ambient_player.jPlayer('pause');
     } else {
+        // Otherwise, let the player play.
         ambient_is_paused = false;
         $ambient_player.jPlayer('play');
     }
@@ -184,12 +223,6 @@ var on_waypoint = function(element, direction) {
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
-
-    // Kill audio on the final waypoint.
-    if (waypoint == 'quote-hilary-zaranek' && direction == 'down'){
-        $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
-    }
-
 };
 
 var lightbox_image = function(element) {
@@ -329,8 +362,8 @@ $(document).ready(function() {
     $w = $(window);
     $ambient_audio = $('#audio-ambient');
     $ambient_player = $('#pop-audio-ambient');
-    $audio = $('#audio');
-    $player = $('#pop-audio');
+    $story_audio = $('#audio');
+    $story_player = $('#pop-audio');
     $nav = $('.nav a');
     $waypoints = $('.waypoint');
     $begin = $('.begin-bar');
@@ -341,24 +374,17 @@ $(document).ready(function() {
     $story_player_button = $('#jp_container_1 .jp-play');
 
     // Set up the STORY NARRATION player.
-    $player.jPlayer({
+    $story_player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
                 mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
                 oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
             }).jPlayer('pause');
         },
-        play: function() {
-            $(this).jPlayer('play', 0);
-        },
-        ended: function (event) {
-            $(this).jPlayer('pause', AUDIO_LENGTH - 1);
-            _gaq.push(['_trackEvent', 'Audio', 'Completed story audio', APP_CONFIG.PROJECT_NAME, 1]);
-        },
+        timeupdate: on_story_timeupdate,
         swfPath: 'js/lib',
         supplied: 'mp3, oga',
         loop: false,
-        timeupdate: check_cues,
         volume: volume_narration_active
     });
 
@@ -378,7 +404,7 @@ $(document).ready(function() {
         cssSelectorAncestor: '#jp_container_2',
         loop: false,
         supplied: 'mp3, oga',
-        timeupdate: check_cues,
+        timeupdate: on_ambient_timeupdate,
         volume: volume_ambient_active
     });
 
@@ -393,10 +419,10 @@ $(document).ready(function() {
 
     //scrollspy
     $('body').scrollspy({ target: '.controls' });
-    
+
     $('[data-spy="scroll"]').each(function () {
-	  var $spy = $(this).scrollspy('refresh');
-	});
+        var $spy = $(this).scrollspy('refresh');
+    });
 
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
@@ -427,10 +453,16 @@ $(document).ready(function() {
         _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
         console.log('Downloaded story audio mp3');
     });
-    
+
     $story_player_button.on('click', function(){
-        _gaq.push(['_trackEvent', 'Audio', 'played audio story', APP_CONFIG.PROJECT_NAME, 1]);
-        $player.jPlayer('play');
+        _gaq.push(['_trackEvent', 'Audio', 'Played audio story', APP_CONFIG.PROJECT_NAME, 1]);
+        $story_player.jPlayer('play');
+    });
+
+    $(window).on('scroll', function() {
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
+            $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
+        }
     });
 
     //share popover
