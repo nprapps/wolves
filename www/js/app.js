@@ -103,7 +103,7 @@ var on_resize = function() {
     $titlecard_wrapper.height($w.height() + 'px');
     //$opener.height($w.height() + 'px');
     $container.css('marginTop', $w.height() + 'px');
-    
+
 };
 
 var on_story_timeupdate = function(e) {
@@ -225,9 +225,10 @@ var on_waypoint = function(element, direction) {
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
     }
-    
+
+    // If this is a chapter waypoint, run the chapter transitions.
     if ($(element).children('.edge-to-edge')){
-	 	$(element).addClass('chapter-active');   
+        $(element).addClass('chapter-active');
     }
 };
 
@@ -434,13 +435,23 @@ $(document).ready(function() {
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
     $begin.on('click', function() {
-        $toggle_ambient.toggleClass("ambi-mute");
+
+        // Remove the mute class.
+        $toggle_ambient.removeClass("ambi-mute");
+
+        // If this is a mobile device, start up the waterworks.
         if (Modernizr.touch) {
             on_ambient_player_ready();
             $( "#content" ).addClass( "touch-begin" );
         }
+
+        // On all devices, start playing the audio.
         $ambient_player.jPlayer('play', ambient_start);
+
+        // Smooth scroll us to the intro.
         $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
+
+        // Don't do anything else.
         return false;
     });
 
