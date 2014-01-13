@@ -184,23 +184,23 @@ a:hover, a:active {
 //Titlecard
 
 @-webkit-keyframes titleFade {
-	0% {opacity: .7;}
-	100% {opacity: .2;}
+	0% {opacity: .6;}
+	100% {opacity: .3;}
 }
 
 @-moz-keyframes titleFade {
-	0% {opacity: .7;}
-	100% {opacity: .2;}
+	0% {opacity: .6;}
+	100% {opacity: .3;}
 }
 
 @-o-keyframes titleFade {
-	0% {opacity: .7;}
-	100% {opacity: .2;}
+	0% {opacity: .6;}
+	100% {opacity: .3;}
 }
 
 @keyframes titleFade {
-	0% {opacity: .7;}
-	100% {opacity: .2;}
+	0% {opacity: .6;}
+	100% {opacity: .3;}
 }
 
 .titlecard-wrapper {
@@ -219,20 +219,14 @@ color: #fff;
 	}
 	
 	.headphone-prompt {
-		position: absolute;
-		bottom: 20px;
-		left: 0;
-		width: 100%;
-		z-index: 12;
-		.animation-name(fadeIn);
-		.animation-duration(6s);
 		text-align: center;
 		h6 {
 			font-size: 12px;
-			letter-spacing: 4px;
+			line-height: 1.6;
+			letter-spacing: 2px;
 			text-transform: uppercase;
 			color: #ddd;
-			
+			margin-top: 10px;
 		}
 		
 	}
@@ -251,7 +245,7 @@ color: #fff;
 		text-align: center;
 
 		&.animated{
-			.animation-duration(7s);
+			.animation-duration(9s);
 		}
 
 		.npr-logo {
@@ -329,7 +323,7 @@ color: #fff;
 		height: 100%;
 		background-color: #000;
 		&.animated{
-			.animation-duration(10s);
+			.animation-duration(12s);
 		}
 		.ie9 & {display: none;}
 	}
@@ -341,13 +335,13 @@ color: #fff;
 		left: 0;
 		width: 100%;
 		height: 100%;
-		.opacity(.7);
+		.opacity(.2);
 		background-color: #000;
 		background: url('@{img-root}/wolf-titlecard-people.jpg') no-repeat top left;
 		.background-size(cover);
 		.animation-name(titleFade);
 		&.animated{
-			.animation-duration(9s);
+			.animation-duration(6s);
 		}
 
 		.ie9 & {display: none;}
@@ -361,10 +355,10 @@ color: #fff;
 		height: 100%;
 		background: url('@{img-root}/wolves/INTRO01x_1500.jpg') no-repeat top left fixed;
 		.background-size(cover);
-		.opacity(.6);
+		.opacity(.5);
 
 		@media @screen-medium-above {
-			.opacity(1);
+			.opacity(.5);
 		}
 
 		.touch & {
@@ -385,17 +379,16 @@ color: #fff;
 	}
 
 	.begin-bar {
-		
 		margin-top: 60px;
 		
 
 		p {
 			cursor: pointer;
-			font-size: 15px;
+			font-size: 18px;
 			background-color: #fff;
 			color: #222;
 			padding: 10px;
-			width: 100px;
+			width: 250px;
 			margin: 0 auto;
 			text-align: center;
 			text-transform: uppercase;
@@ -510,9 +503,6 @@ color: #fff;
 
 #content {
 	position: relative;
-	@media @screen-small-above {
-		padding-top: 30px;
-	}
 
 
 	h2 {
@@ -556,6 +546,15 @@ color: #fff;
 			}
 		}
 	}
+	
+	/*.opener {
+		background: url('@{img-root}/wolves/INTRO03x_1500.jpg') no-repeat top left fixed;
+		.background-size(cover);
+		overflow: hidden;
+		position: relative;
+		opacity: 1;
+		
+	}*/
 
 	//Quote
 	.quote {
@@ -636,11 +635,34 @@ color: #fff;
 
 	.edge-to-edge {
 		margin-top: 60px;
+		position: relative;
 		img {
 			display: block;
 			width: 100%;
 			height: auto;
 		}
+		h2 {
+			//margin: 1800px auto 1000px auto; 
+			max-width: 800px;
+			font-size: 40px;
+			//text-align: center;
+			color: #fff;
+			text-transform: uppercase;
+			position: absolute;
+			bottom: 50px;
+			left: 50px;
+			.text-shadow(1px 1px 1px #222;);
+			.opacity(0);
+			.transition(opacity 3s ease);
+		}
+		
+		
+	}
+	
+	.chapter-active {
+		.edge-to-edge {
+			h2 {.opacity(1);}
+		}	
 	}
 
 	.kicker {

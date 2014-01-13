@@ -101,7 +101,9 @@ var on_resize = function() {
 
     $titlecard.width(w + 'px').height(h + 'px');
     $titlecard_wrapper.height($w.height() + 'px');
+    //$opener.height($w.height() + 'px');
     $container.css('marginTop', $w.height() + 'px');
+    
 };
 
 var on_story_timeupdate = function(e) {
@@ -222,6 +224,10 @@ var on_waypoint = function(element, direction) {
     // Get the directionally-varied waypoint for audio.
     if ($(element).attr('data-' + direction + '-waypoint')) {
         play_audio($(element).attr('data-' + direction + '-waypoint'));
+    }
+    
+    if ($(element).children('.edge-to-edge')){
+	 	$(element).addClass('chapter-active');   
     }
 };
 
@@ -359,6 +365,7 @@ $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
     $titlecard_wrapper = $('.titlecard-wrapper');
+    //$opener = $('.opener');
     $w = $(window);
     $ambient_audio = $('#audio-ambient');
     $ambient_player = $('#pop-audio-ambient');
