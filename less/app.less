@@ -536,7 +536,7 @@ color: #fff;
 		margin: 30px 0;
 		color: #777;
 		@media @screen-small-above {
-			font-size: 22px;
+			font-size: 18px;
 			line-height: 1.7;
 		}
 	}
@@ -667,14 +667,17 @@ color: #fff;
 				line-height: 1.4;
 				padding: 15px 15px 30px 15px;
 				@media @screen-small-above {
-					font-size: 14px;
-					line-height: 1.6;
-					padding: 20px 100px 15px 20px;
+					font-size: 12px;
+					color: #999;
+					padding: 10px 0 0 0;
+					background-color: transparent;
 				}
 
 			}
 			@media @screen-small-above {
-				bottom: 22px;
+				position: relative;
+				bottom: 0;
+				opacity: 1;
 			}
 		}
 		.caption-label {
@@ -704,19 +707,7 @@ color: #fff;
 
 
 			@media @screen-small-above {
-
-				margin: 0;
-
-				b {
-					font-size: 11px;
-					.transition(color 1s ease);
-				}
-
-				i {
-					font-size: 16px;
-					.transition(color 1s ease);
-				}
-
+				display: none;
 			}
 
 			&:hover {
@@ -760,6 +751,11 @@ color: #fff;
 			.caption-label {
 				padding-left: 10px;
 			}
+			@media @screen-small-above {
+				.caption-text {
+					margin-left: 10px;
+				}
+			}
 
 		}
 
@@ -771,6 +767,9 @@ color: #fff;
 		    .caption-text {
 			    right: 15px;
 			    margin-left: 15px;
+			    @media @screen-small-above {
+					margin-left: 0;
+				}
 		    }
 	    }
     }
@@ -1042,40 +1041,7 @@ footer {
 	}
 }
 
-/* Fluidbox */
-a[data-fluidbox] {
-  background-color: #eee;
-  border: none;
-  cursor: -webkit-zoom-in;
-  cursor: -moz-zoom-in;
-  margin-bottom: 1.5rem;
-}
-a[data-fluidbox].fluidbox-opened {
-  cursor: -webkit-zoom-out;
-  cursor: -moz-zoom-out;
-}
-a[data-fluidbox] img {
-  display: block;
-  margin: 0 auto;
-  opacity: 0;
-  max-width: 100%;
-  transition: all .25s ease-in-out;
-}
-
-a[class^='float'] {
-  margin: 1rem;
-  margin-top: 0;
-  width: 33.33333%;
-}
-a[class^='float'].float-left {
-  float: left;
-  margin-left: 0;
-}
-a[class^='float'].float-right {
-  float: right;
-  margin-right: 0;
-}
-
+/* lightbox */
 #lightbox {
   background-color: rgba(0, 0, 0, 0.85);
   cursor: pointer;
@@ -1090,6 +1056,32 @@ a[class^='float'].float-right {
 	opacity: 0;
 	.transition(all .25s ease-in-out);
 }
+
+.enlarge {
+	position: relative;
+	
+	.option {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background-color: #333;
+		padding: 25px;
+		line-height: 1;
+		font-size: 20px;
+		color: #ccc;
+		opacity: 0;
+		.transition(opacity 1s ease);
+	}
+	
+	&:hover {
+		.option {
+			.opacity(.7);
+		}	
+	}
+}
+
+
+
 // Media queries
 @media (max-width: 979px) {
 	footer {
