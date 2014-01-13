@@ -543,8 +543,6 @@ color: #fff;
 
 	.img-responsive {
 		width: 100%;
-		cursor: -webkit-zoom-in;
-		cursor: -moz-zoom-in;
 	}
 
 	.extended-title {
@@ -1045,8 +1043,6 @@ footer {
 #lightbox {
   background-color: rgba(0, 0, 0, 0.85);
   cursor: pointer;
-  cursor: -webkit-zoom-out;
-  cursor: -moz-zoom-out;
   display: none;
   opacity: 0;
   .transition(all .25s ease-in-out);
@@ -1059,6 +1055,8 @@ footer {
 
 .enlarge {
 	position: relative;
+	
+	img {cursor: pointer;}
 	
 	.option {
 		position: absolute;
