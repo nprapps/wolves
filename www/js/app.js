@@ -15,7 +15,7 @@ var $button_toggle_caption;
 var $lightbox;
 var $lightbox_image;
 var $story_player_button;
-var ambient_is_paused = false;
+var ambient_is_paused = true;
 var ambient_start = 0;
 var ambient_end = 53;
 var aspect_width = 16;
@@ -189,7 +189,7 @@ var on_ambient_player_ready = function() {
     $ambient_player.jPlayer('setMedia', {
         mp3: 'http://stage-apps.npr.org/wolves/audio/ambient.mp3',
         oga: 'http://stage-apps.npr.org/wolves/audio/ambient.ogg'
-    }).jPlayer('play', ambient_start);
+    }).jPlayer('pause', ambient_start);
 };
 
 var on_toggle_ambient_click =  function() {
@@ -427,10 +427,12 @@ $(document).ready(function() {
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
     $begin.on('click', function() {
+        $toggle_ambient.toggleClass("ambi-mute");
         if (Modernizr.touch) {
             on_ambient_player_ready();
             $( "#content" ).addClass( "touch-begin" );
         }
+        $ambient_player.jPlayer('play', ambient_start);
         $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
         return false;
     });
