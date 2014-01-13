@@ -213,6 +213,29 @@ var on_toggle_ambient_click =  function() {
     }
 };
 
+var on_begin_click = function() {
+    /*
+    * Handles clicks on the begin button.
+    */
+    // Remove the mute class.
+    $toggle_ambient.removeClass("ambi-mute");
+
+    // If this is a mobile device, start up the waterworks.
+    if (Modernizr.touch) {
+        on_ambient_player_ready();
+        $( "#content" ).addClass( "touch-begin" );
+    }
+
+    // On all devices, start playing the audio.
+    $ambient_player.jPlayer('play', ambient_start);
+
+    // Smooth scroll us to the intro.
+    $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
+
+    // Don't do anything else.ß
+    return false;
+};
+
 var on_waypoint = function(element, direction) {
     /*
     * Event for reaching a waypoint.
@@ -361,7 +384,6 @@ var fade_lightbox_out = function() {
     $lightbox.remove();
 };
 
-
 $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
@@ -434,26 +456,7 @@ $(document).ready(function() {
 
     // Smooth scroll for the "begin" button.
     // Also sets up the ambient player.
-    $begin.on('click', function() {
-
-        // Remove the mute class.
-        $toggle_ambient.removeClass("ambi-mute");
-
-        // If this is a mobile device, start up the waterworks.
-        if (Modernizr.touch) {
-            on_ambient_player_ready();
-            $( "#content" ).addClass( "touch-begin" );
-        }
-
-        // On all devices, start playing the audio.
-        $ambient_player.jPlayer('play', ambient_start);
-
-        // Smooth scroll us to the intro.
-        $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
-
-        // Don't do anything else.
-        return false;
-    });
+    $begin.on('click', on_begin_click);
 
     // Smooth scroll for the nav.
     $nav.on('click', function(){
