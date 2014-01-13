@@ -418,7 +418,7 @@ $(document).ready(function() {
 
     // call lightbox on a click, but only if it's not a mobile device
     if (!Modernizr.touch) {
-        $('.img-responsive, img.waypoint').on('click', function() {
+        $('.enlarge').find('img').on('click', function() {
             lightbox_image(this);
         });
     }
