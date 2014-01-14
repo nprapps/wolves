@@ -659,19 +659,26 @@ color: #fff;
 			color: #fff;
 			text-transform: uppercase;
 			position: absolute;
-			bottom: 50px;
+			bottom: 100px;
 			left: 50px;
 			.text-shadow(1px 1px 1px #222);
 			.opacity(0);
 			.transition(opacity 3s ease);
 		}
-
+		
 
 	}
 
 	.chapter-active {
 		.edge-to-edge {
 			h2 {.opacity(1);}
+		}
+		
+		.more-below {
+			.animation-name(fadeInUp);
+			&.animated{
+				.animation-duration(3s);
+			}
 		}
 	}
 
