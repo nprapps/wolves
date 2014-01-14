@@ -572,7 +572,7 @@ color: #fff;
 	#intro-advance {
 		cursor: pointer;
 		i {display: none;}
-		@media @screen-small-above {
+		@media @screen-medium-above {
 			i {display: block;}
 		}
 	}
@@ -674,7 +674,6 @@ color: #fff;
 	}
 
 	.edge-to-edge {
-	
 		position: relative;
 		@media @screen-small-above {
 			margin-top: 60px;
@@ -696,19 +695,22 @@ color: #fff;
 			padding: 0 10px;
 			margin: 0 auto;
 			@media @screen-small-above {
+				width: auto;
 				text-align: left;
 				padding: 0;
 				max-width: 800px;
 				font-size: 45px;
 				bottom: 100px;
-				left: 20px;
-				
+				left: 20px;	
 			}
 			@media @screen-medium-above {
 				left: 50px;
 				.text-shadow(1px 1px 1px #222);
 				.opacity(0);
 				.transition(opacity 3s ease);
+				.touch & {
+					.opacity(1);
+				}
 			}
 			
 		}
