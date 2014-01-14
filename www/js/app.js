@@ -510,7 +510,7 @@ $(document).ready(function() {
     $w.on('resize', on_window_resize);
 
     // Scrollspy
-    $('body').scrollspy({ target: '.controls' });
+    $('body').scrollspy({ target: '.controls', offset: $w.height()/3 });
 
     $('[data-spy="scroll"]').each(function () {
         var $spy = $(this).scrollspy('refresh');
