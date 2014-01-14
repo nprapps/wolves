@@ -445,10 +445,20 @@ color: #fff;
 			a {
 				color: #ccc;
 				outline: 0;
+				.fa-headphones {
+					display: none;
+				}
 			}
 			&.active{
+			
 				a {
 					color: #777;
+					.fa-headphones {
+						display: block;
+					}
+					.fa-circle {
+						display: none;
+					}
 				}
 			}
 			strong {
@@ -482,8 +492,8 @@ color: #fff;
 		top: 210px;
 		right: 20px;
 	}
-	width: 30px;
-	height: 30px;
+	width: 33px;
+	height: 32px;
 	z-index: 99;
 	padding: 5px 6px;
 	background-color:rgba(0,0,0,1);
@@ -651,7 +661,7 @@ color: #fff;
 			position: absolute;
 			bottom: 50px;
 			left: 50px;
-			.text-shadow(1px 1px 1px #222;);
+			.text-shadow(1px 1px 1px #222);
 			.opacity(0);
 			.transition(opacity 3s ease);
 		}
