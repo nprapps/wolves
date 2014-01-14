@@ -654,9 +654,17 @@ color: #fff;
 			div:first-child {
 			  margin-bottom: 0;
 			}
+			.captioned .caption-text {
+				h6 {padding-bottom: 30px;}
+			}
 		}
-		.caption-text {margin-bottom: 0;}
 		.fluidbox div {margin-bottom: 0;}
+		
+		@media @screen-medium-above {
+			.captioned .caption-text {
+				h6 {padding-bottom: 0;}
+			}
+		}
 	}
 	
 	#hunters {
