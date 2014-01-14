@@ -162,6 +162,7 @@ var play_audio = function(times) {
         * If we're paused, update the state and the start_time for the player.
         * Just don't actually play any audio.
         */
+
         $ambient_player.jPlayer("pause", ambient_start);
         currently_playing = true;
         if (ambient_is_paused) {
@@ -233,6 +234,9 @@ var on_begin_click = function() {
     // Smooth scroll us to the intro.
     $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
 
+    // Unpause.
+    ambient_is_paused = false;
+
     // Don't do anything else.ß
     return false;
 };
@@ -292,10 +296,11 @@ var on_waypoint = function(element, direction) {
 
     // Get the waypoint name.
     var waypoint = $(element).attr('id');
+    var cuepoints = $(element).attr('data-' + direction + '-waypoint');
 
     // Get the directionally-varied waypoint for audio.
-    if ($(element).attr('data-' + direction + '-waypoint')) {
-        play_audio($(element).attr('data-' + direction + '-waypoint'));
+    if (cuepoints) {
+        play_audio(cuepoints);
     }
 
     // If this is a chapter waypoint, run the chapter transitions.
