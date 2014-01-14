@@ -303,6 +303,15 @@ var on_waypoint = function(element, direction) {
         play_audio(cuepoints);
     }
 
+    // HELP ME PLEASE I AM TRAPPED IN THIS JAVASCRIPT FILE.
+    // IT IS LIKE THE UNPLEASANT PARTS OF TRON.
+
+    // THIS TASTES LIKE BURNING.
+    if (waypoint.indexOf('x') == -1) {
+        $('ul.nav li').removeClass('active');
+        $('.' + waypoint + '-nav').addClass('active');
+    }
+
     // If this is a chapter waypoint, run the chapter transitions.
     if ($(element).children('.edge-to-edge')){
         $(element).addClass('chapter-active');
@@ -513,13 +522,6 @@ $(document).ready(function() {
 
     $( "#intro-advance" ).click(function() {
       $.smoothScroll({ speed: 800, scrollTarget: '#intro-copy' });
-    });
-
-    // Scrollspy
-    $('body').scrollspy({ target: '.controls', offset: -$w.height()/2 });
-
-    $('[data-spy="scroll"]').each(function () {
-        var $spy = $(this).scrollspy('refresh');
     });
 
     on_window_resize();
