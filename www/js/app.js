@@ -1,7 +1,7 @@
 var $container;
 var $titlecard;
 var $titlecard_wrapper;
-var $w;
+var $w = $(window);
 var $ambient_audio;
 var $ambient_player;
 var $story_audio;
@@ -162,6 +162,7 @@ var play_audio = function(times) {
         * If we're paused, update the state and the start_time for the player.
         * Just don't actually play any audio.
         */
+
         $ambient_player.jPlayer("pause", ambient_start);
         currently_playing = true;
         if (ambient_is_paused) {
@@ -233,6 +234,9 @@ var on_begin_click = function() {
     // Smooth scroll us to the intro.
     $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
 
+    // Unpause.
+    ambient_is_paused = false;
+
     // Don't do anything else.ß
     return false;
 };
@@ -259,7 +263,7 @@ var on_lightbox_click = function() {
     * Click handler for lightboxed photos.
     */
     if (!Modernizr.touch) {
-        lightbox_image(this);
+        lightbox_image($(this).find('img'));
     }
 };
 
@@ -292,10 +296,11 @@ var on_waypoint = function(element, direction) {
 
     // Get the waypoint name.
     var waypoint = $(element).attr('id');
+    var cuepoints = $(element).attr('data-' + direction + '-waypoint');
 
     // Get the directionally-varied waypoint for audio.
-    if ($(element).attr('data-' + direction + '-waypoint')) {
-        play_audio($(element).attr('data-' + direction + '-waypoint'));
+    if (cuepoints) {
+        play_audio(cuepoints);
     }
 
     // If this is a chapter waypoint, run the chapter transitions.
@@ -437,7 +442,6 @@ $(document).ready(function() {
     $container = $('#content');
     $titlecard = $('.titlecard');
     $titlecard_wrapper = $('.titlecard-wrapper');
-    $w = $(window);
     $ambient_audio = $('#audio-ambient');
     $ambient_player = $('#pop-audio-ambient');
     $story_audio = $('#audio');
@@ -495,15 +499,15 @@ $(document).ready(function() {
 
     $nav.on('click', on_nav_click);
 
-    $enlarge.find('img').on('click', on_lightbox_click);
+    $enlarge.on('click', on_lightbox_click);
 
     $button_download_audio.on('click', on_button_download_audio_click);
 
     $story_player_button.on('click', on_story_player_button_click);
 
-    $(window).on('scroll', on_window_scroll);
+    $w.on('scroll', on_window_scroll);
 
-    $(window).on('resize', on_window_resize);
+    $w.on('resize', on_window_resize);
 
     // Scrollspy
     $('body').scrollspy({ target: '.controls' });
@@ -523,7 +527,7 @@ $(document).ready(function() {
 });
 
 // Defer pointer events on animated header
-$(window).load(function (){
+$w.load(function (){
   $('header').css({
     'pointer-events': 'auto'
   });
