@@ -508,6 +508,12 @@ $(document).ready(function() {
     $w.on('scroll', on_window_scroll);
 
     $w.on('resize', on_window_resize);
+    
+    // 
+    
+    $( "#intro-advance" ).click(function() {
+	  $.smoothScroll({ speed: 800, scrollTarget: '#intro-copy' });
+	});
 
     // Scrollspy
     $('body').scrollspy({ target: '.controls' });
