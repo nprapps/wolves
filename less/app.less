@@ -652,12 +652,6 @@ color: #fff;
 
 		@media @screen-small-above {
 			div:first-child {
-			  margin-bottom: 30px;
-			}
-		}
-
-		@media @screen-medium-above {
-			div:first-child {
 			  margin-bottom: 0;
 			}
 		}
@@ -701,12 +695,16 @@ color: #fff;
 			left: 0;
 			padding: 0 10px;
 			margin: 0 auto;
-			@media @screen-medium-above {
+			@media @screen-small-above {
 				text-align: left;
 				padding: 0;
 				max-width: 800px;
 				font-size: 45px;
 				bottom: 100px;
+				left: 20px;
+				
+			}
+			@media @screen-medium-above {
 				left: 50px;
 				.text-shadow(1px 1px 1px #222);
 				.opacity(0);
