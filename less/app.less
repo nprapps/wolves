@@ -422,7 +422,7 @@ color: #fff;
 		bottom: auto;
 		@media @screen-small-above {
 			top: 20px;
-			right: 30px;
+			right: 10px;
 		}
 	}
 
@@ -493,11 +493,17 @@ color: #fff;
 
 .toggle-ambi {
 	position: fixed;
-	top: 0;
-	right: 0;
+	top: 210px;
+	right: 20px;
+	.touch & {
+		top: 0;
+		right: 0;
+	}
 	@media @screen-small-above {
-		top: 210px;
-		right: 20px;
+		.touch & {
+			top: 210px;
+			right: 2px;
+		}
 	}
 	width: 33px;
 	height: 32px;
@@ -571,9 +577,9 @@ color: #fff;
 	
 	#intro-advance {
 		cursor: pointer;
-		i {display: none;}
+		i {visibility: hidden;}
 		@media @screen-medium-above {
-			i {display: block;}
+			i {visibility: visible;}
 		}
 	}
 
@@ -972,7 +978,10 @@ color: #fff;
 			position: relative;
 
 			#jp_container_1 {
-				margin-right: 100px;
+				margin-right: 120px;
+				.touch & {
+					margin-right: 0;
+				}
 			}
 
 			.download-audio {
@@ -980,19 +989,22 @@ color: #fff;
 				top: 0;
 				right: 0;
 				margin-top: 0;
-				width: 100px;
+				width: 120px;
 				height: 50px;
 				font-size: 13px;
 				color: #aaa;
 				font-weight: bold;
-				padding-top: 18px;
+				padding: 18px 0 0 15px;
 				line-height: 1;
-				padding-left: 6px;
 				background-color: #515151;
 				cursor: pointer;
 				&:hover {
 					color: #ccc;
 					background: #6d8ac4;
+				}
+				
+				.touch & {
+					display: none;
 				}
 
 			}
@@ -1043,10 +1055,13 @@ color: #fff;
 		.current-time {
 			position: absolute;
 			top: 20px;
-			right: 110px;
+			right: 130px;
 			z-index: 3;
 			font-size: 12px;
 			line-height: 1;
+			.touch & {
+				right: 10px;
+			}
 		}
 	}
 
