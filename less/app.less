@@ -437,6 +437,9 @@ color: #fff;
 				.fa-headphones {
 					display: none;
 				}
+				&:hover {
+					color: #707070;
+				}
 			}
 			&.active{
 			
@@ -470,13 +473,35 @@ color: #fff;
 				}
 			}
 		}
+		
+		.share {
+			margin-top: 5px;
+			color: #ccc;
+			cursor: pointer;
+			
+			&:hover {
+				color: #707070;
+			}
+		}
+	}
+}
+
+.popover-content {
+	i {
+		display: block;
+		margin: 10px 0;
+		cursor: pointer;
+		color: #777;
+		&:hover {
+			color: #333;
+		}
 	}
 }
 
 //mute button for ambient audio
 .toggle-ambi {
 	position: fixed;
-	top: 210px;
+	top: 230px;
 	right: 20px;
 	.touch & {
 		top: 0;
@@ -484,7 +509,7 @@ color: #fff;
 	}
 	@media @screen-small-above {
 		.touch & {
-			top: 210px;
+			top: 230px;
 			right: 2px;
 		}
 	}

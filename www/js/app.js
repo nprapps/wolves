@@ -510,6 +510,22 @@ $(document).ready(function() {
     $story_player_button = $('#jp_container_1 .jp-play');
     $enlarge = $('.enlarge');
     $intro_advance = $("#intro-advance");
+    
+    
+    //share popover
+    $(function () {
+        $('body').popover({
+            selector: '[data-toggle="popover"]'
+        });
+    });
+	
+	$('.share').popover({
+        'selector': '',
+        'placement': 'left',
+        //'title': '<p>Share</p>',
+        'content': '<i class="fa fa-twitter"></i><i class="fa fa-facebook-square"></i>',
+        'html': 'true'
+      });
 
     // Set up the STORY NARRATION player.
     $story_player.jPlayer({
