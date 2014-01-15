@@ -16,6 +16,7 @@ var $lightbox;
 var $lightbox_image;
 var $story_player_button;
 var $enlarge;
+var $intro_advance;
 var ambient_is_paused = true;
 var ambient_start = 0;
 var ambient_end = 53;
@@ -164,21 +165,32 @@ var play_audio = function(times) {
         */
 
         $ambient_player.jPlayer("pause", ambient_start);
-        currently_playing = true;
+
         if (ambient_is_paused) {
             return;
         }
+
         $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
         $ambient_player.jPlayer("play");
+        currently_playing = true;
     };
+
+    console.log({
+        currently_playing: currently_playing,
+        ambient_is_paused: ambient_is_paused,
+        ambient_start: ambient_start,
+        ambient_end: ambient_end
+    });
 
     // Test if we're in the middle of a currently playing clip.
     if (currently_playing) {
+
         // If in a currently playing clip, fade the previous clip before starting this one.
         $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0, function(){
             init();
         });
     } else {
+
         // Start this clip, otherwise.
         init();
     }
@@ -205,13 +217,17 @@ var on_toggle_ambient_click =  function() {
     // Don't like this but it's viable.
     // We've got a global "is paused" state, too.
     if ($(this).hasClass('ambi-mute')) {
+
         // If the mute button is on, pause the audio.
         ambient_is_paused = true;
         $ambient_player.jPlayer('pause');
+
     } else {
+
         // Otherwise, let the player play.
         ambient_is_paused = false;
         $ambient_player.jPlayer('play');
+
     }
 };
 
@@ -284,9 +300,32 @@ var on_story_player_button_click = function(){
 };
 
 var on_window_scroll = function() {
-    if($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
+    /*
+    * Fires on window scroll.
+    * Largely for handling bottom-of-page or nearly bottom-of-page
+    * events, because waypoints won't ever trigger.
+    */
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 25) {
+
         $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
+        $('ul.nav li').removeClass('active');
+        $('.listen-nav').addClass('active');
+    } else {
+
+        if ($('.listen-nav').hasClass('active')) {
+            $('ul.nav li').removeClass('active');
+            $('.tricks-nav').addClass('active');
+            $ambient_player.jPlayerFade().to(1000, 0, volume_ambient_active);
+            play_audio($('#tricks').attr('data-down-waypoint'));
+        }
     }
+};
+
+var on_intro_advance_click = function() {
+    /*
+    * Click handler on intro advance.
+    */
+    $.smoothScroll({ speed: 800, scrollTarget: '#intro-copy' });
 };
 
 var on_waypoint = function(element, direction) {
@@ -470,6 +509,7 @@ $(document).ready(function() {
     $overlay = $('#fluidbox-overlay');
     $story_player_button = $('#jp_container_1 .jp-play');
     $enlarge = $('.enlarge');
+    $intro_advance = $("#intro-advance");
 
     // Set up the STORY NARRATION player.
     $story_player.jPlayer({
@@ -524,11 +564,7 @@ $(document).ready(function() {
 
     $w.on('resize', on_window_resize);
 
-    //
-
-    $( "#intro-advance" ).click(function() {
-      $.smoothScroll({ speed: 800, scrollTarget: '#intro-copy' });
-    });
+    $intro_advance.on('click', on_intro_advance_click);
 
     on_window_resize();
 
