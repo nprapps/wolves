@@ -683,7 +683,7 @@ color: #fff;
 
 		.caption-text {
 			position: absolute;
-			bottom: 26px;
+			bottom: 0px;
 			left: 0;
 			z-index: 500;
 			.transition(opacity 1s ease);
@@ -696,7 +696,7 @@ color: #fff;
 				margin: 0;
 				font-size: 11px;
 				line-height: 1.4;
-				padding: 15px 15px 30px 15px;
+				padding: 15px 25px 30px 15px;
 				@media @screen-small-above {
 					font-size: 12px;
 					color: #999;
@@ -712,9 +712,11 @@ color: #fff;
 			}
 		}
 		.caption-label {
-    		position: relative;
-			text-align: left;
-			margin: 10px 0 0 0;
+    		position: absolute;
+			bottom: 2px;
+			right: 20px;
+			z-index: 1000;
+			margin: 0;
 			padding: 0;
 			line-height: 1;
 			text-transform: uppercase;
@@ -722,24 +724,26 @@ color: #fff;
 			cursor: pointer;
 
 			b {
-				font-size: 11px;
+				/*font-size: 11px;
 				color: #ccc;
 				letter-spacing: 1px;
 				position: relative;
-				top: -1px;
+				top: -1px;*/
+				display: none;
 
 			}
 
 			i {
-				font-size: 16px;
-				color: #ccc;
+				font-size: 26px;
+				color: #fff;
+				.opacity(.2);
 			}
 
 			@media @screen-small-above {
 				display: none;
 			}
 
-			&:hover {
+			/*&:hover {
 				b, i {
 					color: #444;
 				}
@@ -752,7 +756,10 @@ color: #fff;
 					}
 				}
 
-			}
+			}*/
+		}
+		&.edge-to-edge {
+			.caption-label {right: 10px;}
 		}
 
     	&.cap-on {
@@ -760,9 +767,9 @@ color: #fff;
 				opacity: 1;
 			}
 
-			.caption-label b, .caption-label i {
+			/*.caption-label b, .caption-label i {
 				color: #444;
-			}
+			}*/
 
 			.caption-label {
 				i {
