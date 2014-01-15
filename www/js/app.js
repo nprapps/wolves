@@ -246,6 +246,9 @@ var on_begin_click = function() {
 
     // On all devices, start playing the audio.
     $ambient_player.jPlayer('play', ambient_start);
+    
+    //show the mute button
+    $( "body" ).addClass( "ambient-begin" );
 
     // Smooth scroll us to the intro.
     $.smoothScroll({ speed: 800, scrollTarget: '#intro' });
