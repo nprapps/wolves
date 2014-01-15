@@ -175,13 +175,6 @@ var play_audio = function(times) {
         currently_playing = true;
     };
 
-    console.log({
-        currently_playing: currently_playing,
-        ambient_is_paused: ambient_is_paused,
-        ambient_start: ambient_start,
-        ambient_end: ambient_end
-    });
-
     // Test if we're in the middle of a currently playing clip.
     if (currently_playing) {
 
@@ -246,7 +239,7 @@ var on_begin_click = function() {
 
     // On all devices, start playing the audio.
     $ambient_player.jPlayer('play', ambient_start);
-    
+
     //show the mute button
     $( "body" ).addClass( "ambient-begin" );
 
@@ -513,15 +506,15 @@ $(document).ready(function() {
     $story_player_button = $('#jp_container_1 .jp-play');
     $enlarge = $('.enlarge');
     $intro_advance = $("#intro-advance");
-    
-    
+
+
     //share popover
     $(function () {
         $('body').popover({
             selector: '[data-toggle="popover"]'
         });
     });
-	
+
 	$('.share').popover({
         'selector': '',
         'placement': 'left',
