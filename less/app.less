@@ -1,6 +1,6 @@
 @import "less/lib/bootstrap/bootstrap";
 @import "less/lib/font-awesome/font-awesome";
-@import "less/adhesion";
+//@import "less/adhesion";
 @import "less/lib/prefixer";
 //@import "less/lib/animate";
 
@@ -23,7 +23,6 @@
 
 
 // General styles
-
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-family: "Gotham SSm", helvetica, arial, sans-serif;
 	font: 16px/1.5em "Gotham SSm", helvetica, arial, sans-serif;
@@ -59,7 +58,6 @@ a:hover, a:active {
 }
 
 //animations
-
 .animated {
 	-webkit-animation-fill-mode:both;
 	-moz-animation-fill-mode:both;
@@ -69,11 +67,13 @@ a:hover, a:active {
 	.animation-duration(9s);
 }
 
-.animated {
-	//.animation-delay(1s);
-}
-
 //fadeIn
+.fadeIn {
+	-webkit-animation-name: fadeIn;
+	-moz-animation-name: fadeIn;
+	-o-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
 
 @-webkit-keyframes fadeIn {
 	0% {opacity: 0;}
@@ -95,15 +95,7 @@ a:hover, a:active {
 	100% {opacity: 1;}
 }
 
-.fadeIn {
-	-webkit-animation-name: fadeIn;
-	-moz-animation-name: fadeIn;
-	-o-animation-name: fadeIn;
-	animation-name: fadeIn;
-}
-
 //fadeInUp
-
 @-webkit-keyframes fadeInUp {
 	0% {
 		opacity: 0;
@@ -153,6 +145,13 @@ a:hover, a:active {
 }
 
 //fadeOut
+.fadeOut {
+	-webkit-animation-name: fadeOut;
+	-moz-animation-name: fadeOut;
+	-o-animation-name: fadeOut;
+	animation-name: fadeOut;
+}
+
 @-webkit-keyframes fadeOut {
 	0% {opacity: 1;}
 	100% {opacity: 0;}
@@ -172,14 +171,6 @@ a:hover, a:active {
 	0% {opacity: 1;}
 	100% {opacity: 0;}
 }
-
-.fadeOut {
-	-webkit-animation-name: fadeOut;
-	-moz-animation-name: fadeOut;
-	-o-animation-name: fadeOut;
-	animation-name: fadeOut;
-}
-
 
 //Titlecard
 
@@ -256,15 +247,6 @@ color: #fff;
 			margin: 10px 0;
 			@media @screen-small-above {
 			    width: 100px;
-				//margin: 50px 0 15px 0;
-			}
-
-			@media @screen-medium-above {
-				//margin-top: 110px;
-			}
-
-			@media @screen-large {
-				//margin-top: 150px;
 			}
 		}
 
@@ -411,11 +393,13 @@ color: #fff;
 	}
 }
 
+//section navigation
 .controls {
 	position: fixed;
 	top: 20px;
 	right: 30px;
-
+	z-index: 99;
+	
 	.touch & {
 		top: 0;
 		right: 0;
@@ -425,8 +409,6 @@ color: #fff;
 			right: 10px;
 		}
 	}
-
-	z-index: 99;
 
 	ul {
 		list-style: none;
@@ -491,6 +473,7 @@ color: #fff;
 	}
 }
 
+//mute button for ambient audio
 .toggle-ambi {
 	position: fixed;
 	top: 210px;
@@ -523,7 +506,7 @@ color: #fff;
 	.ambient-off {display: block;}
 }
 
-
+//main content
 #content {
 	position: relative;
 	margin-top: 2000px;
@@ -550,7 +533,6 @@ color: #fff;
 	}
 
 	h5, p {
-		//font-family: georgia, serif;
 		font-size: 13px;
 		line-height: 1.4;
 		margin: 30px 0;
@@ -565,6 +547,23 @@ color: #fff;
 		width: 100%;
 	}
 
+
+	.row {
+		margin: 10px 0;
+		position: relative;
+		@media @screen-small-above {
+			margin: 60px 0 30px 0;
+		}
+	}
+
+	.col-md-6 {
+		margin-bottom: 20px;
+		@media @screen-small-above {
+			margin-bottom: 0;
+		}
+	}
+	
+	//intro
 	.extended-title {
 		p {
 			font-size: 16px;
@@ -583,71 +582,7 @@ color: #fff;
 		}
 	}
 
-	/*.opener {
-		background: url('@{img-root}/wolves/INTRO03x_1500.jpg') no-repeat top left fixed;
-		.background-size(cover);
-		overflow: hidden;
-		position: relative;
-		opacity: 1;
-
-	}*/
-
-	//Quote
-	.quote {
-		margin-top: 20px;
-		@media @screen-small-above {
-			margin: 0;
-		}
-
-		h3 {
-			font-family: georgia, serif;
-			font-weight: normal;
-			text-transform: none;
-			color: #555;
-			line-height: 1.3;
-			margin: 0 0 20px 0;
-			padding: 10px 0 0 0;
-			font-size: 16px;
-			@media @screen-small-above {
-				margin: 0;
-				font-size: 36px;
-			}
-		}
-
-		h6 {
-			font-weight: bold;
-			font-size: 12px;
-
-			@media @screen-small-above {
-				font-size: 16px;
-				
-			}
-		}
-		.row {
-			padding: 30px 0;
-			border-top: 2px solid #ddd; 
-			border-bottom: 2px solid #ddd; 
-			@media @screen-small-above {
-				padding: 30px 0;
-			}
-		}
-	}
-
-	.row {
-		margin: 10px 0;
-		position: relative;
-		@media @screen-small-above {
-			margin: 60px 0 30px 0;
-		}
-	}
-
-	.col-md-6 {
-		margin-bottom: 20px;
-		@media @screen-small-above {
-			margin-bottom: 0;
-		}
-	}
-
+	// image grid
 	.side-by-side {
 		margin-top: 0;
 		div {margin-bottom: 0;}
@@ -673,20 +608,8 @@ color: #fff;
 		}
 	}
 	
-	#hunters {
-		margin-top: 20px;
-		@media @screen-small-above {
-			margin-top: 0;
-		}
-	}
 	
-	#quote-bruce-stell {
-		margin-bottom: 20px;
-		@media @screen-small-above {
-			margin-bottom: 0;
-		}
-	}
-
+	//full bleed images
 	.edge-to-edge {
 		position: relative;
 		@media @screen-small-above {
@@ -728,10 +651,9 @@ color: #fff;
 			}
 			
 		}
-		
-
 	}
-
+	
+	//chapter title animation
 	.chapter-active {
 		@media @screen-medium-above {
 			.edge-to-edge {
@@ -746,11 +668,16 @@ color: #fff;
 			}
 		}
 	}
-
-	.kicker {
-		.edge-to-edge {margin-top: 0;}
+	
+	//adjusting chapter positioning on small screen
+	#hunters {
+		margin-top: 20px;
+		@media @screen-small-above {
+			margin-top: 0;
+		}
 	}
 
+	//image captions
 	.captioned {
 		position: relative;
 
@@ -803,12 +730,10 @@ color: #fff;
 
 			}
 
-
 			i {
 				font-size: 16px;
 				color: #ccc;
 			}
-
 
 			@media @screen-small-above {
 				display: none;
@@ -845,7 +770,6 @@ color: #fff;
 					.opacity(1);
 				}
 			}
-
 		}
 
 		&.edge-to-edge {
@@ -859,9 +783,8 @@ color: #fff;
 			}
 
 		}
-
-
 	}
+	
 	//adjusting caption width to account for image padding within the bootstrap grid
     .row {
 	    .captioned {
@@ -874,12 +797,60 @@ color: #fff;
 		    }
 	    }
     }
+    
+    //Quote
+	.quote {
+		margin-top: 20px;
+		@media @screen-small-above {
+			margin: 0;
+		}
 
+		h3 {
+			font-family: georgia, serif;
+			font-weight: normal;
+			text-transform: none;
+			color: #555;
+			line-height: 1.3;
+			margin: 0 0 20px 0;
+			padding: 10px 0 0 0;
+			font-size: 16px;
+			@media @screen-small-above {
+				margin: 0;
+				font-size: 36px;
+			}
+		}
 
+		h6 {
+			font-weight: bold;
+			font-size: 12px;
+
+			@media @screen-small-above {
+				font-size: 16px;
+				
+			}
+		}
+		.row {
+			padding: 30px 0;
+			border-top: 2px solid #ddd; 
+			border-bottom: 2px solid #ddd; 
+			@media @screen-small-above {
+				padding: 30px 0;
+			}
+		}
+	}
+	
+	#quote-bruce-stell {
+		margin-bottom: 20px;
+		@media @screen-small-above {
+			margin-bottom: 0;
+		}
+	}
+
+	//ambient audio player
     #audio-ambient {
     	display:none;
     }
-
+	//full story audio player
 	#audio-story {
 		background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
 		.background-size(cover);
@@ -1068,29 +1039,6 @@ color: #fff;
 
 }// end content
 
-
-
-
-
-//share tools
-.share-this {
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		padding: 10px;
-		background-color: #000;
-		cursor: pointer;
-		opacity: 0;
-		.transition(opacity 1s ease);
-		h6 {
-			margin: 0;
-			font-size: 15px;
-			font-weight: bold;
-		}
-	}
-
-
-
 // Footer
 footer {
 	padding: 0 15px 10px 15px;
@@ -1202,6 +1150,10 @@ footer {
 		opacity: 0;
 		.transition(opacity 1s ease);
 		cursor: pointer;
+		.touch & {
+			display: none;
+		}
+		
 	}
 
 	&:hover {
@@ -1211,9 +1163,7 @@ footer {
 	}
 }
 
-
-
-// Media queries
+// footer media queries
 @media (max-width: 979px) {
 	footer {
 		.primary { float: none; }
