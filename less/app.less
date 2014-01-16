@@ -434,9 +434,7 @@ color: #fff;
 			a {
 				color: #ccc;
 				outline: 0;
-				.fa-headphones {
-					display: none;
-				}
+				.transition(color 1s ease);
 				&:hover {
 					color: #707070;
 				}
@@ -445,12 +443,6 @@ color: #fff;
 			
 				a {
 					color: #707070;
-					.fa-headphones {
-						display: block;
-					}
-					.fa-circle {
-						display: none;
-					}
 				}
 			}
 			strong {
@@ -478,6 +470,7 @@ color: #fff;
 			margin-top: 5px;
 			color: #ccc;
 			cursor: pointer;
+			.transition(color 1s ease);
 			
 			&:hover {
 				color: #707070;
@@ -761,7 +754,7 @@ color: #fff;
 			i {
 				font-size: 26px;
 				color: #fff;
-				.opacity(.2);
+				.opacity(.4);
 			}
 
 			@media @screen-small-above {
