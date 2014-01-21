@@ -30,7 +30,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 body {
-	color: #555;
+	color: #555;	
 }
 
 h1 {
@@ -383,9 +383,7 @@ color: #fff;
 				padding: 10px;
 				width: 250px;
 			}
-		}
-		&:hover {
-			p {
+			&:hover {
 				color: #fff;
 				background-color: #111;
 			}
@@ -434,20 +432,15 @@ color: #fff;
 			a {
 				color: #ccc;
 				outline: 0;
-				.fa-headphones {
-					display: none;
+				.transition(color 1s ease);
+				&:hover {
+					color: #707070;
 				}
 			}
 			&.active{
 			
 				a {
 					color: #707070;
-					.fa-headphones {
-						display: block;
-					}
-					.fa-circle {
-						display: none;
-					}
 				}
 			}
 			strong {
@@ -470,13 +463,36 @@ color: #fff;
 				}
 			}
 		}
+		
+		.share {
+			margin-top: 5px;
+			color: #ccc;
+			cursor: pointer;
+			.transition(color 1s ease);
+			
+			&:hover {
+				color: #707070;
+			}
+		}
+	}
+}
+
+.popover-content {
+	i {
+		display: block;
+		margin: 10px 0;
+		cursor: pointer;
+		color: #777;
+		&:hover {
+			color: #333;
+		}
 	}
 }
 
 //mute button for ambient audio
 .toggle-ambi {
 	position: fixed;
-	top: 210px;
+	top: 230px;
 	right: 20px;
 	.touch & {
 		top: 0;
@@ -484,7 +500,7 @@ color: #fff;
 	}
 	@media @screen-small-above {
 		.touch & {
-			top: 210px;
+			top: 230px;
 			right: 2px;
 		}
 	}
@@ -492,11 +508,16 @@ color: #fff;
 	height: 32px;
 	z-index: 99;
 	padding: 5px 6px;
-	background-color:rgba(0,0,0,1);
+	background-color:#ccc;
 	color: #fff;
 	cursor: pointer;
 	list-style: none;
 	margin: 0;
+	.transition(background-color 1s ease);
+	&:hover {
+		background-color: #555;
+	}
+	
 	li {padding: 0 0 0 2px;}
 }
 .ambient-off {display: none;}
@@ -538,7 +559,7 @@ color: #fff;
 		margin: 30px 0;
 		color: #777;
 		@media @screen-small-above {
-			font-size: 18px;
+			font-size: 17px;
 			line-height: 1.7;
 		}
 	}
@@ -683,7 +704,7 @@ color: #fff;
 
 		.caption-text {
 			position: absolute;
-			bottom: 26px;
+			bottom: 0px;
 			left: 0;
 			z-index: 500;
 			.transition(opacity 1s ease);
@@ -696,7 +717,7 @@ color: #fff;
 				margin: 0;
 				font-size: 11px;
 				line-height: 1.4;
-				padding: 15px 15px 30px 15px;
+				padding: 15px 25px 30px 15px;
 				@media @screen-small-above {
 					font-size: 12px;
 					color: #999;
@@ -712,9 +733,11 @@ color: #fff;
 			}
 		}
 		.caption-label {
-    		position: relative;
-			text-align: left;
-			margin: 10px 0 0 0;
+    		position: absolute;
+			bottom: 2px;
+			right: 20px;
+			z-index: 1000;
+			margin: 0;
 			padding: 0;
 			line-height: 1;
 			text-transform: uppercase;
@@ -722,24 +745,26 @@ color: #fff;
 			cursor: pointer;
 
 			b {
-				font-size: 11px;
+				/*font-size: 11px;
 				color: #ccc;
 				letter-spacing: 1px;
 				position: relative;
-				top: -1px;
+				top: -1px;*/
+				display: none;
 
 			}
 
 			i {
-				font-size: 16px;
-				color: #ccc;
+				font-size: 26px;
+				color: #fff;
+				.opacity(.4);
 			}
 
 			@media @screen-small-above {
 				display: none;
 			}
 
-			&:hover {
+			/*&:hover {
 				b, i {
 					color: #444;
 				}
@@ -752,7 +777,10 @@ color: #fff;
 					}
 				}
 
-			}
+			}*/
+		}
+		&.edge-to-edge {
+			.caption-label {right: 10px;}
 		}
 
     	&.cap-on {
@@ -760,9 +788,9 @@ color: #fff;
 				opacity: 1;
 			}
 
-			.caption-label b, .caption-label i {
+			/*.caption-label b, .caption-label i {
 				color: #444;
-			}
+			}*/
 
 			.caption-label {
 				i {
@@ -831,6 +859,7 @@ color: #fff;
 		}
 		.row {
 			padding: 30px 0;
+			margin: 0 15px;
 			border-top: 2px solid #ddd; 
 			border-bottom: 2px solid #ddd; 
 			@media @screen-small-above {
