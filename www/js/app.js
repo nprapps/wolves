@@ -586,7 +586,7 @@ $(document).ready(function() {
 
     $waypoints.waypoint(function(direction){
         on_waypoint(this, direction);
-    }, { offset: $w.height() / 5 });
+    }, { offset: $w.height() / 2 });
 
 });
 
