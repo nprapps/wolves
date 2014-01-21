@@ -81,7 +81,7 @@ npm install less universal-jst -g --prefix node_modules
 mkvirtualenv --no-site-packages wolves
 pip install -r requirements.txt
 brew install imagemagick libjpeg libpng
-fab cut_images
+fab cut_photos
 ```
 
 Project secrets
