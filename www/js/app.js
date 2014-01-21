@@ -310,6 +310,7 @@ var on_window_scroll = function() {
         $ambient_player.jPlayerFade().to(1000, volume_ambient_active, 0);
         $('ul.nav li').removeClass('active');
         $('.listen-nav').addClass('active');
+
     } else {
 
         if ($('.listen-nav').hasClass('active')) {
@@ -349,6 +350,7 @@ var on_waypoint = function(element, direction) {
             $('.' + waypoint + '-nav').addClass('active');
         }
     }
+
     if (direction == "up") {
         var $previous_element = $(element).prev();
         if ($previous_element.hasClass('chapter')) {
