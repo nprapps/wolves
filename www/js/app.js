@@ -196,8 +196,8 @@ var on_ambient_player_ready = function() {
     * Loads on initialization for desktop.
     */
     $ambient_player.jPlayer('setMedia', {
-        mp3: window.AMBIENT_MP3,
-        oga: window.AMBIENT_OGG
+        mp3: AMBIENT_MP3,
+        oga: AMBIENT_OGG
     }).jPlayer('pause', ambient_start);
 };
 
@@ -528,8 +528,8 @@ $(document).ready(function() {
     $story_player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
-                mp3: window.STORY_MP3,
-                oga: window.STORY_OGG
+                mp3: STORY_MP3,
+                oga: STORY_OGG
             }).jPlayer('pause');
         },
         timeupdate: on_story_timeupdate,

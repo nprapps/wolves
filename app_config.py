@@ -14,7 +14,7 @@ import os
 NAMES
 """
 # Project name used for display
-PROJECT_NAME = 'People And The Wolf'
+PROJECT_NAME = 'Wolves At The Door'
 
 # Project name in urls
 # Use dashes, not underscores!
@@ -149,22 +149,26 @@ def configure_targets(deployment_target):
     global SERVER_BASE_URL
     global DEBUG
     global DEPLOYMENT_TARGET
+    global AUDIO_BASE_URL
 
     if deployment_target == 'production':
         S3_BUCKETS = PRODUCTION_S3_BUCKETS
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        AUDIO_BASE_URL = S3_BASE_URL
         SERVERS = PRODUCTION_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DEBUG = False
     elif deployment_target == 'staging':
         S3_BUCKETS = STAGING_S3_BUCKETS
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        AUDIO_BASE_URL = S3_BASE_URL
         SERVERS = STAGING_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DEBUG = True
     else:
         S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'
+        AUDIO_BASE_URL = 'http://stage-apps.npr.org/wolves'
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
         DEBUG = True
