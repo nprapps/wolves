@@ -89,15 +89,15 @@ TWITTER = {
     'TEXT': "The elusive gray wolf and the people who love/hate them, via @nprnews.",
     'URL': SHARE_URL,
     # Will be resized to 120x120, can't be larger than 1MB
-    'IMAGE_URL': 'https://pbs.twimg.com/media/BfUL3tHIgAAqTnF.jpg'
+    'IMAGE_URL': 'http://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-twitter.jpg'
 }
 
 FACEBOOK = {
     'TITLE': PROJECT_NAME,
     'URL': SHARE_URL,
-    'DESCRIPTION': "In much of the American West, the gray wolf is a divisive political issue. NPR's Nathan Rott and photographer David Gilkey spent weeks reporting from Montana, where wolves are no longer protected, gathering material for an immersive multimedia experience that explores why these animals stir such deep emotions. ",
+    'DESCRIPTION': "In much of the American West, the gray wolf is a divisive political issue. NPR's Nathan Rott and photographer David Gilkey spent weeks reporting from Montana, where wolves are no longer protected.",
     # Should be square. No documented restrictions on size
-    'IMAGE_URL': "https://pbs.twimg.com/media/BfPcsMoCIAARk8C.jpg:large",
+    'IMAGE_URL': "http://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-facebook.jpg",
     'APP_ID': '138837436154588'
 }
 
