@@ -196,8 +196,8 @@ var on_ambient_player_ready = function() {
     * Loads on initialization for desktop.
     */
     $ambient_player.jPlayer('setMedia', {
-        mp3: 'http://stage-apps.npr.org/wolves/audio/ambient.mp3',
-        oga: 'http://stage-apps.npr.org/wolves/audio/ambient.ogg'
+        mp3: window.AMBIENT_MP3,
+        oga: window.AMBIENT_OGG
     }).jPlayer('pause', ambient_start);
 };
 
@@ -528,8 +528,8 @@ $(document).ready(function() {
     $story_player.jPlayer({
         ready: function () {
             $(this).jPlayer('setMedia', {
-                mp3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
-                oga: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+                mp3: window.STORY_MP3,
+                oga: window.STORY_OGG
             }).jPlayer('pause');
         },
         timeupdate: on_story_timeupdate,

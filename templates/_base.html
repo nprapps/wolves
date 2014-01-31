@@ -80,6 +80,13 @@
 
     {% endblock outer_content %}
 
+    <script type="text/javascript">
+        window.AMBIENT_MP3: '{{ S3_BASE_URL }}/audio/ambient.mp3',
+        window.AMBIENT_OGG: '{{ S3_BASE_URL }}/audio/ambient.ogg'
+        window.STORY_MP3: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.mp3',
+        window.STORY_OGG: 'http://s.npr.org/news/specials/2014/wolves/wolf-ambient-draft.ogg'
+    </script>
+
     {{ JS.push('js/app_config.js') }}
     {{ JS.push('js/copy.js') }}
     {{ JS.push('js/console.js') }}
