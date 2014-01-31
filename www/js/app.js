@@ -520,7 +520,7 @@ $(document).ready(function() {
 	$('.share').popover({
         'selector': '',
         'placement': 'left',
-        'content': '<a target="_blank" href="https://twitter.com/intent/tweet?text=%23aoooooooo @npr\'s interesting story about wolves.&url=http://apps.npr.org/wolves/&original_referer=http://apps.npr.org/wolves/"><i class="fa fa-twitter"></i></a> <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http://apps.npr.org/wolves/"><i class="fa fa-facebook-square"></i></a>',
+        'content': '<a target="_blank" href="https://twitter.com/intent/tweet?text=The elusive gray wolf and the people who love/hate them, via @nprnews.&url=http://apps.npr.org/wolves/&original_referer=http://apps.npr.org/wolves/"><i class="fa fa-twitter"></i></a> <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http://apps.npr.org/wolves/"><i class="fa fa-facebook-square"></i></a>',
         'html': 'true'
       });
 

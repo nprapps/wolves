@@ -89,7 +89,7 @@ TWITTER = {
     'TEXT': "The elusive gray wolf and the people who love/hate them, via @nprnews.",
     'URL': SHARE_URL,
     # Will be resized to 120x120, can't be larger than 1MB
-    'IMAGE_URL': 'https://pbs.twimg.com/media/BfPM8pICcAEcmrG.jpg:large'
+    'IMAGE_URL': 'https://pbs.twimg.com/media/BfUL3tHIgAAqTnF.jpg'
 }
 
 FACEBOOK = {
