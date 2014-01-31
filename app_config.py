@@ -82,22 +82,22 @@ COPY_GOOGLE_DOC_KEY = '0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc'
 """
 SHARING
 """
-PROJECT_DESCRIPTION = 'An opinionated project template for (mostly) server-less apps.'
+PROJECT_DESCRIPTION = 'The elusive gray wolf and the people who love/hate them.'
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKETS[0], PROJECT_SLUG)
 
 TWITTER = {
-    'TEXT': PROJECT_NAME,
+    'TEXT': "The elusive gray wolf and the people who love/hate them, via @nprnews.",
     'URL': SHARE_URL,
-    # Will be resized to 120x120, can't be larger than 1MB 
-    'IMAGE_URL': ''
+    # Will be resized to 120x120, can't be larger than 1MB
+    'IMAGE_URL': 'https://pbs.twimg.com/media/BfPM8pICcAEcmrG.jpg:large'
 }
 
 FACEBOOK = {
     'TITLE': PROJECT_NAME,
     'URL': SHARE_URL,
-    'DESCRIPTION': PROJECT_DESCRIPTION,
+    'DESCRIPTION': "In much of the American West, the gray wolf is a divisive political issue. NPR's Nathan Rott and photographer David Gilkey spent weeks reporting from Montana, where wolves are no longer protected, gathering material for an immersive multimedia experience that explores why these animals stir such deep emotions. ",
     # Should be square. No documented restrictions on size
-    'IMAGE_URL': TWITTER['IMAGE_URL'],
+    'IMAGE_URL': "https://pbs.twimg.com/media/BfPcsMoCIAARk8C.jpg:large",
     'APP_ID': '138837436154588'
 }
 
@@ -163,7 +163,7 @@ def configure_targets(deployment_target):
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DEBUG = True
     else:
-        S3_BUCKETS = [] 
+        S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
@@ -177,4 +177,3 @@ Run automated configuration
 DEPLOYMENT_TARGET = os.environ.get('DEPLOYMENT_TARGET', None)
 
 configure_targets(DEPLOYMENT_TARGET)
-
