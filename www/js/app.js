@@ -284,7 +284,6 @@ var on_button_download_audio_click = function(){
     * Click handler for the download button.
     */
     _gaq.push(['_trackEvent', 'Audio', 'Downloaded story audio mp3', APP_CONFIG.PROJECT_NAME, 1]);
-    console.log('Downloaded story audio mp3');
 };
 
 var on_story_player_button_click = function(){
