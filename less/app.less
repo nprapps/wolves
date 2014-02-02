@@ -885,8 +885,12 @@ color: #fff;
     }
 	//full story audio player
 	#audio-story {
-		background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
-		.background-size(cover);
+		background: #333;
+		@media @screen-small-above {
+			background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
+			.background-size(cover);
+		}
+		
 		color: #ddd;
 		position: relative;
 		padding-bottom: 40px;
