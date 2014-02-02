@@ -423,9 +423,6 @@ color: #fff;
 
 		.touch & {
 			display: none;
-			@media @screen-small-above {
-				display: block;
-			}
 		}
 
 		li {
@@ -501,12 +498,6 @@ color: #fff;
 	.touch & {
 		top: 0;
 		right: 0;
-	}
-	@media @screen-small-above {
-		.touch & {
-			top: 230px;
-			right: 2px;
-		}
 	}
 	width: 33px;
 	height: 32px;
@@ -833,8 +824,9 @@ color: #fff;
     //Quote
 	.quote {
 		margin-top: 20px;
+		margin-bottom: 20px;
 		@media @screen-small-above {
-			margin: 0;
+			margin-bottom: 0;
 		}
 
 		h3 {
@@ -872,21 +864,18 @@ color: #fff;
 		}
 	}
 
-	#quote-bruce-stell {
-		margin-bottom: 20px;
-		@media @screen-small-above {
-			margin-bottom: 0;
-		}
-	}
-
 	//ambient audio player
     #audio-ambient {
     	display:none;
     }
 	//full story audio player
 	#audio-story {
-		background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
-		.background-size(cover);
+		background: #333;
+		@media @screen-small-above {
+			background: #333 url('@{img-root}/audio-bg.jpg') no-repeat top left;
+			.background-size(cover);
+		}
+		
 		color: #ddd;
 		position: relative;
 		padding-bottom: 40px;
