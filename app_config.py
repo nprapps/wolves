@@ -18,7 +18,7 @@ PROJECT_NAME = 'Wolves At The Door'
 
 # Project name in urls
 # Use dashes, not underscores!
-PROJECT_SLUG = 'wolves'
+PROJECT_SLUG = 'wolves-optimize'
 
 # The name of the repository containing the source
 REPOSITORY_NAME = 'wolves'
@@ -26,7 +26,7 @@ REPOSITORY_URL = 'git@github.com:nprapps/%s.git' % REPOSITORY_NAME
 REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
 
 # The name to be used in paths on the server
-PROJECT_FILENAME = 'wolves'
+PROJECT_FILENAME = 'wolves-optimize'
 
 """
 DEPLOYMENT
