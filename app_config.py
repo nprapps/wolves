@@ -31,7 +31,7 @@ PROJECT_FILENAME = 'wolves'
 """
 DEPLOYMENT
 """
-PRODUCTION_S3_BUCKETS = ['apps.npr.org', 'apps2.npr.org']
+PRODUCTION_S3_BUCKETS = ['apps.npr.org']
 STAGING_S3_BUCKETS = ['stage-apps.npr.org']
 
 PRODUCTION_SERVERS = ['cron.nprapps.org']
@@ -69,15 +69,17 @@ SERVER_SERVICES = [
 
 # These variables will be set at runtime. See configure_targets() below
 S3_BUCKETS = []
+S3_ACL = 'private'
 S3_BASE_URL = ''
 SERVERS = []
 SERVER_BASE_URL = ''
+DEFAULT_MAX_AGE = 20
 DEBUG = True
 
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '0AlXMOHKxzQVRdHZuX1UycXplRlBfLVB0UVNldHJYZmc'
+COPY_GOOGLE_DOC_KEY = '1GagRyPjVs2C8QbEvU46Nx-sTI70t7Vq21p9-Z-BauLM'
 
 """
 SHARING
@@ -144,6 +146,7 @@ def configure_targets(deployment_target):
     overriden for rendering before deployment.
     """
     global S3_BUCKETS
+    global S3_ACL
     global S3_BASE_URL
     global SERVERS
     global SERVER_BASE_URL
@@ -153,14 +156,16 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKETS = PRODUCTION_S3_BUCKETS
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        S3_ACL = 'public-read'
+        S3_BASE_URL = 'https://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
         AUDIO_BASE_URL = S3_BASE_URL
         SERVERS = PRODUCTION_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         DEBUG = False
     elif deployment_target == 'staging':
         S3_BUCKETS = STAGING_S3_BUCKETS
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
+        S3_ACL = 'private'
+        S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s' % (S3_BUCKETS[0], PROJECT_SLUG)
         AUDIO_BASE_URL = S3_BASE_URL
         SERVERS = STAGING_SERVERS
         SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
@@ -168,7 +173,7 @@ def configure_targets(deployment_target):
     else:
         S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'
-        AUDIO_BASE_URL = 'http://stage-apps.npr.org/wolves'
+        AUDIO_BASE_URL = 'https://stage-apps.npr.org/wolves'
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
         DEBUG = True

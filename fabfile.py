@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-
+# _*_ coding:utf-8 _*_
 import copy
 from glob import glob
 import os
+from distutils.util import strtobool
 
 from fabric.api import *
 from jinja2 import Template
@@ -152,7 +153,7 @@ def render():
     """
     from flask import g
 
-    update_copy()
+    # update_copy()
     less()
     jst()
 
@@ -310,6 +311,9 @@ Changes to deployment requires a full-stack test. Deployment
 has two primary functions: Pushing flat files to S3 and deploying
 code to a remote server if required.
 """
+def prep_bool_arg(arg):
+    return bool(strtobool(str(arg)))
+
 def _deploy_to_s3(path='.gzip'):
     """
     Deploy the gzipped stuff to S3.
@@ -324,6 +328,36 @@ def _deploy_to_s3(path='.gzip'):
     for bucket in app_config.S3_BUCKETS:
         local(s3cmd % (path, 's3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
         local(s3cmd_gzip % (path, 's3://%s/%s/' % (bucket, app_config.PROJECT_SLUG)))
+
+
+def awscli_sync(path='www', gzip=False, dryrun=False):
+    """
+    sync folder to s3 bucket
+    """
+    gzip = prep_bool_arg(gzip)
+    dryrun = prep_bool_arg(dryrun)
+    GZIP_FILE_TYPES = ['*.html', '*.js', '*.json', '*.css', '*.xml']
+    for bucket in app_config.S3_BUCKETS:
+        command = 'aws s3 sync %s s3://%s/%s --acl="%s"' % (
+            path,
+            bucket,
+            app_config.PROJECT_SLUG,
+            app_config.S3_ACL)
+        # add cache control header
+        command += ' --cache-control "max-age=%i"' % (app_config.DEFAULT_MAX_AGE)
+        if dryrun:
+            command += ' --dryrun'
+
+        # add include exclude options and content-encoding
+        if gzip:
+            command += ' --content-encoding "gzip" --exclude="*"'
+            arg = '--include'
+        else:
+            command += ' --exclude=".*"'
+            arg = '--exclude'
+        for ext in GZIP_FILE_TYPES:
+            command += ' %s="%s"' % (arg, ext)
+        local(command)
 
 def _gzip(in_path='www', out_path='.gzip'):
     """
@@ -444,7 +478,9 @@ def deploy(remote='origin'):
 
     render()
     _gzip('www', '.gzip')
-    _deploy_to_s3()
+    # _deploy_to_s3()
+    # Switch to awscli
+    awscli_sync('.gzip', gzip=True)
 
 """
 Cron jobs
