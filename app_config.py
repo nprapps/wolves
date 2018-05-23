@@ -85,13 +85,13 @@ COPY_GOOGLE_DOC_KEY = '1GagRyPjVs2C8QbEvU46Nx-sTI70t7Vq21p9-Z-BauLM'
 SHARING
 """
 PROJECT_DESCRIPTION = 'The elusive gray wolf and the people who love/hate them.'
-SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKETS[0], PROJECT_SLUG)
+SHARE_URL = 'https://%s/%s/' % (PRODUCTION_S3_BUCKETS[0], PROJECT_SLUG)
 
 TWITTER = {
     'TEXT': "The elusive gray wolf and the people who love/hate them, via @nprnews.",
     'URL': SHARE_URL,
     # Will be resized to 120x120, can't be larger than 1MB
-    'IMAGE_URL': 'http://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-twitter.jpg'
+    'IMAGE_URL': 'https://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-twitter.jpg'
 }
 
 FACEBOOK = {
@@ -99,7 +99,7 @@ FACEBOOK = {
     'URL': SHARE_URL,
     'DESCRIPTION': "In much of the American West, the gray wolf is a divisive political issue. NPR's Nathan Rott and photographer David Gilkey spent weeks reporting from Montana, where wolves are no longer protected.",
     # Should be square. No documented restrictions on size
-    'IMAGE_URL': "http://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-facebook.jpg",
+    'IMAGE_URL': "https://apps.npr.org.s3.amazonaws.com/wolves/img/wolf-facebook.jpg",
     'APP_ID': '138837436154588'
 }
 
@@ -173,7 +173,7 @@ def configure_targets(deployment_target):
     else:
         S3_BUCKETS = []
         S3_BASE_URL = 'http://127.0.0.1:8000'
-        AUDIO_BASE_URL = 'https://stage-apps.npr.org/wolves'
+        AUDIO_BASE_URL = 'https://s3.amazonaws.com/%s/%s' % (STAGING_S3_BUCKETS[0], PROJECT_SLUG)
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
         DEBUG = True
